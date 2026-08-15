@@ -2,6 +2,14 @@
 
 This repository hosts a zero-cost static dashboard for the Persistent Personal Agent / JARVIS research program.
 
+## Production
+
+**Primary live URL:**
+
+`https://jarvis-research-dashboard.vercel.app/`
+
+The current production project is `jarvis-research-dashboard` on the connected Vercel team. GitHub Pages remains an optional backup deployment path and is intentionally manual until Pages is enabled in repository settings.
+
 ## Data model
 
 The dashboard deliberately separates two kinds of data:
@@ -37,20 +45,21 @@ The dashboard intentionally does **not** display a synthetic overall completion 
 
 This prevents unrelated maturity scales from being averaged into a misleading number.
 
-## Cost
+## Cost model
 
-The implementation requires no paid API or backend:
+The implementation does not require a paid API, model, GPU, database, or application backend:
 
 - static React/Vite frontend;
 - public GitHub REST API for live metadata;
 - five-minute browser cache to reduce anonymous API usage;
 - GitHub Actions for build verification;
-- GitHub Pages for hosting.
+- static Vercel production deployment using the connected account;
+- optional GitHub Pages backup.
 
 ## Local development
 
 ```bash
-npm ci
+npm install --no-audit --no-fund
 npm run dev
 ```
 
@@ -60,12 +69,16 @@ Production build:
 npm run build
 ```
 
-## Deployment
+Direct frontend dependencies are pinned in `package.json` to the versions validated by CI.
 
-`main` is deployed through `.github/workflows/deploy-pages.yml`.
+## Build evidence
 
-The expected project URL is:
+The dashboard feature branch passed three consecutive GitHub-hosted `Dashboard CI` builds before merge. A retained build artifact from run `31879819090` had digest:
 
-`https://kodlbegiko.github.io/persistent-personal-agent-research/`
+`sha256:85777fe92380a550830ff30a4609592aefcb62f3a235bfb596b915edf8df3c83`
 
-If GitHub Pages is not yet enabled for the repository, the first deployment may require Pages to be enabled in repository settings with **GitHub Actions** as the source.
+The merged production source was introduced by commit `f38db4f52d2c39a2ebc6d5605ea1745b9c4f865e` and later received hosting-documentation cleanup commits.
+
+## Optional GitHub Pages
+
+`.github/workflows/deploy-pages.yml` is manual-only until the repository has GitHub Pages enabled with **GitHub Actions** as the source. This prevents a disabled Pages setting from producing false-red CI on normal research commits.
