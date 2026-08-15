@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { maturityStages, verifiedSnapshot } from './data/researchState.js';
 import { clearDashboardCache, loadAllLiveState } from './lib/github.js';
+import { LANG_EN, LANG_ZH, statusLabel, useLanguage } from './i18n.jsx';
 
 const GITHUB = 'https://github.com';
 
@@ -35,11 +36,12 @@ function Icon({ name, size = 18 }) {
   return <svg {...common}>{paths[name] || paths.grid}</svg>;
 }
 
-function formatDate(value, includeTime = true) {
+function formatDate(value, locale, includeTime = true) {
   if (!value) return '—';
   try {
     const date = new Date(value);
-    return new Intl.DateTimeFormat('zh-TW', {
+    return new Intl.DateTimeFormat(locale, {
+      timeZone: 'Asia/Taipei',
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
@@ -81,9 +83,9 @@ function MetricCard({ icon, label, value, detail }) {
   );
 }
 
-function StageRail({ stage }) {
+function StageRail({ stage, ariaLabel }) {
   return (
-    <div className="stage-rail" aria-label={`Maturity stage ${stage} of ${maturityStages.length - 1}`}>
+    <div className="stage-rail" aria-label={ariaLabel}>
       {maturityStages.map((_, index) => (
         <span key={index} className={index <= stage ? 'filled' : ''} />
       ))}
@@ -92,6 +94,7 @@ function StageRail({ stage }) {
 }
 
 function App() {
+  const { language, setLanguage, t, snapshot, locale } = useLanguage();
   const [live, setLive] = useState({ repos: [], issues: [], fetchedAt: null, issuesError: null });
   const [loading, setLoading] = useState(true);
   const [liveError, setLiveError] = useState(null);
@@ -105,27 +108,25 @@ function App() {
       setLive(data);
       const failures = data.repos.filter((row) => !row.ok);
       if (failures.length) {
-        setLiveError(`${failures.length} 個 repository 無法取得即時資料；已保留 verified snapshot。`);
+        setLiveError(t('liveFailure', { count: failures.length }));
       }
     } catch (error) {
       setLiveError(error.message || 'GitHub live data unavailable');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     load(false);
   }, [load]);
 
-  const evidenceBearing = verifiedSnapshot.tracks.filter((track) => track.stage >= 2).length;
-  const integrated = verifiedSnapshot.tracks.filter((track) => track.stage >= 5).length;
-  const activeIssueCount = live.issues.filter((issue) => issue.state === 'open').length || verifiedSnapshot.milestones.length;
-  const verifiedBlockers = verifiedSnapshot.blockers.length;
+  const evidenceBearing = snapshot.tracks.filter((track) => track.stage >= 2).length;
+  const integrated = snapshot.tracks.filter((track) => track.stage >= 5).length;
+  const activeIssueCount = live.issues.filter((issue) => issue.state === 'open').length || snapshot.milestones.length;
+  const verifiedBlockers = snapshot.blockers.length;
 
-  const issueMap = useMemo(() => {
-    return new Map(live.issues.map((issue) => [issue.number, issue]));
-  }, [live.issues]);
+  const issueMap = useMemo(() => new Map(live.issues.map((issue) => [issue.number, issue])), [live.issues]);
 
   const activities = useMemo(() => {
     const rows = [];
@@ -159,58 +160,64 @@ function App() {
       .slice(0, 8);
   }, [live.repos]);
 
-  const repoCards = verifiedSnapshot.repositories.map((repo) => {
+  const repoCards = snapshot.repositories.map((repo) => {
     const liveRow = live.repos.find((row) => row.data?.key === repo.key);
     return { ...repo, liveRow };
   });
 
+  const navItems = [
+    ['overview', 'home', t('nav.overview')],
+    ['north-star', 'star', t('nav.northStar')],
+    ['tracks', 'grid', t('nav.tracks')],
+    ['gates', 'flag', t('nav.gates')],
+    ['benchmarks', 'benchmark', t('nav.benchmarks')],
+    ['blockers', 'alert', t('nav.blockers')],
+    ['activity', 'activity', t('nav.activity')],
+    ['evidence', 'database', t('nav.evidence')],
+  ];
+
   return (
-    <div className="app-shell">
+    <div className="app-shell" data-language={language}>
       <header className="topbar">
         <div className="brand">
           <div className="brand-orbit"><span /></div>
           <div>
             <strong>JARVIS Research Dashboard</strong>
-            <small>Persistent Personal Agent Research</small>
+            <small>{t('brandSubtitle')}</small>
           </div>
         </div>
         <div className="topbar-right">
-          <div className="freshness-block">
-            <span>研究證據快照</span>
-            <strong><Icon name="check" size={14} /> {formatDate(verifiedSnapshot.verifiedAt)}</strong>
+          <div className="language-switch" role="group" aria-label={t('language.label')}>
+            <button type="button" className={language === LANG_ZH ? 'active' : ''} onClick={() => setLanguage(LANG_ZH)}>{t('language.zh')}</button>
+            <button type="button" className={language === LANG_EN ? 'active' : ''} onClick={() => setLanguage(LANG_EN)}>{t('language.en')}</button>
           </div>
           <div className="freshness-block">
-            <span>GitHub 即時資料</span>
-            <strong><Icon name="activity" size={14} /> {live.fetchedAt ? formatDate(live.fetchedAt) : loading ? '更新中…' : '未取得'}</strong>
+            <span>{t('researchSnapshot')}</span>
+            <strong><Icon name="check" size={14} /> {formatDate(snapshot.verifiedAt, locale)}</strong>
+          </div>
+          <div className="freshness-block">
+            <span>{t('githubLive')}</span>
+            <strong><Icon name="activity" size={14} /> {live.fetchedAt ? formatDate(live.fetchedAt, locale) : loading ? t('updating') : t('unavailable')}</strong>
           </div>
           <button className="refresh-button" onClick={() => load(true)} disabled={loading}>
             <Icon name="refresh" size={16} />
-            {loading ? '同步中' : '重新同步'}
+            {loading ? t('syncing') : t('resync')}
           </button>
         </div>
       </header>
 
       <aside className="sidebar">
         <nav>
-          {[
-            ['overview', 'home', '總覽', 'Overview'],
-            ['north-star', 'star', '北極星', 'North Star'],
-            ['tracks', 'grid', '研究軌道', 'Research Tracks'],
-            ['gates', 'flag', '研究門檻', 'Research Gates'],
-            ['benchmarks', 'benchmark', '比較與基準', 'Benchmarks'],
-            ['blockers', 'alert', '阻礙', 'Blockers'],
-            ['activity', 'activity', '最新動態', 'Activity Feed'],
-            ['evidence', 'database', '證據邊界', 'Evidence'],
-          ].map(([href, icon, zh, en], index) => (
+          {navItems.map(([href, icon, label], index) => (
             <a key={href} href={`#${href}`} className={index === 0 ? 'active' : ''}>
               <Icon name={icon} />
-              <span>{zh}<small>{en}</small></span>
+              <span>{label}</span>
             </a>
           ))}
         </nav>
 
         <div className="sidebar-repos">
-          <h3>Repositories</h3>
+          <h3>{t('repositories')}</h3>
           {repoCards.map((repo) => {
             const ok = repo.liveRow?.ok;
             return (
@@ -234,72 +241,72 @@ function App() {
         <section className="hero" id="north-star">
           <div className="hero-copy">
             <div className="section-label">NORTH STAR</div>
-            <h1>{verifiedSnapshot.northStar.title}</h1>
-            <p>{verifiedSnapshot.northStar.description}</p>
+            <h1>{snapshot.northStar.title}</h1>
+            <p>{snapshot.northStar.description}</p>
             <div className="evidence-note">
               <Icon name="database" size={16} />
-              本站不以任意百分比代表「JARVIS 完成度」；距離以必要能力、整合層與 MVJ gates 的實際證據計算。
+              {t('evidenceNote')}
             </div>
           </div>
 
           <Card className="distance-card">
             <div className="distance-head">
               <div>
-                <span>距離北極星還有多遠？</span>
-                <strong>目前仍在「子系統證據 → 首次整合」階段</strong>
+                <span>{t('distanceQuestion')}</span>
+                <strong>{t('distanceStage')}</strong>
               </div>
               <Badge tone="active">EVIDENCE-FIRST</Badge>
             </div>
             <div className="distance-grid">
               <div>
-                <span>有研究證據的軌道</span>
-                <strong>{evidenceBearing} / {verifiedSnapshot.tracks.length}</strong>
-                <div className="count-bar"><span style={{ width: `${(evidenceBearing / verifiedSnapshot.tracks.length) * 100}%` }} /></div>
+                <span>{t('evidenceTracks')}</span>
+                <strong>{evidenceBearing} / {snapshot.tracks.length}</strong>
+                <div className="count-bar"><span style={{ width: `${(evidenceBearing / snapshot.tracks.length) * 100}%` }} /></div>
               </div>
               <div>
-                <span>已整合軌道</span>
-                <strong>{integrated} / {verifiedSnapshot.tracks.length}</strong>
-                <div className="count-bar"><span style={{ width: `${Math.max(2, (integrated / verifiedSnapshot.tracks.length) * 100)}%` }} /></div>
+                <span>{t('integratedTracks')}</span>
+                <strong>{integrated} / {snapshot.tracks.length}</strong>
+                <div className="count-bar"><span style={{ width: `${Math.max(2, (integrated / snapshot.tracks.length) * 100)}%` }} /></div>
               </div>
               <div>
-                <span>MVJ 必要 gates 完成</span>
-                <strong>{verifiedSnapshot.northStar.mvjCompletedGates} / {verifiedSnapshot.northStar.mvjRequiredGates}</strong>
+                <span>{t('mvjGates')}</span>
+                <strong>{snapshot.northStar.mvjCompletedGates} / {snapshot.northStar.mvjRequiredGates}</strong>
                 <div className="count-bar"><span style={{ width: '2%' }} /></div>
               </div>
             </div>
             <div className="critical-path">
-              <span>現在的關鍵路徑</span>
-              <strong>{verifiedSnapshot.northStar.criticalPath}</strong>
-              <a href={`${GITHUB}/kodlbegiko/persistent-personal-agent-research/issues/1`} target="_blank" rel="noreferrer">查看 Issue <Icon name="external" size={14} /></a>
+              <span>{t('criticalPath')}</span>
+              <strong>{snapshot.northStar.criticalPath}</strong>
+              <a href={`${GITHUB}/kodlbegiko/persistent-personal-agent-research/issues/1`} target="_blank" rel="noreferrer">{t('viewIssue')} <Icon name="external" size={14} /></a>
             </div>
           </Card>
         </section>
 
         <section className="metric-grid">
-          <MetricCard icon="grid" label="研究軌道" value={verifiedSnapshot.tracks.length} detail="RT-01 → RT-07" />
-          <MetricCard icon="database" label="已有研究證據" value={`${evidenceBearing} / ${verifiedSnapshot.tracks.length}`} detail="非等同 validated" />
-          <MetricCard icon="check" label="已整合軌道" value={`${integrated} / ${verifiedSnapshot.tracks.length}`} detail="目前尚未形成完整 closed loop" />
-          <MetricCard icon="alert" label="已驗證 blockers" value={verifiedBlockers} detail="依 evidence snapshot" />
-          <MetricCard icon="activity" label="總 Repo Open Issues" value={activeIssueCount} detail={live.fetchedAt ? 'GitHub live' : 'snapshot fallback'} />
+          <MetricCard icon="grid" label={t('metrics.tracks')} value={snapshot.tracks.length} detail="RT-01 → RT-07" />
+          <MetricCard icon="database" label={t('metrics.evidence')} value={`${evidenceBearing} / ${snapshot.tracks.length}`} detail={t('metrics.evidenceDetail')} />
+          <MetricCard icon="check" label={t('metrics.integrated')} value={`${integrated} / ${snapshot.tracks.length}`} detail={t('metrics.integratedDetail')} />
+          <MetricCard icon="alert" label={t('metrics.blockers')} value={verifiedBlockers} detail={t('metrics.blockerDetail')} />
+          <MetricCard icon="activity" label={t('metrics.issues')} value={activeIssueCount} detail={live.fetchedAt ? t('metrics.githubLive') : t('metrics.snapshotFallback')} />
         </section>
 
         <section id="tracks" className="section-block">
           <div className="section-heading">
-            <div><h2>研究軌道進度</h2><p>每條軌道顯示 evidence maturity，而不是主觀完成百分比。</p></div>
-            <span className="mini-legend">0 Not started → 6 Independently reproduced</span>
+            <div><h2>{t('tracks.title')}</h2><p>{t('tracks.desc')}</p></div>
+            <span className="mini-legend">{t('tracks.legend')}</span>
           </div>
           <div className="tracks-grid">
-            {verifiedSnapshot.tracks.map((track) => (
+            {snapshot.tracks.map((track) => (
               <Card key={track.id} className={`track-card accent-${track.accent}`}>
                 <div className="track-top">
                   <span className="track-id">{track.id}</span>
-                  <Badge>{track.status}</Badge>
+                  <Badge>{statusLabel(language, track.status)}</Badge>
                 </div>
                 <h3>{track.name}</h3>
                 <p className="track-subtitle">{track.subtitle}</p>
-                <StageRail stage={track.stage} />
+                <StageRail stage={track.stage} ariaLabel={t('maturityStage', { stage: track.stage, total: maturityStages.length - 1 })} />
                 <div className="stage-copy">
-                  <strong>Stage {track.stage}</strong><span>{maturityStages[track.stage]}</span>
+                  <strong>{t('stage')} {track.stage}</strong><span>{statusLabel(language, maturityStages[track.stage])}</span>
                 </div>
                 <p className="track-detail">{track.detail}</p>
               </Card>
@@ -309,17 +316,17 @@ function App() {
 
         <div className="two-column">
           <section id="gates" className="section-block">
-            <div className="section-heading compact"><div><h2>研究門檻</h2><p>只顯示已驗證的 gate snapshot。</p></div></div>
+            <div className="section-heading compact"><div><h2>{t('gates.title')}</h2><p>{t('gates.desc')}</p></div></div>
             <Card className="table-card">
               <div className="gate-table" role="table">
                 <div className="gate-row head" role="row">
-                  <span>Track</span><span>Gate</span><span>Verdict</span><span>Evidence boundary</span>
+                  <span>{t('gates.track')}</span><span>{t('gates.gate')}</span><span>{t('gates.verdict')}</span><span>{t('gates.boundary')}</span>
                 </div>
-                {verifiedSnapshot.gates.map((gate, index) => (
+                {snapshot.gates.map((gate, index) => (
                   <div className="gate-row" role="row" key={`${gate.track}-${gate.gate}-${index}`}>
                     <span>{gate.track}</span>
                     <strong>{gate.gate}</strong>
-                    <span><Badge tone={gate.tone}>{gate.verdict}</Badge></span>
+                    <span><Badge tone={gate.tone}>{gate.verdictLabel}</Badge></span>
                     <span className="gate-detail">{gate.detail}</span>
                   </div>
                 ))}
@@ -328,13 +335,13 @@ function App() {
           </section>
 
           <section id="blockers" className="section-block">
-            <div className="section-heading compact"><div><h2>當前阻礙</h2><p>依對 North Star 的依賴關係排序。</p></div></div>
+            <div className="section-heading compact"><div><h2>{t('blockers.title')}</h2><p>{t('blockers.desc')}</p></div></div>
             <div className="blocker-list">
-              {verifiedSnapshot.blockers.map((blocker) => (
-                <Card key={blocker.title} className="blocker-card">
+              {snapshot.blockers.map((blocker) => (
+                <Card key={`${blocker.source}-${blocker.title}`} className="blocker-card">
                   <div className="blocker-title"><Badge tone={blocker.level === 'critical' ? 'danger' : 'warn'}>{blocker.level.toUpperCase()}</Badge><strong>{blocker.title}</strong></div>
                   <p>{blocker.text}</p>
-                  <span className="source-line">來源：{blocker.source}</span>
+                  <span className="source-line">{t('blockers.source')}：{blocker.source}</span>
                 </Card>
               ))}
             </div>
@@ -342,60 +349,60 @@ function App() {
         </div>
 
         <section id="benchmarks" className="section-block">
-          <div className="section-heading"><div><h2>關鍵基準與比較</h2><p>比較結果會連同 claim boundary 一起顯示，避免把特定 benchmark 的優勢擴張成 SOTA。</p></div></div>
+          <div className="section-heading"><div><h2>{t('benchmarks.title')}</h2><p>{t('benchmarks.desc')}</p></div></div>
           <div className="benchmark-grid">
             <Card className="benchmark-card">
-              <div className="benchmark-title"><span>PSE</span><h3>{verifiedSnapshot.benchmarks.pse.title}</h3></div>
+              <div className="benchmark-title"><span>PSE</span><h3>{snapshot.benchmarks.pse.title}</h3></div>
               <div className="duel-grid">
                 <div className="duel-section">
-                  <span>{verifiedSnapshot.benchmarks.pse.answerable.metric} — answerable</span>
-                  <div className="duel-values"><div><small>Candidate-v6</small><strong>{verifiedSnapshot.benchmarks.pse.answerable.candidate.toFixed(3)}</strong></div><div><small>A-MEM</small><strong>{verifiedSnapshot.benchmarks.pse.answerable.baseline.toFixed(3)}</strong></div></div>
+                  <span>{snapshot.benchmarks.pse.answerable.metric} — {t('benchmarks.answerable')}</span>
+                  <div className="duel-values"><div><small>Candidate-v6</small><strong>{snapshot.benchmarks.pse.answerable.candidate.toFixed(3)}</strong></div><div><small>A-MEM</small><strong>{snapshot.benchmarks.pse.answerable.baseline.toFixed(3)}</strong></div></div>
                 </div>
                 <div className="duel-section">
-                  <span>{verifiedSnapshot.benchmarks.pse.noEvidence.metric} — no evidence</span>
-                  <div className="duel-values"><div className="good"><small>Candidate-v6</small><strong>{verifiedSnapshot.benchmarks.pse.noEvidence.candidate}</strong></div><div className="bad"><small>A-MEM</small><strong>{verifiedSnapshot.benchmarks.pse.noEvidence.baseline}</strong></div></div>
+                  <span>{snapshot.benchmarks.pse.noEvidence.metric} — {t('benchmarks.noEvidence')}</span>
+                  <div className="duel-values"><div className="good"><small>Candidate-v6</small><strong>{snapshot.benchmarks.pse.noEvidence.candidate}</strong></div><div className="bad"><small>A-MEM</small><strong>{snapshot.benchmarks.pse.noEvidence.baseline}</strong></div></div>
                 </div>
               </div>
-              <div className="claim-boundary"><Icon name="flag" size={16} /><span>{verifiedSnapshot.benchmarks.pse.claim}</span></div>
+              <div className="claim-boundary"><Icon name="flag" size={16} /><span>{snapshot.benchmarks.pse.claim}</span></div>
             </Card>
 
             <Card className="benchmark-card">
-              <div className="benchmark-title"><span>PDA</span><h3>{verifiedSnapshot.benchmarks.pda.title}</h3></div>
+              <div className="benchmark-title"><span>PDA</span><h3>{snapshot.benchmarks.pda.title}</h3></div>
               <div className="audit-grid">
-                {verifiedSnapshot.benchmarks.pda.values.map(([label, value]) => (
+                {snapshot.benchmarks.pda.values.map(([label, value]) => (
                   <div key={label}><span>{label}</span><strong>{value}</strong></div>
                 ))}
               </div>
-              <div className="claim-boundary"><Icon name="flag" size={16} /><span>{verifiedSnapshot.benchmarks.pda.claim}</span></div>
+              <div className="claim-boundary"><Icon name="flag" size={16} /><span>{snapshot.benchmarks.pda.claim}</span></div>
             </Card>
           </div>
         </section>
 
         <section className="section-block" id="evidence">
-          <div className="section-heading"><div><h2>Claim Boundary</h2><p>哪些可以說、哪些現在還不能說。</p></div></div>
+          <div className="section-heading"><div><h2>{t('claims.title')}</h2><p>{t('claims.desc')}</p></div></div>
           <div className="claims-grid">
             <Card className="claims-card supported">
-              <h3><Icon name="check" />目前有證據支持</h3>
-              <ul>{verifiedSnapshot.claims.supported.map((claim) => <li key={claim}>{claim}</li>)}</ul>
+              <h3><Icon name="check" />{t('claims.supported')}</h3>
+              <ul>{snapshot.claims.supported.map((claim) => <li key={claim}>{claim}</li>)}</ul>
             </Card>
             <Card className="claims-card unsupported">
-              <h3><Icon name="alert" />目前禁止擴張宣稱</h3>
-              <ul>{verifiedSnapshot.claims.notSupported.map((claim) => <li key={claim}>{claim}</li>)}</ul>
+              <h3><Icon name="alert" />{t('claims.unsupported')}</h3>
+              <ul>{snapshot.claims.notSupported.map((claim) => <li key={claim}>{claim}</li>)}</ul>
             </Card>
           </div>
         </section>
 
         <section className="section-block">
-          <div className="section-heading"><div><h2>MVJ 關鍵里程碑</h2><p>Issue 狀態來自總 repo 的 GitHub live data；若 API 不可用則顯示 snapshot。</p></div></div>
+          <div className="section-heading"><div><h2>{t('milestones.title')}</h2><p>{t('milestones.desc')}</p></div></div>
           <Card className="milestones-card">
-            {verifiedSnapshot.milestones.map((milestone) => {
+            {snapshot.milestones.map((milestone) => {
               const issue = issueMap.get(milestone.issue);
               const state = issue?.state || 'unknown';
               return (
                 <a key={milestone.issue} href={`${GITHUB}/kodlbegiko/persistent-personal-agent-research/issues/${milestone.issue}`} target="_blank" rel="noreferrer" className="milestone-row">
                   <span className="issue-number">#{milestone.issue}</span>
-                  <span className="milestone-title"><strong>{milestone.title}</strong><small>{milestone.track}{milestone.requiredForMvj ? ' · MVJ required' : ''}</small></span>
-                  <Badge tone={state === 'closed' ? 'success' : state === 'open' ? 'active' : 'muted'}>{state.toUpperCase()}</Badge>
+                  <span className="milestone-title"><strong>{milestone.title}</strong><small>{milestone.track}{milestone.requiredForMvj ? ` · ${t('milestones.required')}` : ''}</small></span>
+                  <Badge tone={state === 'closed' ? 'success' : state === 'open' ? 'active' : 'muted'}>{statusLabel(language, state)}</Badge>
                   <Icon name="external" size={15} />
                 </a>
               );
@@ -404,23 +411,23 @@ function App() {
         </section>
 
         <section id="activity" className="section-block">
-          <div className="section-heading"><div><h2>最新 GitHub 動態</h2><p>這是 live activity signal，不等於研究 gate 自動升級。</p></div><span className="live-pill"><span /> LIVE ON REFRESH</span></div>
+          <div className="section-heading"><div><h2>{t('activity.title')}</h2><p>{t('activity.desc')}</p></div><span className="live-pill"><span /> {t('activity.live')}</span></div>
           <Card className="activity-card">
             {activities.length ? activities.map((item, index) => (
               <a href={item.url} target="_blank" rel="noreferrer" className="activity-row" key={`${item.repo}-${item.type}-${item.date}-${index}`}>
                 <span className={`activity-type ${item.type}`}><Icon name={item.type === 'commit' ? 'git' : 'github'} size={16} /></span>
-                <span className="activity-main"><strong>{item.title}</strong><small>{item.repo}{item.sha ? ` · ${item.sha}` : item.state ? ` · ${item.state}` : ''}</small></span>
-                <time>{formatDate(item.date)}</time>
+                <span className="activity-main"><strong>{item.title}</strong><small>{item.repo}{item.sha ? ` · ${item.sha}` : item.state ? ` · ${statusLabel(language, item.state)}` : ''}</small></span>
+                <time>{formatDate(item.date, locale)}</time>
                 <Icon name="external" size={14} />
               </a>
             )) : (
-              <div className="empty-state">{loading ? '正在取得 GitHub live data…' : '目前無法取得 live activity；verified snapshot 仍可使用。'}</div>
+              <div className="empty-state">{loading ? t('activity.loading') : t('activity.empty')}</div>
             )}
           </Card>
         </section>
 
         <section className="section-block">
-          <div className="section-heading"><div><h2>Repository 狀態</h2><p>即時 repo metadata、branch 與最近 PR。</p></div></div>
+          <div className="section-heading"><div><h2>{t('repoStatus.title')}</h2><p>{t('repoStatus.desc')}</p></div></div>
           <div className="repo-status-grid">
             {repoCards.map((repo) => {
               const result = repo.liveRow;
@@ -430,14 +437,14 @@ function App() {
                   <div className="repo-status-title"><span className={`repo-dot ${repo.accent} ${result?.ok ? 'online' : ''}`} /><div><h3>{repo.repo}</h3><span>{repo.label}</span></div></div>
                   {data ? (
                     <>
-                      <div className="repo-stats"><div><span>Branches</span><strong>{data.branches.length}</strong></div><div><span>Open issues + PRs</span><strong>{data.meta.open_issues_count}</strong></div><div><span>Default</span><strong>{data.meta.default_branch}</strong></div></div>
-                      <div className="repo-last"><span>Last push</span><strong>{formatDate(data.meta.pushed_at)}</strong></div>
-                      {data.pulls[0] && <a className="repo-pr" href={data.pulls[0].html_url} target="_blank" rel="noreferrer"><span>Latest PR</span><strong>#{data.pulls[0].number} {data.pulls[0].title}</strong><Badge tone={data.pulls[0].state === 'open' ? 'active' : 'muted'}>{data.pulls[0].state.toUpperCase()}</Badge></a>}
+                      <div className="repo-stats"><div><span>{t('repoStatus.branches')}</span><strong>{data.branches.length}</strong></div><div><span>{t('repoStatus.openIssues')}</span><strong>{data.meta.open_issues_count}</strong></div><div><span>{t('repoStatus.default')}</span><strong>{data.meta.default_branch}</strong></div></div>
+                      <div className="repo-last"><span>{t('repoStatus.lastPush')}</span><strong>{formatDate(data.meta.pushed_at, locale)}</strong></div>
+                      {data.pulls[0] && <a className="repo-pr" href={data.pulls[0].html_url} target="_blank" rel="noreferrer"><span>{t('repoStatus.latestPr')}</span><strong>#{data.pulls[0].number} {data.pulls[0].title}</strong><Badge tone={data.pulls[0].state === 'open' ? 'active' : 'muted'}>{statusLabel(language, data.pulls[0].state)}</Badge></a>}
                     </>
                   ) : (
-                    <div className="empty-state compact">Live metadata unavailable.</div>
+                    <div className="empty-state compact">{t('repoStatus.unavailable')}</div>
                   )}
-                  <a className="repo-link" href={`${GITHUB}/${repo.owner}/${repo.repo}`} target="_blank" rel="noreferrer"><Icon name="github" size={15}/> 開啟 Repository <Icon name="external" size={13}/></a>
+                  <a className="repo-link" href={`${GITHUB}/${repo.owner}/${repo.repo}`} target="_blank" rel="noreferrer"><Icon name="github" size={15}/> {t('repoStatus.openRepo')} <Icon name="external" size={13}/></a>
                 </Card>
               );
             })}
@@ -445,8 +452,8 @@ function App() {
         </section>
 
         <footer>
-          <div><strong>Evidence-first dashboard</strong><span>研究進度只在 evidence boundary 允許時升級。</span></div>
-          <div><span>Verified snapshot: {formatDate(verifiedSnapshot.verifiedAt)}</span><span>Live GitHub: {live.fetchedAt ? formatDate(live.fetchedAt) : 'unavailable'}</span></div>
+          <div><strong>{t('footer.title')}</strong><span>{t('footer.desc')}</span></div>
+          <div><span>{t('footer.snapshot')}: {formatDate(snapshot.verifiedAt, locale)}</span><span>{t('footer.live')}: {live.fetchedAt ? formatDate(live.fetchedAt, locale) : t('unavailable')}</span></div>
         </footer>
       </main>
     </div>
