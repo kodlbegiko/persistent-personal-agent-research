@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './data/recoveryOverlay.js';
 import App from './App.jsx';
 import AchievementSystem from './components/AchievementSystem.jsx';
 import { LanguageProvider } from './i18n.jsx';
