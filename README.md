@@ -4,6 +4,10 @@
 
 **Codename:** JARVIS (informal project codename only)
 
+**Live research dashboard:** https://jarvis-research-dashboard.vercel.app/
+
+The dashboard separates live GitHub activity from a timestamped, evidence-reviewed scientific snapshot. Live commits/PRs/issues do not automatically advance research gates.
+
 ## Mission
 
 This repository is the umbrella research-control layer for a long-term effort to build a personal AI agent that can:
@@ -101,9 +105,11 @@ No SOTA, parity, superiority, production-readiness, or safety claim may be infer
 - `GOVERNANCE.md` — research integrity, change control, safety rules
 - `evidence/CLAIMS_REGISTRY.md` — auditable claim ledger
 - `docs/FRONTIER_TRACKING.md` — how external frontier progress is monitored
+- `dashboard/README.md` — dashboard architecture, data boundary and deployment evidence
+- `src/data/researchState.js` — timestamped verified dashboard snapshot
 
 ## Current program posture
 
 The umbrella program is in **FOUNDATION / ARCHITECTURE** stage. RT-01 and RT-02 already have independent active research repositories; the remaining tracks are not considered implemented merely because relevant frontier technologies exist.
 
-See `STATUS.md` for the current evidence-backed state.
+See `STATUS.md` and the live dashboard for the current evidence-backed state.
