@@ -4,6 +4,7 @@ import App from './App.jsx';
 import AchievementSystem from './components/AchievementSystem.jsx';
 import './styles.css';
 import './achievements.css';
+import './macbook.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
