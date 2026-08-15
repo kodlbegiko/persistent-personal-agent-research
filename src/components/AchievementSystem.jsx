@@ -27,6 +27,86 @@ function getStatusMeta(t) {
   };
 }
 
+function localText(value, language) {
+  if (value == null) return '';
+  if (typeof value === 'string') return value;
+  return language === 'en' ? value.en : value.zh;
+}
+
+function getLineCopy(language) {
+  return language === 'en'
+    ? {
+        eyebrow: 'ACTIVE RESEARCH LINES',
+        title: 'Progress by research lineage',
+        desc: 'Each line shows its own evidence history. Lineage progress is kept separate from umbrella RT maturity, so protected evidence cannot silently become an integration PASS.',
+        achieved: 'Achieved',
+        failed: 'Failed',
+        latest: 'Latest verified event',
+        current: 'Current position',
+        next: 'Next target',
+        evidence: 'Evidence',
+        inProgress: 'In progress',
+      }
+    : {
+        eyebrow: '目前研究主線',
+        title: '每條研究線的實際進度',
+        desc: '每條線各自保留 evidence 歷史；lineage 進度與 umbrella RT 成熟度分開，避免 protected evidence 被直接誤算成整合 PASS。',
+        achieved: '已達成',
+        failed: '未通過',
+        latest: '最近可驗證事件',
+        current: '目前所在位置',
+        next: '下一個目標',
+        evidence: '證據',
+        inProgress: '進行中',
+      };
+}
+
+function ResearchLineCard({ line, language, locale, copy }) {
+  const latest = formatEvidenceTime(line.latestAt, line.latestPrecision, locale);
+  return (
+    <article className={`research-line-card line-${line.status} accent-${line.accent}`}>
+      <div className="research-line-head">
+        <span className="research-line-code">{line.code}</span>
+        <span className={`research-line-status status-${line.status}`}>{localText(line.statusText, language)}</span>
+      </div>
+
+      <h3>{localText(line.title, language)}</h3>
+      <p className="research-line-summary">{localText(line.summary, language)}</p>
+
+      <div className="research-line-stats">
+        <div><span>{copy.achieved}</span><strong>{line.counts?.achieved ?? 0}</strong></div>
+        <div><span>{copy.failed}</span><strong>{line.counts?.failed ?? 0}</strong></div>
+        <div><span>{copy.latest}</span><strong>{latest || copy.inProgress}</strong></div>
+      </div>
+
+      <div className="research-line-current">
+        <span>{copy.current}</span>
+        <a href={line.current?.url} target="_blank" rel="noreferrer">
+          {localText(line.current, language)} <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <div className="research-line-history" aria-label={`${localText(line.title, language)} history`}>
+        {line.history?.map((event, index) => {
+          const timestamp = formatEvidenceTime(event.at, event.precision, locale);
+          return (
+            <a key={`${line.id}-${index}`} className={`research-history-row status-${event.status}`} href={event.url} target="_blank" rel="noreferrer">
+              <span className="research-history-symbol">{event.status === 'complete' ? '✓' : event.status === 'failed' ? '×' : event.status === 'blocked' ? '!' : '→'}</span>
+              <span className="research-history-copy"><strong>{localText(event, language)}</strong><small>{timestamp || copy.inProgress}</small></span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          );
+        })}
+      </div>
+
+      <div className="research-line-next">
+        <span>{copy.next}</span>
+        <strong>{localText(line.next, language)}</strong>
+      </div>
+    </article>
+  );
+}
+
 function TimelineNode({ node, index, t, locale }) {
   const statusMeta = getStatusMeta(t);
   const meta = statusMeta[node.status] || statusMeta.future;
@@ -113,6 +193,7 @@ export default function AchievementSystem() {
   const [open, setOpen] = useState(false);
   const { t, snapshot, locale, language } = useLanguage();
   const timeline = snapshot.advancementTimeline;
+  const lineCopy = getLineCopy(language);
 
   const stats = useMemo(() => {
     const nodes = timeline.phases.flatMap((phase) => phase.nodes);
@@ -164,6 +245,23 @@ export default function AchievementSystem() {
               </div>
               <button className="roadmap-close" type="button" onClick={() => setOpen(false)} aria-label={t('timeline.close')}>×</button>
             </header>
+
+            {snapshot.researchLines?.length ? (
+              <section className="research-lines-panel">
+                <div className="research-lines-heading">
+                  <div>
+                    <span>{lineCopy.eyebrow}</span>
+                    <h3>{lineCopy.title}</h3>
+                    <p>{lineCopy.desc}</p>
+                  </div>
+                </div>
+                <div className="research-lines-grid">
+                  {snapshot.researchLines.map((line) => (
+                    <ResearchLineCard key={line.id} line={line} language={language} locale={locale} copy={lineCopy} />
+                  ))}
+                </div>
+              </section>
+            ) : null}
 
             <div className="roadmap-phase-strip" aria-label={t('timeline.phaseAria')}>
               {timeline.phases.map((phase) => <PhaseSummary key={phase.id} phase={phase} t={t} />)}

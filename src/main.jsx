@@ -6,6 +6,7 @@ import AchievementSystem from './components/AchievementSystem.jsx';
 import { LanguageProvider } from './i18n.jsx';
 import './styles.css';
 import './achievements.css';
+import './research-lines.css';
 import './macbook.css';
 import './i18n.css';
 
