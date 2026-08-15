@@ -1,14 +1,8 @@
 name: Deploy Dashboard to GitHub Pages
 
+# Optional backup deployment. The repository must first have GitHub Pages enabled
+# with GitHub Actions as its source. Production is currently served from Vercel.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'src/**'
-      - 'index.html'
-      - 'package.json'
-      - 'vite.config.js'
-      - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
 permissions:
