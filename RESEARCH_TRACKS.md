@@ -22,9 +22,6 @@ Umbrella dependency output:
 - provenance references;
 - supersession/dispute markers.
 
-Exit criterion for integration:
-- source repo exposes a frozen/exportable contract whose semantics are backed by protected evidence for the claims being used.
-
 ## RT-02 — Specification-Grounded Proactivity Decision
 
 **Question:** Should the agent intervene now, and in what mode?
@@ -39,52 +36,72 @@ Modes:
 - `ASK`
 - `ACT`
 
-Scope:
-- explicit intervention specification;
-- permission;
-- information sufficiency;
-- timing;
-- need;
-- side effect;
-- risk;
-- reversibility;
-- temporal/counterfactual consistency;
-- decision trace.
-
 Umbrella dependency output:
 - versioned `InterventionDecision` contract;
 - policy version identity;
 - matched-rule/prohibition trace;
 - authorization requirement.
 
-Exit criterion for integration:
-- benchmark/oracle validity established for the policy claim being imported;
-- no unsupported state may escalate into unsafe autonomous action.
+## RT-03 — Action Verification (PAAV)
 
-## RT-03 — Action Verification
+**Question:** Did the intended user goal/postcondition actually occur?
 
-**Question:** Did the intended outcome actually occur?
+**Status:** `NOT YET SCIENTIFICALLY ESTABLISHED`
+
+**Independent research lineage:** `Personal Agent Action Verification (PAAV)`
 
 Initial hypothesis:
 
-> Agents fail partly because they conflate tool/API success with user-goal success. Explicit postcondition verification should reduce false completion and state corruption.
+> Agents fail partly because they conflate tool/API success with user-goal success. Explicit goal/postcondition-aware verification using legal observable evidence should reduce false completion while preserving uncertainty as `INCONCLUSIVE` when evidence is insufficient.
 
 Required baselines:
 - tool/API return only;
-- single-observation confirmation;
-- candidate multi-evidence verification policy.
+- immediate readback;
+- fixed postcondition check;
+- bounded retry observation;
+- multi-evidence verification;
+- conservative fail-closed;
+- strongest eligible contemporary zero-cost reproducible baseline.
 
 Primary metrics:
-- false completion rate;
-- verified success precision/recall;
-- inconclusive rate;
-- duplicate/destructive side-effect rate;
-- recovery success;
-- additional latency/cost.
+- False Completion Rate;
+- Goal Verification Accuracy;
+- Unsafe Certainty Rate;
+- Verified Success Precision;
+- INCONCLUSIVE Rate;
+- collateral-damage detection;
+- verification actions/cost/latency.
 
-Dependencies:
-- RT-02 risk/authorization classes;
-- RT-01 state update semantics.
+Required evidence boundary:
+- PAAV must not read or tune on PARE protected labels/cases;
+- PARE recovery correctness is not evidence of PAAV verification correctness;
+- protected PAAV candidate must be frozen before fresh protected seed generation.
+
+## Independent Recovery / State Repair — PARE
+
+**Repository:** https://github.com/kodlbegiko/personal-agent-recovery-engine
+
+**Current umbrella status:**
+
+`PROTECTED_EVALUATION_COMPLETED — BENCHMARK-SPECIFIC RECOVERY CAPABILITY ESTABLISHED`
+
+PARE sits downstream of verification:
+
+```text
+UserGoal
+  ↓
+ActionAttempt
+  ↓
+PAAV VerificationRecord
+  ↓
+PARE RecoveryDecision
+  ↓
+RecoveryRecord
+  ↓
+StateSnapshot'
+```
+
+PARE protected evidence must not be reinterpreted as completion of RT-03 Action Verification.
 
 ## RT-04 — Long-Horizon Planning
 
@@ -101,53 +118,13 @@ Scope:
 - partial completion;
 - abandonment.
 
-Primary failure classes:
-- goal drift;
-- stale assumptions;
-- forgotten constraints;
-- premature completion;
-- duplicate action;
-- missed dependency;
-- failure to resume;
-- failure to stop after supersession.
-
 ## RT-05 — Multimodal Context
 
 **Question:** How can perception become useful evidence without becoming ungoverned durable truth?
 
-Sources may include:
-- text;
-- voice;
-- screen;
-- vision;
-- calendar/event streams;
-- device state;
-- location when explicitly permitted.
-
-Required properties:
-- source identity;
-- time/freshness;
-- confidence/uncertainty;
-- privacy class;
-- correction/deletion support;
-- bounded durable-write rules.
-
 ## RT-06 — Cross-Device Continuity
 
 **Question:** Can one personal agent preserve coherent state/control semantics across multiple endpoints?
-
-Scope:
-- shared state identity;
-- sync/versioning;
-- conflict resolution;
-- offline operation;
-- event deduplication;
-- device-local/private fields;
-- endpoint-specific permissions;
-- auditability.
-
-Initial MVJ target:
-- two endpoints/interfaces, not an entire consumer device ecosystem.
 
 ## RT-07 — Physical-World Agency
 
@@ -155,48 +132,33 @@ Initial MVJ target:
 
 This track is deliberately downstream.
 
-Prerequisites:
-- validated action verification;
-- bounded recovery;
-- explicit authorization;
-- cross-device identity/control;
-- physical risk taxonomy.
-
-Initial permitted research scope:
-- reversible, low-energy, low-risk devices in controlled environments.
-
-Out of scope for autonomous MVJ:
-- weapons;
-- safety-critical vehicles;
-- medical actuation;
-- hazardous machinery;
-- uncontrolled high-consequence robotics.
-
 ## Cross-track integration questions
 
 1. How does uncertain or disputed state constrain PDA action mode?
 2. Can PDA produce `ACT` when verification support is unavailable?
-3. What state transitions occur after `INCONCLUSIVE` verification?
-4. How does a new event invalidate a waiting plan?
-5. Which multimodal observations are ephemeral vs eligible for durable state?
-6. Which fields may sync across devices, and which must remain local?
-7. How are policy/model/schema versions attached to every end-to-end trace?
+3. What state transitions occur after PAAV `INCONCLUSIVE`?
+4. When does PARE recover versus preserve uncertainty?
+5. How does a new event invalidate a waiting plan?
+6. Which multimodal observations are ephemeral vs eligible for durable state?
+7. Which fields may sync across devices, and which must remain local?
+8. How are policy/model/schema versions attached to every end-to-end trace?
 
 ## Priority order
-
-Current priority:
 
 ```text
 RT-01 + RT-02
       |
       v
-Integration Contract v0.1
+Integration Contracts
       |
       v
-RT-03 Action Verification
+RT-03 PAAV Action Verification
       |
       v
-Closed-loop MVP
+PARE Recovery / State Repair
+      |
+      v
+Closed-loop Integration Benchmark
       |
       v
 RT-04
