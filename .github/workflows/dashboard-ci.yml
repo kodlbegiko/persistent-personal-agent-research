@@ -7,7 +7,6 @@ on:
       - 'src/**'
       - 'index.html'
       - 'package.json'
-      - 'package-lock.json'
       - 'vite.config.js'
       - '.github/workflows/dashboard-ci.yml'
   push:
@@ -16,7 +15,6 @@ on:
       - 'src/**'
       - 'index.html'
       - 'package.json'
-      - 'package-lock.json'
       - 'vite.config.js'
       - '.github/workflows/dashboard-ci.yml'
 
@@ -31,6 +29,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci
+      - run: npm install --no-audit --no-fund
       - run: npm run build
