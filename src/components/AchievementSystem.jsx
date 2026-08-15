@@ -1,20 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { verifiedSnapshot } from '../data/researchState.js';
+import { useLanguage } from '../i18n.jsx';
 
-const statusMeta = {
-  complete: { label: '已達成', symbol: '✓' },
-  current: { label: '目前目標', symbol: '→' },
-  blocked: { label: '阻塞', symbol: '!' },
-  failed: { label: '未通過', symbol: '×' },
-  future: { label: '尚未開始', symbol: '·' },
-};
-
-function formatEvidenceTime(value, precision = 'time') {
+function formatEvidenceTime(value, precision, locale) {
   if (!value) return null;
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
 
-  return new Intl.DateTimeFormat('zh-TW', {
+  return new Intl.DateTimeFormat(locale, {
     timeZone: 'Asia/Taipei',
     year: 'numeric',
     month: '2-digit',
@@ -25,11 +17,22 @@ function formatEvidenceTime(value, precision = 'time') {
   }).format(date);
 }
 
-function TimelineNode({ node, index }) {
+function getStatusMeta(t) {
+  return {
+    complete: { label: t('timeline.achieved'), symbol: '✓' },
+    current: { label: t('timeline.current'), symbol: '→' },
+    blocked: { label: t('timeline.blocked'), symbol: '!' },
+    failed: { label: t('timeline.failed'), symbol: '×' },
+    future: { label: t('timeline.future'), symbol: '·' },
+  };
+}
+
+function TimelineNode({ node, index, t, locale }) {
+  const statusMeta = getStatusMeta(t);
   const meta = statusMeta[node.status] || statusMeta.future;
   const achieved = node.status === 'complete';
   const terminal = node.status === 'failed';
-  const timestamp = formatEvidenceTime(node.achievedAt || node.terminalAt, node.datePrecision);
+  const timestamp = formatEvidenceTime(node.achievedAt || node.terminalAt, node.datePrecision, locale);
 
   return (
     <article className={`roadmap-node status-${node.status}`}>
@@ -43,7 +46,7 @@ function TimelineNode({ node, index }) {
           <div className="roadmap-node-title-wrap">
             <div className="roadmap-node-kicker">
               <span>{node.track}</span>
-              {node.requiredForMvj ? <span>MVJ REQUIRED</span> : null}
+              {node.requiredForMvj ? <span>{t('timeline.mvjRequired')}</span> : null}
             </div>
             <h3>{node.title}</h3>
             <p>{node.description}</p>
@@ -54,31 +57,31 @@ function TimelineNode({ node, index }) {
         <div className="roadmap-node-meta">
           {timestamp ? (
             <div className="roadmap-meta-block">
-              <span>{achieved ? (node.datePrecision === 'date' ? '首次可驗證日期' : '達成時間') : terminal ? '終端證據時間' : '時間'}</span>
+              <span>{achieved ? (node.datePrecision === 'date' ? t('timeline.verifiedDate') : t('timeline.achievedAt')) : terminal ? t('timeline.terminalAt') : t('timeline.time')}</span>
               <strong>{timestamp}</strong>
             </div>
           ) : (
             <div className="roadmap-meta-block">
-              <span>時間</span>
-              <strong>{node.status === 'current' ? '進行中' : '尚未達成'}</strong>
+              <span>{t('timeline.time')}</span>
+              <strong>{node.status === 'current' ? t('timeline.inProgress') : t('timeline.notAchieved')}</strong>
             </div>
           )}
 
           <div className="roadmap-meta-block roadmap-prereq">
-            <span>前置條件</span>
-            <strong>{node.dependsOn?.length ? node.dependsOn.join(' · ') : '無'}</strong>
+            <span>{t('timeline.prereq')}</span>
+            <strong>{node.dependsOn?.length ? node.dependsOn.join(' · ') : t('timeline.none')}</strong>
           </div>
 
           {node.evidenceUrl ? (
             <a className="roadmap-evidence-link" href={node.evidenceUrl} target="_blank" rel="noreferrer">
-              <span>證據</span>
+              <span>{t('timeline.evidence')}</span>
               <strong>{node.evidenceLabel}</strong>
               <span aria-hidden="true">↗</span>
             </a>
           ) : (
             <div className="roadmap-meta-block">
-              <span>解鎖條件</span>
-              <strong>{node.unlockCondition || '等待前置研究完成'}</strong>
+              <span>{t('timeline.unlock')}</span>
+              <strong>{node.unlockCondition || t('timeline.waiting')}</strong>
             </div>
           )}
         </div>
@@ -89,7 +92,7 @@ function TimelineNode({ node, index }) {
   );
 }
 
-function PhaseSummary({ phase }) {
+function PhaseSummary({ phase, t }) {
   const completed = phase.nodes.filter((node) => node.status === 'complete').length;
   const failed = phase.nodes.filter((node) => node.status === 'failed').length;
   const current = phase.nodes.some((node) => node.status === 'current');
@@ -98,14 +101,18 @@ function PhaseSummary({ phase }) {
     <div className={`roadmap-phase-chip ${current ? 'is-current' : ''}`}>
       <span>{phase.shortLabel}</span>
       <strong>{phase.title}</strong>
-      <small>{completed}/{phase.nodes.length} 已達成{failed ? ` · ${failed} 未通過` : ''}</small>
+      <small>
+        {t('timeline.phaseSummary', { done: completed, total: phase.nodes.length })}
+        {failed ? ` · ${t('timeline.failedCount', { count: failed })}` : ''}
+      </small>
     </div>
   );
 }
 
 export default function AchievementSystem() {
   const [open, setOpen] = useState(false);
-  const timeline = verifiedSnapshot.advancementTimeline;
+  const { t, snapshot, locale, language } = useLanguage();
+  const timeline = snapshot.advancementTimeline;
 
   const stats = useMemo(() => {
     const nodes = timeline.phases.flatMap((phase) => phase.nodes);
@@ -132,11 +139,14 @@ export default function AchievementSystem() {
 
   return (
     <>
-      <button className="roadmap-launcher" type="button" onClick={() => setOpen(true)} aria-label="開啟北極星研究路徑">
+      <button className="roadmap-launcher" type="button" onClick={() => setOpen(true)} aria-label={t('timeline.openAria')}>
         <span className="roadmap-launcher-icon" aria-hidden="true">⌁</span>
         <span className="roadmap-launcher-copy">
-          <strong>北極星路徑</strong>
-          <small>{stats.completed}/{stats.total} 個節點 · 下一步 {stats.current?.issue ? `#${stats.current.issue}` : '待確認'}</small>
+          <strong>{t('timeline.launcher')}</strong>
+          <small>
+            {t('timeline.nodes', { done: stats.completed, total: stats.total })}
+            {' · '}{t('timeline.next')} {stats.current?.issue ? `#${stats.current.issue}` : t('timeline.pending')}
+          </small>
         </span>
         <span className="roadmap-launcher-arrow" aria-hidden="true">›</span>
       </button>
@@ -145,38 +155,38 @@ export default function AchievementSystem() {
         <div className="roadmap-backdrop" role="presentation" onMouseDown={(event) => {
           if (event.target === event.currentTarget) setOpen(false);
         }}>
-          <section className="roadmap-window" role="dialog" aria-modal="true" aria-labelledby="roadmap-title">
+          <section className="roadmap-window" role="dialog" aria-modal="true" aria-labelledby="roadmap-title" data-language={language}>
             <header className="roadmap-header">
               <div>
-                <span className="roadmap-eyebrow">JARVIS ADVANCEMENT PATH</span>
-                <h2 id="roadmap-title">從現在走到 North Star</h2>
-                <p>不是成就收藏，而是一條可追溯的研究路徑：每個已完成節點保留達成時間與證據，未完成節點顯示前置條件。</p>
+                <span className="roadmap-eyebrow">{t('timeline.eyebrow')}</span>
+                <h2 id="roadmap-title">{t('timeline.title')}</h2>
+                <p>{t('timeline.intro')}</p>
               </div>
-              <button className="roadmap-close" type="button" onClick={() => setOpen(false)} aria-label="關閉北極星路徑">×</button>
+              <button className="roadmap-close" type="button" onClick={() => setOpen(false)} aria-label={t('timeline.close')}>×</button>
             </header>
 
-            <div className="roadmap-phase-strip" aria-label="研究階段摘要">
-              {timeline.phases.map((phase) => <PhaseSummary key={phase.id} phase={phase} />)}
+            <div className="roadmap-phase-strip" aria-label={t('timeline.phaseAria')}>
+              {timeline.phases.map((phase) => <PhaseSummary key={phase.id} phase={phase} t={t} />)}
             </div>
 
             <div className="roadmap-body">
               <aside className="roadmap-summary">
                 <div className="roadmap-north-star">
-                  <span>NORTH STAR</span>
-                  <strong>{verifiedSnapshot.northStar.title}</strong>
-                  <p>{verifiedSnapshot.northStar.description}</p>
+                  <span>{t('timeline.northStar')}</span>
+                  <strong>{snapshot.northStar.title}</strong>
+                  <p>{snapshot.northStar.description}</p>
                 </div>
 
                 <div className="roadmap-summary-grid">
-                  <div><span>已達成</span><strong>{stats.completed}</strong></div>
-                  <div><span>全部節點</span><strong>{stats.total}</strong></div>
-                  <div><span>未通過</span><strong>{stats.failed}</strong></div>
-                  <div><span>阻塞</span><strong>{stats.blocked}</strong></div>
+                  <div><span>{t('timeline.completed')}</span><strong>{stats.completed}</strong></div>
+                  <div><span>{t('timeline.total')}</span><strong>{stats.total}</strong></div>
+                  <div><span>{t('timeline.failedStat')}</span><strong>{stats.failed}</strong></div>
+                  <div><span>{t('timeline.blockedStat')}</span><strong>{stats.blocked}</strong></div>
                 </div>
 
                 <div className="roadmap-current-card">
-                  <span>現在所在位置</span>
-                  <strong>{stats.current?.title || '等待下一個可驗證節點'}</strong>
+                  <span>{t('timeline.currentPosition')}</span>
+                  <strong>{stats.current?.title || t('timeline.waitingNext')}</strong>
                   <p>{stats.current?.unlockCondition || stats.current?.description}</p>
                   {stats.current?.issue ? (
                     <a href={`https://github.com/kodlbegiko/persistent-personal-agent-research/issues/${stats.current.issue}`} target="_blank" rel="noreferrer">
@@ -187,21 +197,21 @@ export default function AchievementSystem() {
 
                 {stats.lastCompleted ? (
                   <div className="roadmap-last-completed">
-                    <span>最近達成</span>
+                    <span>{t('timeline.recent')}</span>
                     <strong>{stats.lastCompleted.title}</strong>
-                    <small>{formatEvidenceTime(stats.lastCompleted.achievedAt, stats.lastCompleted.datePrecision)}</small>
+                    <small>{formatEvidenceTime(stats.lastCompleted.achievedAt, stats.lastCompleted.datePrecision, locale)}</small>
                   </div>
                 ) : null}
 
-                <div className="roadmap-legend" aria-label="路徑狀態圖例">
-                  {Object.entries(statusMeta).map(([status, meta]) => (
+                <div className="roadmap-legend" aria-label={t('timeline.legendAria')}>
+                  {Object.entries(getStatusMeta(t)).map(([status, meta]) => (
                     <span key={status}><i className={`status-${status}`} />{meta.label}</span>
                   ))}
                 </div>
 
                 <div className="roadmap-evidence-rule">
-                  <strong>時間與完成規則</strong>
-                  <p>只記錄可回溯的 terminal / frozen evidence。若只能證明日期、不足以證明分鐘級時間，就只顯示日期，不補猜。</p>
+                  <strong>{t('timeline.ruleTitle')}</strong>
+                  <p>{t('timeline.rule')}</p>
                 </div>
               </aside>
 
@@ -216,7 +226,7 @@ export default function AchievementSystem() {
                       </div>
                     </header>
                     <div className="roadmap-nodes">
-                      {phase.nodes.map((node, index) => <TimelineNode key={node.id} node={node} index={index} />)}
+                      {phase.nodes.map((node, index) => <TimelineNode key={node.id} node={node} index={index} t={t} locale={locale} />)}
                     </div>
                   </section>
                 ))}
