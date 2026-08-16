@@ -1,0 +1,189 @@
+name: Exact-Main Vercel Production
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/deploy-vercel-production.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dashboard-v2-exact-main-production
+  cancel-in-progress: false
+
+env:
+  VERCEL_ORG_ID: team_2UInD4pRnALRv9emtsvl4fr5
+  VERCEL_PROJECT_ID: prj_pmEnHIAkJM4XNm9QLM9cwuWDVkAL
+  CANONICAL_DOMAIN: https://jarvis-research-dashboard.vercel.app
+
+jobs:
+  exact-main-production:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout exact main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Verify production credential exists
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        shell: bash
+        run: |
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "::error title=Production deployment blocked::VERCEL_TOKEN repository secret is required. No deployment was attempted."
+            exit 78
+          fi
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Full control-plane preflight
+        run: |
+          npm run validate:data
+          npm run test:unit
+          npm run build
+          npx playwright install --with-deps chromium
+          npm run test:e2e
+          npm run test:a11y
+          npm run test:visual
+
+      - name: Pull Vercel production settings
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: npx --yes vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Build production artifact from exact main
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: npx --yes vercel@latest build --prod --token="$VERCEL_TOKEN"
+
+      - name: Create production-targeted deployment without routing traffic
+        id: deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEPLOYMENT_URL="$(npx --yes vercel@latest deploy --prebuilt --prod --skip-domain --yes --token="$VERCEL_TOKEN")"
+          echo "deployment_url=$DEPLOYMENT_URL" >> "$GITHUB_OUTPUT"
+          echo "Created isolated production-targeted deployment: $DEPLOYMENT_URL"
+
+      - name: Verify Vercel deployment metadata binds exact git SHA
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment_url }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/dashboard-v2-final-acceptance
+          DEPLOYMENT_HOST="${DEPLOYMENT_URL#https://}"
+          curl -fsS \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com/v13/deployments/$DEPLOYMENT_HOST?teamId=$VERCEL_ORG_ID" \
+            > artifacts/dashboard-v2-final-acceptance/production-deployment.json
+          python - <<'PY'
+          import json, os, pathlib, sys
+          p = pathlib.Path('artifacts/dashboard-v2-final-acceptance/production-deployment.json')
+          d = json.loads(p.read_text())
+          expected = os.environ['GITHUB_SHA']
+          meta = d.get('meta') or {}
+          git_source = d.get('gitSource') or {}
+          candidates = {
+              'meta.githubCommitSha': meta.get('githubCommitSha'),
+              'meta.gitCommitSha': meta.get('gitCommitSha'),
+              'meta.commitSha': meta.get('commitSha'),
+              'gitSource.sha': git_source.get('sha'),
+          }
+          matched = [k for k, v in candidates.items() if v == expected]
+          if not matched:
+              print('EXACT_MAIN_PRODUCTION_IDENTITY_NOT_VERIFIABLE', candidates, file=sys.stderr)
+              sys.exit(2)
+          out = {
+              'expectedMainSHA': expected,
+              'verifiedBy': matched,
+              'deploymentId': d.get('id'),
+              'deploymentUrl': d.get('url'),
+              'readyState': d.get('readyState') or d.get('state'),
+          }
+          pathlib.Path('artifacts/dashboard-v2-final-acceptance/production-source-identity.json').write_text(json.dumps(out, indent=2) + '\n')
+          print('EXACT_MAIN_DEPLOYMENT_IDENTITY_VERIFIED', out)
+          PY
+
+      - name: Verify compiled application snapshot identity before promotion
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os, pathlib, sys
+          p = pathlib.Path('dashboard/state/verified/current.json')
+          d = json.loads(p.read_text())
+          expected = os.environ['GITHUB_SHA']
+          program = next((x for x in d.get('sourceRepositories', []) if x.get('role') == 'PROGRAM_CONTROL'), None)
+          checks = {
+              'sourceUmbrellaSHA': d.get('sourceUmbrellaSHA') == expected,
+              'programSourceSHA': bool(program and program.get('sha') == expected),
+              'registryVersion': bool(d.get('registryVersion')),
+              'watchPolicyVersion': bool(d.get('watchPolicyVersion')),
+              'watchPolicyHash': d.get('watchPolicyHash') == '2851bc01078f6e2e3883c4a2cdad6603809dc56c80d791f0b87cd9dc408ec0a4',
+              'contentHash': bool(d.get('contentHash')),
+          }
+          if not all(checks.values()):
+              print('SNAPSHOT_IDENTITY_FAIL', checks, file=sys.stderr)
+              sys.exit(3)
+          out = {k: d.get(k) for k in ['schemaVersion','snapshotId','auditId','verifiedAt','sourceUmbrellaSHA','registryVersion','watchPolicyVersion','watchPolicyHash','contentHash']}
+          out['programSourceSHA'] = program.get('sha')
+          pathlib.Path('artifacts/dashboard-v2-final-acceptance/snapshot-verification.json').write_text(json.dumps(out, indent=2) + '\n')
+          pathlib.Path('artifacts/dashboard-v2-final-acceptance/final-main-sha.txt').write_text(expected + '\n')
+          print('SNAPSHOT_IDENTITY_VERIFIED', out)
+          PY
+
+      - name: Promote only the verified deployment to Production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment_url }}
+        run: npx --yes vercel@latest promote "$DEPLOYMENT_URL" --yes --token="$VERCEL_TOKEN"
+
+      - name: Verify canonical Production domain
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsS "$CANONICAL_DOMAIN/" -o /tmp/production-index.html
+          ASSET="$(grep -oE 'assets/index-[^"'"']+\.js' /tmp/production-index.html | head -n1)"
+          if [ -z "$ASSET" ]; then
+            echo "::error::Could not identify production JavaScript asset"
+            exit 4
+          fi
+          curl -fsS "$CANONICAL_DOMAIN/$ASSET" -o /tmp/production-app.js
+          grep -Fq "$GITHUB_SHA" /tmp/production-app.js || {
+            echo "::error::Canonical Production bundle does not contain exact main SHA"
+            exit 5
+          }
+          STATUS="$(curl -sS -o /tmp/research-pulse.json -w '%{http_code}' "$CANONICAL_DOMAIN/api/research-pulse")"
+          if [ "$STATUS" = "404" ] || [ "$STATUS" -ge 500 ]; then
+            echo "::error::Production /api/research-pulse returned HTTP $STATUS"
+            cat /tmp/research-pulse.json
+            exit 6
+          fi
+          printf '{"canonicalDomain":"%s","rootHttp":200,"researchPulseHttp":%s,"sourceSHA":"%s"}\n' \
+            "$CANONICAL_DOMAIN" "$STATUS" "$GITHUB_SHA" \
+            > artifacts/dashboard-v2-final-acceptance/production-api-verification.json
+          echo "CANONICAL_PRODUCTION_VERIFIED $GITHUB_SHA"
+
+      - name: Upload final production acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-v2-final-production-acceptance
+          path: artifacts/dashboard-v2-final-acceptance
+          if-no-files-found: warn
+          retention-days: 30
