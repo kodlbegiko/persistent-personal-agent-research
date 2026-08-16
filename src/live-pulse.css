@@ -25,7 +25,10 @@
 
 .live-pulse-compact.loading .live-pulse-dot { animation: livePulse 1.1s ease-in-out infinite; }
 .live-pulse-compact.paused .live-pulse-dot,
-.live-pulse-compact.hidden .live-pulse-dot { background: #e6b84f; box-shadow: 0 0 9px rgba(230, 184, 79, .32); }
+.live-pulse-compact.hidden .live-pulse-dot,
+.live-pulse-compact.fallback .live-pulse-dot,
+.live-pulse-compact.stale .live-pulse-dot { background: #e6b84f; box-shadow: 0 0 9px rgba(230, 184, 79, .32); }
+.live-pulse-compact.shared .live-pulse-dot { background: #59bfff; box-shadow: 0 0 10px rgba(89, 191, 255, .42); }
 .live-pulse-compact.error .live-pulse-dot { background: #ef6577; box-shadow: 0 0 9px rgba(239, 101, 119, .3); }
 
 @keyframes livePulse {
@@ -68,6 +71,11 @@
   font-weight: 760;
   letter-spacing: .07em;
 }
+.live-pulse-tag.fallback,
+.live-pulse-tag.stale,
+.live-pulse-tag.paused { color: #e7bd5f; border-color: rgba(231, 189, 95, .22); background: rgba(231, 189, 95, .07); }
+.live-pulse-tag.shared { color: #76c9ff; border-color: rgba(118, 201, 255, .22); background: rgba(118, 201, 255, .07); }
+.live-pulse-tag.error { color: #f27d8b; border-color: rgba(242, 125, 139, .22); background: rgba(242, 125, 139, .07); }
 
 .live-pulse-header p {
   margin: 2px 0 0 14px;
