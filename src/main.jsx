@@ -20,6 +20,7 @@ import './plain-progress.css';
 import './research-history.css';
 import './live-pulse.css';
 import './control-plane.css';
+import './final-polish.css';
 
 const params = new URLSearchParams(window.location.search);
 const queryLanguage = params.get('lang');
