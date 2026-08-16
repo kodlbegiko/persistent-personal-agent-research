@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { verifiedSnapshot } from './data/researchState.js';
 import { clearDashboardCache, loadAllLiveState } from './lib/github.js';
 import { useLanguage } from './i18n.jsx';
+import PlainLanguageProgress from './components/PlainLanguageProgress.jsx';
 import ResearchHistory from './components/ResearchHistory.jsx';
 import {
   ActivityPanel,
@@ -97,6 +98,7 @@ export default function App() {
       <Sidebar navItems={navItems} repoCards={repoCards} t={t} />
       <main className="main-content" id="overview">
         {liveError && <div className="notice warning"><Icon name="alert" /><span>{liveError}</span></div>}
+        <PlainLanguageProgress snapshot={snapshot} language={language} />
         <NorthStarSummary snapshot={snapshot} t={t} evidenceBearing={evidenceBearing} integrated={integrated} verifiedBlockers={verifiedBlockers} activeIssueCount={activeIssueCount} live={live} />
         <ResearchTracks snapshot={snapshot} t={t} language={language} />
         <ResearchHistory />
