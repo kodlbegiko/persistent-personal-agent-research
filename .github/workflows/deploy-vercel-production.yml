@@ -86,20 +86,49 @@ jobs:
           npm run test:a11y
           npm run test:visual
 
-      - name: Create isolated exact-main Vercel deployment through REST API
+      - name: Verify compiled application snapshot identity before Production deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/dashboard-v2-final-acceptance
+          python - <<'PY'
+          import json, os, pathlib, sys
+          p = pathlib.Path('dashboard/state/verified/current.json')
+          d = json.loads(p.read_text())
+          expected = os.environ['GITHUB_SHA']
+          program = next((x for x in d.get('sourceRepositories', []) if x.get('role') == 'PROGRAM_CONTROL'), None)
+          checks = {
+              'sourceUmbrellaSHA': d.get('sourceUmbrellaSHA') == expected,
+              'programSourceSHA': bool(program and program.get('sha') == expected),
+              'registryVersion': bool(d.get('registryVersion')),
+              'watchPolicyVersion': bool(d.get('watchPolicyVersion')),
+              'watchPolicyHash': d.get('watchPolicyHash') == '2851bc01078f6e2e3883c4a2cdad6603809dc56c80d791f0b87cd9dc408ec0a4',
+              'contentHash': bool(d.get('contentHash')),
+          }
+          if not all(checks.values()):
+              print('SNAPSHOT_IDENTITY_FAIL', checks, file=sys.stderr)
+              sys.exit(3)
+          out = {k: d.get(k) for k in ['schemaVersion','snapshotId','auditId','verifiedAt','sourceUmbrellaSHA','registryVersion','watchPolicyVersion','watchPolicyHash','contentHash']}
+          out['programSourceSHA'] = program.get('sha')
+          pathlib.Path('artifacts/dashboard-v2-final-acceptance/snapshot-verification.json').write_text(json.dumps(out, indent=2) + '\n')
+          pathlib.Path('artifacts/dashboard-v2-final-acceptance/final-main-sha.txt').write_text(expected + '\n')
+          print('SNAPSHOT_IDENTITY_VERIFIED', out)
+          PY
+
+      - name: Create exact-main Vercel Production deployment through REST API
         id: deploy
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p artifacts/dashboard-v2-final-acceptance
           python - <<'PY'
           import json, os, pathlib
           sha = os.environ['GITHUB_SHA']
           payload = {
               'name': os.environ['VERCEL_PROJECT_NAME'],
               'project': os.environ['VERCEL_PROJECT_NAME'],
+              'target': 'production',
               'gitSource': {
                   'type': 'github',
                   'org': 'kodlbegiko',
@@ -138,7 +167,7 @@ jobs:
             --data-binary @/tmp/vercel-deploy-request.json \
             "https://api.vercel.com/v13/deployments?forceNew=1&skipAutoDetectionConfirmation=1&teamId=$VERCEL_ORG_ID")"
           if [ "$STATUS" != "200" ] && [ "$STATUS" != "201" ]; then
-            echo "::error title=Vercel REST deployment creation failed::HTTP $STATUS"
+            echo "::error title=Vercel REST Production deployment creation failed::HTTP $STATUS"
             cat /tmp/vercel-deploy-response.json
             exit 82
           fi
@@ -152,7 +181,7 @@ jobs:
           PY
           cp /tmp/vercel-deploy-response.json artifacts/dashboard-v2-final-acceptance/deployment-create-response.json
 
-      - name: Wait for isolated deployment to become READY
+      - name: Wait for Production deployment to become READY
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           DEPLOYMENT_ID: ${{ steps.deploy.outputs.deployment_id }}
@@ -170,7 +199,7 @@ jobs:
           print(d.get('readyState') or d.get('state') or '')
           PY
             )"
-            echo "Vercel deployment state: $STATE (attempt $attempt)"
+            echo "Vercel Production deployment state: $STATE (attempt $attempt)"
             if [ "$STATE" = "READY" ]; then
               cp /tmp/vercel-deployment.json artifacts/dashboard-v2-final-acceptance/production-deployment.json
               exit 0
@@ -181,10 +210,10 @@ jobs:
             fi
             sleep 5
           done
-          echo "::error::Timed out waiting for Vercel deployment"
+          echo "::error::Timed out waiting for Vercel Production deployment"
           exit 84
 
-      - name: Verify Vercel native git source binds exact main SHA
+      - name: Verify Vercel Production target and native git source bind exact main SHA
         shell: bash
         run: |
           set -euo pipefail
@@ -197,10 +226,14 @@ jobs:
           git_source = d.get('gitSource') or {}
           git_meta = d.get('gitMetadata') or {}
           candidates = {
+              'target': d.get('target'),
               'gitSource.sha': git_source.get('sha'),
               'gitMetadata.commitSha': git_meta.get('commitSha'),
               'meta.githubCommitSha': meta.get('githubCommitSha'),
           }
+          if d.get('target') != 'production':
+              print('PRODUCTION_TARGET_FAIL', candidates, file=sys.stderr)
+              sys.exit(2)
           if git_source.get('sha') != expected:
               print('EXACT_MAIN_NATIVE_GIT_SOURCE_FAIL', candidates, file=sys.stderr)
               sys.exit(2)
@@ -209,6 +242,7 @@ jobs:
               sys.exit(2)
           out = {
               'expectedMainSHA': expected,
+              'target': d.get('target'),
               'nativeGitSourceSHA': git_source.get('sha'),
               'metadataCommitSHA': git_meta.get('commitSha'),
               'attestedCommitSHA': meta.get('githubCommitSha'),
@@ -217,45 +251,8 @@ jobs:
               'readyState': d.get('readyState') or d.get('state'),
           }
           pathlib.Path('artifacts/dashboard-v2-final-acceptance/production-source-identity.json').write_text(json.dumps(out, indent=2) + '\n')
-          print('EXACT_MAIN_DEPLOYMENT_IDENTITY_VERIFIED', out)
+          print('EXACT_MAIN_PRODUCTION_IDENTITY_VERIFIED', out)
           PY
-
-      - name: Verify compiled application snapshot identity before promotion
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          import json, os, pathlib, sys
-          p = pathlib.Path('dashboard/state/verified/current.json')
-          d = json.loads(p.read_text())
-          expected = os.environ['GITHUB_SHA']
-          program = next((x for x in d.get('sourceRepositories', []) if x.get('role') == 'PROGRAM_CONTROL'), None)
-          checks = {
-              'sourceUmbrellaSHA': d.get('sourceUmbrellaSHA') == expected,
-              'programSourceSHA': bool(program and program.get('sha') == expected),
-              'registryVersion': bool(d.get('registryVersion')),
-              'watchPolicyVersion': bool(d.get('watchPolicyVersion')),
-              'watchPolicyHash': d.get('watchPolicyHash') == '2851bc01078f6e2e3883c4a2cdad6603809dc56c80d791f0b87cd9dc408ec0a4',
-              'contentHash': bool(d.get('contentHash')),
-          }
-          if not all(checks.values()):
-              print('SNAPSHOT_IDENTITY_FAIL', checks, file=sys.stderr)
-              sys.exit(3)
-          out = {k: d.get(k) for k in ['schemaVersion','snapshotId','auditId','verifiedAt','sourceUmbrellaSHA','registryVersion','watchPolicyVersion','watchPolicyHash','contentHash']}
-          out['programSourceSHA'] = program.get('sha')
-          pathlib.Path('artifacts/dashboard-v2-final-acceptance/snapshot-verification.json').write_text(json.dumps(out, indent=2) + '\n')
-          pathlib.Path('artifacts/dashboard-v2-final-acceptance/final-main-sha.txt').write_text(expected + '\n')
-          print('SNAPSHOT_IDENTITY_VERIFIED', out)
-          PY
-
-      - name: Promote only the verified deployment to Production
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment_url }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          npx --yes vercel@latest promote "$DEPLOYMENT_URL" --yes --token="$VERCEL_TOKEN"
 
       - name: Verify canonical Production domain
         shell: bash
@@ -277,7 +274,7 @@ jobs:
                 fi
               fi
             fi
-            echo "Canonical promotion not fully visible yet (attempt $attempt)"
+            echo "Canonical Production not fully visible yet (attempt $attempt)"
             sleep 5
           done
           echo "::error::Canonical Production did not converge to exact main with healthy /api/research-pulse"
