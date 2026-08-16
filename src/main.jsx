@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './data/recoveryOverlay.js';
+import './data/hourlyEvidenceOverlay.js';
 import './navigation-state.js';
 import App from './App.jsx';
 import PolishedAchievementSystem from './components/PolishedAchievementSystem.jsx';
