@@ -1,0 +1,2775 @@
+{
+  "fetchedAt": "2026-08-16T04:26:49.328Z",
+  "source": "build-fallback",
+  "events": [
+    {
+      "id": "17793793682",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117807949,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "73d247e075bbb55a0949fdf5db2d2cc1e74e1151",
+        "before": "64dfada776ae6831cde39a0e3f04d7c961fc6da2"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:26:38Z"
+    },
+    {
+      "id": "17793792574",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117806904,
+        "ref": "refs/heads/ops/dashboard-v2-production-artifact",
+        "head": "d22cc458e629cbd41d98682d502cdc0098af81c7",
+        "before": "8e732af555a4726e30c99a4ff1c1344ca58434a3"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:26:37Z"
+    },
+    {
+      "id": "17793782044",
+      "type": "CreateEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "ref": "watch/v2-hourly-20260816-1225",
+        "ref_type": "branch",
+        "full_ref": "refs/heads/watch/v2-hourly-20260816-1225",
+        "master_branch": "main",
+        "description": null,
+        "pusher_type": "user"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:26:26Z"
+    },
+    {
+      "id": "17793781424",
+      "type": "CreateEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "ref": "ops/dashboard-v2-production-artifact",
+        "ref_type": "branch",
+        "full_ref": "refs/heads/ops/dashboard-v2-production-artifact",
+        "master_branch": "main",
+        "description": null,
+        "pusher_type": "user"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:26:25Z"
+    },
+    {
+      "id": "17793748139",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40117762355,
+        "ref": "refs/heads/research/candidate-v11-semantic-abstraction-contradiction-reasoning",
+        "head": "16fd1d777bb219fa73af8a738cfba75a26c60cbb",
+        "before": "25ed20b5e8f53d3506275fd12cc688dcb1e80701"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:25:50Z"
+    },
+    {
+      "id": "17793721847",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40117735803,
+        "ref": "refs/heads/research/candidate-v11-semantic-abstraction-contradiction-reasoning",
+        "head": "25ed20b5e8f53d3506275fd12cc688dcb1e80701",
+        "before": "1de4db4e38808d31b7347aa7bb2a6288426a09a7"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:25:22Z"
+    },
+    {
+      "id": "17793711575",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117725642,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "64dfada776ae6831cde39a0e3f04d7c961fc6da2",
+        "before": "dfc9470cc7454b0d75d86f8921ab738bb62d65d0"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:25:12Z"
+    },
+    {
+      "id": "17793695478",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40117709433,
+        "ref": "refs/heads/research/candidate-v11-semantic-abstraction-contradiction-reasoning",
+        "head": "1de4db4e38808d31b7347aa7bb2a6288426a09a7",
+        "before": "0bed752075356b94cf823a172ec86382f558fa17"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:24:55Z"
+    },
+    {
+      "id": "13346255847",
+      "type": "PullRequestEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "action": "closed",
+        "number": 27,
+        "pull_request": {
+          "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research/pulls/27",
+          "id": 4288810382,
+          "number": 27,
+          "head": {
+            "ref": "watch/hourly-20260816-1219",
+            "sha": "c5fe7064ac3a2aed53fe80fea5c9450396ed2c68",
+            "repo": {
+              "id": 1334042686,
+              "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research",
+              "name": "persistent-personal-agent-research"
+            }
+          },
+          "base": {
+            "ref": "main",
+            "sha": "8e732af555a4726e30c99a4ff1c1344ca58434a3",
+            "repo": {
+              "id": 1334042686,
+              "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research",
+              "name": "persistent-personal-agent-research"
+            }
+          }
+        }
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:24:24Z"
+    },
+    {
+      "id": "13346252527",
+      "type": "PullRequestEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "action": "opened",
+        "number": 27,
+        "pull_request": {
+          "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research/pulls/27",
+          "id": 4288810382,
+          "number": 27,
+          "head": {
+            "ref": "watch/hourly-20260816-1219",
+            "sha": "c5fe7064ac3a2aed53fe80fea5c9450396ed2c68",
+            "repo": {
+              "id": 1334042686,
+              "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research",
+              "name": "persistent-personal-agent-research"
+            }
+          },
+          "base": {
+            "ref": "main",
+            "sha": "8e732af555a4726e30c99a4ff1c1344ca58434a3",
+            "repo": {
+              "id": 1334042686,
+              "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research",
+              "name": "persistent-personal-agent-research"
+            }
+          }
+        }
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:24:24Z"
+    },
+    {
+      "id": "17793662661",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117676427,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "dfc9470cc7454b0d75d86f8921ab738bb62d65d0",
+        "before": "25c16b5e981c77989b1efd9da374309cbf5ec54d"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:24:21Z"
+    },
+    {
+      "id": "17793657735",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117671252,
+        "ref": "refs/heads/watch/hourly-20260816-1219",
+        "head": "c5fe7064ac3a2aed53fe80fea5c9450396ed2c68",
+        "before": "9f48722553c6008bf0d4e1102816860c1080f785"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:24:16Z"
+    },
+    {
+      "id": "17793651297",
+      "type": "CreateEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "ref": "research/candidate-v11-semantic-abstraction-contradiction-reasoning",
+        "ref_type": "branch",
+        "full_ref": "refs/heads/research/candidate-v11-semantic-abstraction-contradiction-reasoning",
+        "master_branch": "main",
+        "description": null,
+        "pusher_type": "user"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:24:09Z"
+    },
+    {
+      "id": "17793650341",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117664037,
+        "ref": "refs/heads/watch/hourly-20260816-1219",
+        "head": "9f48722553c6008bf0d4e1102816860c1080f785",
+        "before": "08ea68eb417216a56398c12c67c3a281f8b9bee4"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:24:08Z"
+    },
+    {
+      "id": "17793641964",
+      "type": "CreateEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "ref": "research/candidate-v11-post-v7r-semantic-generalization",
+        "ref_type": "branch",
+        "full_ref": "refs/heads/research/candidate-v11-post-v7r-semantic-generalization",
+        "master_branch": "main",
+        "description": null,
+        "pusher_type": "user"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:23:59Z"
+    },
+    {
+      "id": "13346239259",
+      "type": "PullRequestEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "action": "merged",
+        "number": 26,
+        "pull_request": {
+          "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research/pulls/26",
+          "id": 4288786281,
+          "number": 26,
+          "head": {
+            "ref": "agent/dashboard-v2-control-plane",
+            "sha": "d730a01d010dac07f5b7d0feea09d540005d9cfa",
+            "repo": {
+              "id": 1334042686,
+              "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research",
+              "name": "persistent-personal-agent-research"
+            }
+          },
+          "base": {
+            "ref": "main",
+            "sha": "08ea68eb417216a56398c12c67c3a281f8b9bee4",
+            "repo": {
+              "id": 1334042686,
+              "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research",
+              "name": "persistent-personal-agent-research"
+            }
+          }
+        }
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:23:27Z"
+    },
+    {
+      "id": "17793612120",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117625491,
+        "ref": "refs/heads/main",
+        "head": "8e732af555a4726e30c99a4ff1c1344ca58434a3",
+        "before": "08ea68eb417216a56398c12c67c3a281f8b9bee4"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:23:28Z"
+    },
+    {
+      "id": "17793609090",
+      "type": "CreateEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "ref": "watch/hourly-20260816-1219",
+        "ref_type": "branch",
+        "full_ref": "refs/heads/watch/hourly-20260816-1219",
+        "master_branch": "main",
+        "description": null,
+        "pusher_type": "user"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:23:25Z"
+    },
+    {
+      "id": "17793579565",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117592709,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "5e9a2ef3d6835d3157755b48f9caeede9a602269",
+        "before": "59a431d1fc8e33ea08888cbd6ab7590ba9ae1efe"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:22:54Z"
+    },
+    {
+      "id": "17793542441",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117555406,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "59a431d1fc8e33ea08888cbd6ab7590ba9ae1efe",
+        "before": "2e09bf49f96e42e74146818ed2f4a2ac846b935b"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:22:14Z"
+    },
+    {
+      "id": "17793542071",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117555020,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "d730a01d010dac07f5b7d0feea09d540005d9cfa",
+        "before": "2cb02fea2fed886b6e6f20ca785de7d4f4c06e64"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:22:14Z"
+    },
+    {
+      "id": "17793522707",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117535665,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "2cb02fea2fed886b6e6f20ca785de7d4f4c06e64",
+        "before": "83ac6b7a9a7ee135f49628c194ba9c0d5748b20b"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:21:54Z"
+    },
+    {
+      "id": "17793517025",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117529971,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "83ac6b7a9a7ee135f49628c194ba9c0d5748b20b",
+        "before": "9938c337d674004d853a857c621196ae549011b5"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:21:47Z"
+    },
+    {
+      "id": "17793512039",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117524991,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "9938c337d674004d853a857c621196ae549011b5",
+        "before": "fadc1d93c8051ac8c35b6b6b8e07e1b7bdbd96ac"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:21:42Z"
+    },
+    {
+      "id": "17793481882",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117494724,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "2e09bf49f96e42e74146818ed2f4a2ac846b935b",
+        "before": "bdc8953f6a1c549afb6d216d75ba3334de6d9bf7"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:21:09Z"
+    },
+    {
+      "id": "17793429097",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117441771,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "8f4df4df2209c9b4de44fc496c0c827009b1eb6c",
+        "before": "8259c06224b35e264434c6d34d5ff8ce8d224c21"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:20:14Z"
+    },
+    {
+      "id": "17793425642",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117438258,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "bdc8953f6a1c549afb6d216d75ba3334de6d9bf7",
+        "before": "d273b50aea8fffc17501faf7943bd712ddea2fa2"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:20:10Z"
+    },
+    {
+      "id": "17793421088",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117433584,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "8259c06224b35e264434c6d34d5ff8ce8d224c21",
+        "before": "50248dc19872baf781bbb64e0b11f0693d94fa9c"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:20:06Z"
+    },
+    {
+      "id": "17793395650",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117408244,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "d273b50aea8fffc17501faf7943bd712ddea2fa2",
+        "before": "2c28423948abe1f490ce85a371586b3677db0f8c"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:19:38Z"
+    },
+    {
+      "id": "17793379851",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117392287,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "50248dc19872baf781bbb64e0b11f0693d94fa9c",
+        "before": "f0a864ee408e46a9b59ee5480131ff751176410a"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:19:21Z"
+    },
+    {
+      "id": "17793369840",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117382291,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "f0a864ee408e46a9b59ee5480131ff751176410a",
+        "before": "5e85c9c0db13eb2d0a323a8836f7fa17fb6d7cb9"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:19:09Z"
+    },
+    {
+      "id": "17793293639",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117305803,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "5e85c9c0db13eb2d0a323a8836f7fa17fb6d7cb9",
+        "before": "fda9e7af08e59137519d884206d1ffddd0efbe44"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:17:44Z"
+    },
+    {
+      "id": "17793265293",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117277366,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "2c28423948abe1f490ce85a371586b3677db0f8c",
+        "before": "ebb81ba3fd3e0adda224e51902f8ceff6f3f5c1b"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:17:12Z"
+    },
+    {
+      "id": "17793241055",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117253032,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "430017ac78dc634f0e9f862b3e5cea02df3376b4",
+        "before": "a7bd13d90a32ca8c9b5200a990b143db82183da8"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:16:45Z"
+    },
+    {
+      "id": "17793220880",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117232505,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "fda9e7af08e59137519d884206d1ffddd0efbe44",
+        "before": "97f1aaea2876549d29d2ae7687607fe6ce5ac350"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:16:22Z"
+    },
+    {
+      "id": "17793220476",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117232345,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "a7bd13d90a32ca8c9b5200a990b143db82183da8",
+        "before": "56d55ee6cc0204233cccda6f8503f10a3193bfb8"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:16:22Z"
+    },
+    {
+      "id": "17793207564",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40117219417,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "97f1aaea2876549d29d2ae7687607fe6ce5ac350",
+        "before": "f9151c6d882cad9d9859d0bb38a4411033a43676"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:16:08Z"
+    },
+    {
+      "id": "17793184919",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117196500,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "56d55ee6cc0204233cccda6f8503f10a3193bfb8",
+        "before": "0f2396f25fce2c2f7f057cf6c074cb2d55a6603f"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:15:43Z"
+    },
+    {
+      "id": "17793055150",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117066368,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "8d353a41233e23bffe66f4da1410680df5dca211",
+        "before": "370ed0a1e9543b1c55de677c046b8d7ad18513cf"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:13:21Z"
+    },
+    {
+      "id": "13346081691",
+      "type": "PullRequestEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "action": "opened",
+        "number": 26,
+        "pull_request": {
+          "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research/pulls/26",
+          "id": 4288786281,
+          "number": 26,
+          "head": {
+            "ref": "agent/dashboard-v2-control-plane",
+            "sha": "d730a01d010dac07f5b7d0feea09d540005d9cfa",
+            "repo": {
+              "id": 1334042686,
+              "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research",
+              "name": "persistent-personal-agent-research"
+            }
+          },
+          "base": {
+            "ref": "main",
+            "sha": "08ea68eb417216a56398c12c67c3a281f8b9bee4",
+            "repo": {
+              "id": 1334042686,
+              "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research",
+              "name": "persistent-personal-agent-research"
+            }
+          }
+        }
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:12:50Z"
+    },
+    {
+      "id": "17792996230",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40117007284,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "370ed0a1e9543b1c55de677c046b8d7ad18513cf",
+        "before": "90f273148af220c7f4120467ace8548a4c6ece93"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:12:16Z"
+    },
+    {
+      "id": "17792972238",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116983458,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "90f273148af220c7f4120467ace8548a4c6ece93",
+        "before": "a524679c3d9d92a7e6d1b4be00226344ebbc161c"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:11:50Z"
+    },
+    {
+      "id": "17792955935",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40116966691,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "f9151c6d882cad9d9859d0bb38a4411033a43676",
+        "before": "23fdd4cb514d4967da500e6ea03ef62432f483c8"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:11:30Z"
+    },
+    {
+      "id": "17792952543",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40116963443,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "23fdd4cb514d4967da500e6ea03ef62432f483c8",
+        "before": "bb2dcf9c5f7f8216539ff53c556bf0feb4684571"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:11:26Z"
+    },
+    {
+      "id": "17792948446",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40116959174,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "bb2dcf9c5f7f8216539ff53c556bf0feb4684571",
+        "before": "dbec89ab9093ea17c45420ea69c21d566f833119"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:11:22Z"
+    },
+    {
+      "id": "17792933234",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116943976,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "fd42dbe2ed61792f46479a25528f5ffd6e29dae4",
+        "before": "5314102dfefc45a43a259a95f57bed3083d89b46"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:11:05Z"
+    },
+    {
+      "id": "17792913612",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116924261,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "5314102dfefc45a43a259a95f57bed3083d89b46",
+        "before": "54afe10a3e461072433c0e1e89a28e4eab2b03e3"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:10:44Z"
+    },
+    {
+      "id": "17792847401",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40116857965,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "f2efc98ff095983d8e7e3762774e4e44a9b4af6b",
+        "before": "df202ba97aebaecc5f55c848a1b2397ad8dedf76"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:09:32Z"
+    },
+    {
+      "id": "17792798202",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116808547,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "54afe10a3e461072433c0e1e89a28e4eab2b03e3",
+        "before": "3f99904a18f9edcf294b5bff65ee22457f50a224"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:08:38Z"
+    },
+    {
+      "id": "17792782843",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116793033,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "3f99904a18f9edcf294b5bff65ee22457f50a224",
+        "before": "1f2fa06e84dcc98d9b2e12bba540935303870b9c"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:08:22Z"
+    },
+    {
+      "id": "17792751813",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116762084,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "1f2fa06e84dcc98d9b2e12bba540935303870b9c",
+        "before": "b7a3061e191d079bac8309785decd6ab52011908"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:07:48Z"
+    },
+    {
+      "id": "17792743565",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116753827,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "b7a3061e191d079bac8309785decd6ab52011908",
+        "before": "f5abc5e77328b4d1733db687e4a6514891f32b9f"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:07:39Z"
+    },
+    {
+      "id": "17792736153",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40116746375,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "df202ba97aebaecc5f55c848a1b2397ad8dedf76",
+        "before": "58611ec8f6569adefab75148c9318d42c7e149ed"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:07:31Z"
+    },
+    {
+      "id": "13345982412",
+      "type": "PullRequestEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "action": "opened",
+        "number": 25,
+        "pull_request": {
+          "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm/pulls/25",
+          "id": 4288772234,
+          "number": 25,
+          "head": {
+            "ref": "research/candidate-v7-independent-requalification",
+            "sha": "a247c8b9685a48984d7ca9063ba7576d771edb54",
+            "repo": {
+              "id": 1333003624,
+              "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm",
+              "name": "Proactivity-Decision-Algorithm"
+            }
+          },
+          "base": {
+            "ref": "research/candidate-v7-proposition-logic-reasoning",
+            "sha": "274afe45ab6e15f4d07be2834cc484f800c59b65",
+            "repo": {
+              "id": 1333003624,
+              "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm",
+              "name": "Proactivity-Decision-Algorithm"
+            }
+          }
+        }
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:06:09Z"
+    },
+    {
+      "id": "17792619047",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116628961,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "eb533c3aeac0c65ec2cb8d8edc6d7813566f4d46",
+        "before": "b7f6b37025a057099d80f77ac9d02bbed73d05c3"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:05:29Z"
+    },
+    {
+      "id": "17792606324",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40116616124,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "58611ec8f6569adefab75148c9318d42c7e149ed",
+        "before": "82973bd5a3e7b1bfee965e4ec6d743b65257fcfe"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:05:16Z"
+    },
+    {
+      "id": "17792598197",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116607921,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "b7f6b37025a057099d80f77ac9d02bbed73d05c3",
+        "before": "edda490bca223f9b78953e3bf7f1b3ee4a4694c4"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:05:08Z"
+    },
+    {
+      "id": "17792557578",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40116567294,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "82973bd5a3e7b1bfee965e4ec6d743b65257fcfe",
+        "before": "ab48d881f12a4d448b3c9f6cb8c45dd479a78cd4"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:04:26Z"
+    },
+    {
+      "id": "17792555854",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116565533,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "edda490bca223f9b78953e3bf7f1b3ee4a4694c4",
+        "before": "ddace586f585b7ae912d621c74d0891ee5b9f694"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:04:24Z"
+    },
+    {
+      "id": "17792549692",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "repository_id": 1334042686,
+        "push_id": 40116559415,
+        "ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "head": "ab48d881f12a4d448b3c9f6cb8c45dd479a78cd4",
+        "before": "08ea68eb417216a56398c12c67c3a281f8b9bee4"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:04:18Z"
+    },
+    {
+      "id": "17792432415",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116441960,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "9dca053b71a2d1df4b88362e2c54e2f9c74bfc3f",
+        "before": "7aabcd765fd777a16f45ee85c5ea6c3159d9b340"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:02:19Z"
+    },
+    {
+      "id": "17792386139",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116395593,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "7aabcd765fd777a16f45ee85c5ea6c3159d9b340",
+        "before": "86be54079d1412eb2cad8798ec0d3ff82b6826ec"
+      },
+      "public": true,
+      "created_at": "2026-08-16T04:01:35Z"
+    },
+    {
+      "id": "17792222450",
+      "type": "CreateEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "ref": "agent/dashboard-v2-control-plane",
+        "ref_type": "branch",
+        "full_ref": "refs/heads/agent/dashboard-v2-control-plane",
+        "master_branch": "main",
+        "description": null,
+        "pusher_type": "user"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:59:03Z"
+    },
+    {
+      "id": "17792162911",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40116171920,
+        "ref": "refs/heads/research/candidate-v7-independent-requalification",
+        "head": "ef9d092b6cb40c1bb92bd33352e73db116865d08",
+        "before": "96f8a9aecd795721e17c203a073eff0109519819"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:57:56Z"
+    },
+    {
+      "id": "17792158797",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116167740,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "c03e75c88109a2ef25a4071e6418d26e92785d6f",
+        "before": "23ea70d45a4360788eefc4a814472e00c4e9901a"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:57:51Z"
+    },
+    {
+      "id": "13345855935",
+      "type": "PullRequestEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "action": "opened",
+        "number": 24,
+        "pull_request": {
+          "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm/pulls/24",
+          "id": 4288754460,
+          "number": 24,
+          "head": {
+            "ref": "research/candidate-v10-semantic-evidence-generalization-recovery",
+            "sha": "0bed752075356b94cf823a172ec86382f558fa17",
+            "repo": {
+              "id": 1333003624,
+              "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm",
+              "name": "Proactivity-Decision-Algorithm"
+            }
+          },
+          "base": {
+            "ref": "research/candidate-v9-normative-state-safe-recovery",
+            "sha": "8b8149698d7b04147b620c063887cebd901e2252",
+            "repo": {
+              "id": 1333003624,
+              "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm",
+              "name": "Proactivity-Decision-Algorithm"
+            }
+          }
+        }
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:57:40Z"
+    },
+    {
+      "id": "17792056606",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116065509,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "23ea70d45a4360788eefc4a814472e00c4e9901a",
+        "before": "7e9a711f6afbe8f73de336fc62b6ff08aee52c1b"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:55:58Z"
+    },
+    {
+      "id": "17792046709",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40116055427,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "7e9a711f6afbe8f73de336fc62b6ff08aee52c1b",
+        "before": "1a58e5141822ddac3838909f1cd99d60ef9a545a"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:55:47Z"
+    },
+    {
+      "id": "17791980781",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115989544,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "171a9ef4b4fc4b188c5e7fbc719bda013ddce151",
+        "before": "6cbcad69842431810953af4ff3d656ea8ad12a30"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:54:33Z"
+    },
+    {
+      "id": "17791971703",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115980502,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "6cbcad69842431810953af4ff3d656ea8ad12a30",
+        "before": "b62aae275472a514ca6fa7773ae00317470a8ee0"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:54:23Z"
+    },
+    {
+      "id": "17791965410",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115974148,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "b62aae275472a514ca6fa7773ae00317470a8ee0",
+        "before": "b155e29b8c659befaad93ca869abdc750aa294d0"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:54:15Z"
+    },
+    {
+      "id": "17791956946",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115965606,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "b155e29b8c659befaad93ca869abdc750aa294d0",
+        "before": "4af6007c4646c8379bb694fab8f776ba6ca30c9a"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:54:06Z"
+    },
+    {
+      "id": "17791862130",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115870577,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "4af6007c4646c8379bb694fab8f776ba6ca30c9a",
+        "before": "10ef9a3905bbdb59e1a95fba2c523b702d729cc9"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:52:17Z"
+    },
+    {
+      "id": "17791839905",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115848456,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "10ef9a3905bbdb59e1a95fba2c523b702d729cc9",
+        "before": "b4800a57ad2484ec2d9d7b4032bcd4433bb75955"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:51:52Z"
+    },
+    {
+      "id": "17791829529",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115838062,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "b4800a57ad2484ec2d9d7b4032bcd4433bb75955",
+        "before": "b55b9e7cbadb6263c09340aabc44b4c358ed2684"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:51:40Z"
+    },
+    {
+      "id": "17791824029",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115832557,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "b55b9e7cbadb6263c09340aabc44b4c358ed2684",
+        "before": "ab249e42a9c5fccc011a7a2816167fac7710f726"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:51:34Z"
+    },
+    {
+      "id": "17791817247",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115825690,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "ab249e42a9c5fccc011a7a2816167fac7710f726",
+        "before": "62bd91fa8537cdc52eaa6d2a04b998a4a08c3003"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:51:26Z"
+    },
+    {
+      "id": "17791813945",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40115822054,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "fe4d104c365ff9e2ebc68ef37d14eadf50b4021f",
+        "before": "14076e2fda2480acd104ddba1c5f86ee8b2b74d0"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:51:21Z"
+    },
+    {
+      "id": "17791811153",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115819687,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "62bd91fa8537cdc52eaa6d2a04b998a4a08c3003",
+        "before": "e7816a5eba748aa4909c117a7b34e40261648ec3"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:51:19Z"
+    },
+    {
+      "id": "17791807686",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115816087,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "e7816a5eba748aa4909c117a7b34e40261648ec3",
+        "before": "8b7592ad565412fa31db7e90c596df5d918509ec"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:51:14Z"
+    },
+    {
+      "id": "17791796118",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115804528,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "8b7592ad565412fa31db7e90c596df5d918509ec",
+        "before": "928753f5bcd71a643de89553bdfc53081459e756"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:51:01Z"
+    },
+    {
+      "id": "17791794840",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40115803121,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "14076e2fda2480acd104ddba1c5f86ee8b2b74d0",
+        "before": "5337b47b7403b333cd090f70d21ae4fada62eac5"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:51:00Z"
+    },
+    {
+      "id": "17791786372",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115794781,
+        "ref": "refs/heads/research/candidate-v7-independent-requalification",
+        "head": "96f8a9aecd795721e17c203a073eff0109519819",
+        "before": "0ae4b57c98d8a45ed0ec3c68e54d4476d71cfe6f"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:50:50Z"
+    },
+    {
+      "id": "17791777264",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115785695,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "928753f5bcd71a643de89553bdfc53081459e756",
+        "before": "7a45d9bcaccd14ad21ba76a30f0e9ab3dc2c5452"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:50:40Z"
+    },
+    {
+      "id": "17791763899",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115772302,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "7a45d9bcaccd14ad21ba76a30f0e9ab3dc2c5452",
+        "before": "6c94fc53e6b11bbe98de63e2e926bded265f9047"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:50:25Z"
+    },
+    {
+      "id": "17791759077",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115767369,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "6c94fc53e6b11bbe98de63e2e926bded265f9047",
+        "before": "35bd74eba8429505d9d720bb3b354bf3e1ee379c"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:50:19Z"
+    },
+    {
+      "id": "17791726140",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115734446,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "35bd74eba8429505d9d720bb3b354bf3e1ee379c",
+        "before": "d230b52e1f190c3dec7e2b19fe9fe4ec6e67eef7"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:49:42Z"
+    },
+    {
+      "id": "17791713856",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115722115,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "d230b52e1f190c3dec7e2b19fe9fe4ec6e67eef7",
+        "before": "6b5642c24d7e6d62a3f6d09fe29f1e7637786423"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:49:28Z"
+    },
+    {
+      "id": "17791708832",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115717090,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "6b5642c24d7e6d62a3f6d09fe29f1e7637786423",
+        "before": "fe189422a2a9f22c40146c0d5d43d0d8641af026"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:49:22Z"
+    },
+    {
+      "id": "17791693341",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115701667,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "fe189422a2a9f22c40146c0d5d43d0d8641af026",
+        "before": "c107cccbeedee4298ad4168723484c15c6431b97"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:49:04Z"
+    },
+    {
+      "id": "17791647715",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115656013,
+        "ref": "refs/heads/research/candidate-v7-independent-requalification",
+        "head": "0ae4b57c98d8a45ed0ec3c68e54d4476d71cfe6f",
+        "before": "020779d3638dfaccef6f07f5cacc7894e0fc9083"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:48:11Z"
+    },
+    {
+      "id": "17791575579",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "repository_id": 1334007749,
+        "push_id": 40115583614,
+        "ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "head": "5337b47b7403b333cd090f70d21ae4fada62eac5",
+        "before": "bad307ac11e549437b4337f0459ccfd55625f826"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:46:47Z"
+    },
+    {
+      "id": "17791494824",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115502803,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "c107cccbeedee4298ad4168723484c15c6431b97",
+        "before": "1581df0c3fa730628ba31577578a019cb2974180"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:45:16Z"
+    },
+    {
+      "id": "17791480742",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115488697,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "1581df0c3fa730628ba31577578a019cb2974180",
+        "before": "71321544b2b99e4c216affffe8c097bb561d28fb"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:45:01Z"
+    },
+    {
+      "id": "17791467399",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115475315,
+        "ref": "refs/heads/research/candidate-v7-independent-requalification",
+        "head": "020779d3638dfaccef6f07f5cacc7894e0fc9083",
+        "before": "0a090f771d39c9b30151940e54aad0034203a7cd"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:44:46Z"
+    },
+    {
+      "id": "17791458826",
+      "type": "PushEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "repository_id": 1333003624,
+        "push_id": 40115466674,
+        "ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "head": "71321544b2b99e4c216affffe8c097bb561d28fb",
+        "before": "8b8149698d7b04147b620c063887cebd901e2252"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:44:36Z"
+    },
+    {
+      "id": "17791410107",
+      "type": "CreateEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "ref": "research/candidate-v13-external-validity-infra-v2",
+        "ref_type": "branch",
+        "full_ref": "refs/heads/research/candidate-v13-external-validity-infra-v2",
+        "master_branch": "main",
+        "description": null,
+        "pusher_type": "user"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:43:40Z"
+    },
+    {
+      "id": "17791367646",
+      "type": "CreateEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1333003624,
+        "name": "kodlbegiko/Proactivity-Decision-Algorithm",
+        "url": "https://api.github.com/repos/kodlbegiko/Proactivity-Decision-Algorithm"
+      },
+      "payload": {
+        "ref": "research/candidate-v10-semantic-evidence-generalization-recovery",
+        "ref_type": "branch",
+        "full_ref": "refs/heads/research/candidate-v10-semantic-evidence-generalization-recovery",
+        "master_branch": "main",
+        "description": null,
+        "pusher_type": "user"
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:42:53Z"
+    },
+    {
+      "id": "13345571404",
+      "type": "PullRequestEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334007749,
+        "name": "kodlbegiko/personal-state-engine-clean-integrity",
+        "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity"
+      },
+      "payload": {
+        "action": "opened",
+        "number": 1,
+        "pull_request": {
+          "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity/pulls/1",
+          "id": 4288705504,
+          "number": 1,
+          "head": {
+            "ref": "research/candidate-v13-naturalistic-external-validity",
+            "sha": "bad307ac11e549437b4337f0459ccfd55625f826",
+            "repo": {
+              "id": 1334007749,
+              "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity",
+              "name": "personal-state-engine-clean-integrity"
+            }
+          },
+          "base": {
+            "ref": "main",
+            "sha": "73185efd102497d55534e89d179b8259e75a72b3",
+            "repo": {
+              "id": 1334007749,
+              "url": "https://api.github.com/repos/kodlbegiko/personal-state-engine-clean-integrity",
+              "name": "personal-state-engine-clean-integrity"
+            }
+          }
+        }
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:39:12Z"
+    },
+    {
+      "id": "13345567492",
+      "type": "PullRequestEvent",
+      "actor": {
+        "id": 212753711,
+        "login": "kodlbegiko",
+        "display_login": "kodlbegiko",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kodlbegiko",
+        "avatar_url": "https://avatars.githubusercontent.com/u/212753711?"
+      },
+      "repo": {
+        "id": 1334042686,
+        "name": "kodlbegiko/persistent-personal-agent-research",
+        "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research"
+      },
+      "payload": {
+        "action": "merged",
+        "number": 25,
+        "pull_request": {
+          "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research/pulls/25",
+          "id": 4288703203,
+          "number": 25,
+          "head": {
+            "ref": "fix/live-pulse-rate-limit-resilience",
+            "sha": "70e076f0cdbbcc95a4e87dfb9d3a4c28932aa610",
+            "repo": {
+              "id": 1334042686,
+              "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research",
+              "name": "persistent-personal-agent-research"
+            }
+          },
+          "base": {
+            "ref": "main",
+            "sha": "1b0c4591cd13ebd2c9aee908c9b1afd85f35f8af",
+            "repo": {
+              "id": 1334042686,
+              "url": "https://api.github.com/repos/kodlbegiko/persistent-personal-agent-research",
+              "name": "persistent-personal-agent-research"
+            }
+          }
+        }
+      },
+      "public": true,
+      "created_at": "2026-08-16T03:38:55Z"
+    }
+  ],
+  "error": null
+}
