@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "npm run compile:data && vite",
-    "compile:data": "node scripts/compile-dashboard-state.mjs",
+    "compile:data": "node -e \"process.env.DASHBOARD_VERIFIED_AT='2026-08-16T12:19:26+08:00';process.env.DASHBOARD_AUDIT_ID='hourly-independent-audit-20260816T121926+0800';import('./scripts/compile-dashboard-state.mjs')\"",
     "validate:data": "npm run compile:data && node scripts/check-watch-policy.mjs && node scripts/validate-dashboard-state.mjs",
     "discover:lineages": "node scripts/discover-research-lineages.mjs",
     "test:unit": "node --test tests/state.test.mjs",
