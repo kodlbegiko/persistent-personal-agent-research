@@ -67,6 +67,15 @@ jobs:
         run: npm run test:a11y
       - name: Visual regression artifacts
         run: npm run test:visual
+      - name: Prepare clean source commit
+        run: |
+          rm -rf node_modules dist playwright-report test-results
+          rm -f public/live-events.json
+          git checkout HEAD -- .github/workflows/dashboard-ci.yml .github/workflows/apply-dashboard-v2.yml scripts/apply_dashboard_v2.py
+          touch .gitignore
+          for entry in node_modules/ dist/ playwright-report/ test-results/ public/live-events.json; do
+            grep -qxF "$entry" .gitignore || echo "$entry" >> .gitignore
+          done
       - name: Commit verified implementation
         run: |
           git config user.name "github-actions[bot]"
