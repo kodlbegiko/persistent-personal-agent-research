@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0.0",
-  "registryVersion": "2026.08.16.1",
+  "registryVersion": "2026.08.16.2",
   "owner": "kodlbegiko",
   "lineages": [
     {
@@ -16,7 +16,7 @@
         {
           "type": "branch",
           "name": "main",
-          "sha": "08ea68eb417216a56398c12c67c3a281f8b9bee4"
+          "sha": "8e732af555a4726e30c99a4ff1c1344ca58434a3"
         }
       ],
       "sourceOfTruth": "https://github.com/kodlbegiko/persistent-personal-agent-research/tree/main",
@@ -100,12 +100,24 @@
       "activeRefs": [
         {
           "type": "pull_request",
+          "name": "#25",
+          "branch": "research/candidate-v7-independent-requalification",
+          "sha": "a247c8b9685a48984d7ca9063ba7576d771edb54"
+        },
+        {
+          "type": "pull_request",
+          "name": "#24",
+          "branch": "research/candidate-v10-semantic-evidence-generalization-recovery",
+          "sha": "0bed752075356b94cf823a172ec86382f558fa17"
+        },
+        {
+          "type": "pull_request",
           "name": "#23",
           "branch": "research/candidate-v9-normative-state-safe-recovery",
           "sha": "8b8149698d7b04147b620c063887cebd901e2252"
         }
       ],
-      "sourceOfTruth": "https://github.com/kodlbegiko/Proactivity-Decision-Algorithm/pull/23",
+      "sourceOfTruth": "https://github.com/kodlbegiko/Proactivity-Decision-Algorithm/pull/25",
       "addedAt": "2026-08-14",
       "retiredAt": null,
       "supersedes": [],
@@ -114,7 +126,7 @@
         "zh": "Gate B–E bounded evidence 可保留；Gate F 與後續失敗/失效 lineage 不得被改寫成 protected/OOD generalization PASS。",
         "en": "Bounded Gate B–E evidence is retained; Gate F and later failed/invalid lineages cannot be rewritten as protected/OOD generalization PASS."
       },
-      "notes": "Candidate-v9 is a terminal development FAIL; protected evaluation was not executed."
+      "notes": "Candidate-v10 is a pre-freeze terminal development FAIL; independent V7R is a valid scientific requalification FAIL. Protected/OOD generalization remains unestablished."
     },
     {
       "id": "pare",
