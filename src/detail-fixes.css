@@ -1,0 +1,157 @@
+/* Screenshot-driven detail fixes. Loaded after polish.css. */
+
+/* Gate table: every cell uses one vertical rhythm and every verdict uses a same-height badge. */
+.gate-table {
+  --gate-track-width: 82px;
+  --gate-name-width: 132px;
+  --gate-verdict-width: 112px;
+}
+
+.gate-row {
+  grid-template-columns: var(--gate-track-width) var(--gate-name-width) var(--gate-verdict-width) minmax(0, 1fr);
+  align-items: stretch;
+  min-height: 54px;
+  gap: 12px;
+  padding: 0 14px;
+}
+
+.gate-row > * {
+  min-width: 0;
+  min-height: 53px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.gate-row.head {
+  min-height: 38px;
+  padding-block: 0;
+}
+
+.gate-row.head > * {
+  min-height: 37px;
+  align-items: center;
+}
+
+.gate-row > :nth-child(1) {
+  color: #a9bad0;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.gate-row > :nth-child(2) {
+  color: #cdd9e8;
+  font-weight: 700;
+}
+
+.gate-row > :nth-child(3) {
+  align-items: center;
+}
+
+.gate-row > :nth-child(4) {
+  padding-block: 10px;
+  color: #7f94ad;
+}
+
+.gate-row .badge {
+  min-height: 25px;
+  min-width: 44px;
+  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.15;
+  font-size: 9.25px;
+  font-weight: 760;
+  white-space: nowrap;
+}
+
+/* The data model calls a successful verdict `pass`; previously only `.success` existed. */
+.badge.pass {
+  color: #6ce88c;
+  background: rgba(65, 171, 99, .16);
+  border-color: rgba(85, 214, 122, .24);
+}
+
+.gate-row:not(.head):hover {
+  background: rgba(79, 155, 255, .025);
+}
+
+/* Keep hash navigation accurate even when the browser's :has/:target behavior is inconsistent. */
+body:has(:target) .sidebar nav a.active,
+.sidebar nav a.active {
+  color: #69aaff;
+  background: linear-gradient(90deg, rgba(47, 105, 172, .28), rgba(47, 105, 172, .1));
+  border-left-color: var(--blue);
+  border-top-color: rgba(79, 155, 255, .08);
+  border-right-color: rgba(79, 155, 255, .08);
+  border-bottom-color: rgba(79, 155, 255, .08);
+}
+
+/* PARE uses the violet accent; the sidebar previously only defined purple. */
+.repo-dot.violet,
+.repo-dot.online.violet {
+  background: var(--violet);
+  box-shadow: 0 0 10px rgba(164, 109, 255, .38);
+}
+
+/* Give lower sections a little air so the fixed launcher does not visually sit on top of content. */
+.main-content {
+  padding-bottom: 88px;
+}
+
+@media (min-width: 1280px) and (max-width: 1536px) and (max-height: 1050px) {
+  .gate-table {
+    --gate-track-width: 74px;
+    --gate-name-width: 128px;
+    --gate-verdict-width: 108px;
+  }
+
+  .gate-row {
+    min-height: 52px;
+    padding-inline: 13px;
+    gap: 11px;
+  }
+
+  .gate-row > * { min-height: 51px; }
+  .gate-row.head,
+  .gate-row.head > * { min-height: 36px; }
+
+  .roadmap-launcher {
+    right: 14px;
+    bottom: 14px;
+    width: 190px;
+    min-height: 50px;
+    grid-template-columns: 32px minmax(0, 1fr) 12px;
+    gap: 8px;
+    padding: 7px 9px;
+    border-radius: 11px;
+  }
+
+  .roadmap-launcher-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 17px;
+  }
+
+  .roadmap-launcher-copy strong { font-size: 10.75px; }
+  .roadmap-launcher-copy small { font-size: 9.25px; margin-top: 2px; }
+  .roadmap-launcher-arrow { font-size: 18px; }
+}
+
+@media (max-width: 860px) {
+  .roadmap-launcher {
+    right: 12px;
+    bottom: 58px;
+    width: min(196px, calc(100vw - 24px));
+  }
+}
+
+@media (max-width: 720px) {
+  .gate-row {
+    grid-template-columns: 62px 116px 104px minmax(360px, 1fr);
+    min-width: 690px;
+  }
+}
