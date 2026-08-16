@@ -188,3 +188,7 @@ The umbrella program should not depend on implementation-specific internals of R
 ## Model-provider boundary
 
 Foundation-model calls belong behind adapters. Evaluation must record model identity/version, prompt/configuration and tool/runtime dependencies. Model substitution must not silently change benchmark ground truth or policy definitions.
+
+## Dashboard Research Control Plane v2
+
+Canonical path: registry + watch policy + admitted evidence → deterministic compiler → immutable snapshot/history/diff → read-only React surfaces. The near-live GitHub pulse is a separate transport layer and cannot mutate verified scientific state. Invalid terminal-to-PASS transitions fail validation unless a new lineage or explicit supersession evidence is present.

@@ -188,7 +188,7 @@ function PhaseChip({ phase, t, visibleCount, onJump }) {
   );
 }
 
-export default function PolishedAchievementSystem() {
+export default function NorthStarRoadmap() {
   const [open, setOpen] = useState(false);
   const [lineFilter, setLineFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');

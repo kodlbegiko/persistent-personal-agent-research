@@ -320,14 +320,14 @@ function App() {
             <Card className="table-card">
               <div className="gate-table" role="table">
                 <div className="gate-row head" role="row">
-                  <span>{t('gates.track')}</span><span>{t('gates.gate')}</span><span>{t('gates.verdict')}</span><span>{t('gates.boundary')}</span>
+                  <span role="columnheader">{t('gates.track')}</span><span role="columnheader">{t('gates.gate')}</span><span role="columnheader">{t('gates.verdict')}</span><span role="columnheader">{t('gates.boundary')}</span>
                 </div>
                 {snapshot.gates.map((gate, index) => (
                   <div className="gate-row" role="row" key={`${gate.track}-${gate.gate}-${index}`}>
-                    <span>{gate.track}</span>
-                    <strong>{gate.gate}</strong>
-                    <span><Badge tone={gate.tone}>{gate.verdictLabel}</Badge></span>
-                    <span className="gate-detail">{gate.detail}</span>
+                    <span role="cell">{gate.track}</span>
+                    <strong role="cell">{gate.gate}</strong>
+                    <span role="cell"><Badge tone={gate.tone}>{gate.verdictLabel}</Badge></span>
+                    <span role="cell" className="gate-detail">{gate.detail}</span>
                   </div>
                 ))}
               </div>

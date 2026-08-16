@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jarvis-research-dashboard.vercel.app/schema/dashboard-state-v2.json",
+  "title": "JARVIS Research Control Plane verified snapshot",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "snapshotId",
+    "verifiedAt",
+    "auditId",
+    "auditPolicyVersion",
+    "auditPolicyHash",
+    "sourceUmbrellaSHA",
+    "sourceRepositories",
+    "previousSnapshotId",
+    "contentHash",
+    "tracks",
+    "gates",
+    "blockers",
+    "claims",
+    "advancementTimeline"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "2.0.0"
+    },
+    "snapshotId": {
+      "type": "string"
+    },
+    "verifiedAt": {
+      "type": "string"
+    },
+    "auditId": {
+      "type": "string"
+    },
+    "auditPolicyVersion": {
+      "type": "string"
+    },
+    "auditPolicyHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "sourceUmbrellaSHA": {
+      "type": "string",
+      "minLength": 7
+    },
+    "sourceRepositories": {
+      "type": "array",
+      "minItems": 5
+    },
+    "previousSnapshotId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "contentHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "additionalProperties": true
+}
