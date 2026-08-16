@@ -1,0 +1,48 @@
+name: Apply Dashboard v2
+
+on:
+  push:
+    branches: [agent/dashboard-v2-control-plane]
+    paths:
+      - scripts/apply_dashboard_v2.py
+      - .github/workflows/apply-dashboard-v2.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/dashboard-v2-control-plane
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Apply deterministic v2 patch
+        run: python3 scripts/apply_dashboard_v2.py
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Validate data model
+        run: npm run validate:data
+      - name: Unit tests
+        run: npm run test:unit
+      - name: Production build and budgets
+        run: npm run build
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Responsive E2E
+        run: npm run test:e2e
+      - name: Accessibility
+        run: npm run test:a11y
+      - name: Visual regression artifacts
+        run: npm run test:visual
+      - name: Commit verified implementation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Implement JARVIS Research Control Plane v2"
+          git push origin HEAD:agent/dashboard-v2-control-plane
