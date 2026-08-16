@@ -17,7 +17,6 @@ concurrency:
 env:
   VERCEL_ORG_ID: team_2UInD4pRnALRv9emtsvl4fr5
   VERCEL_PROJECT_ID: prj_pmEnHIAkJM4XNm9QLM9cwuWDVkAL
-  VERCEL_SCOPE: sign2
   CANONICAL_DOMAIN: https://jarvis-research-dashboard.vercel.app
 
 jobs:
@@ -96,14 +95,13 @@ jobs:
           mkdir -p .vercel
           printf '{"orgId":"%s","projectId":"%s"}\n' "$VERCEL_ORG_ID" "$VERCEL_PROJECT_ID" > .vercel/project.json
           npx --yes vercel@latest pull --yes --environment=production \
-            --scope "$VERCEL_SCOPE" \
             --project "$VERCEL_PROJECT_ID" \
             --token="$VERCEL_TOKEN"
 
       - name: Build production artifact from exact main
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: npx --yes vercel@latest build --prod --scope "$VERCEL_SCOPE" --project "$VERCEL_PROJECT_ID" --token="$VERCEL_TOKEN"
+        run: npx --yes vercel@latest build --prod --project "$VERCEL_PROJECT_ID" --token="$VERCEL_TOKEN"
 
       - name: Create production-targeted deployment without routing traffic
         id: deploy
@@ -113,7 +111,6 @@ jobs:
         run: |
           set -euo pipefail
           DEPLOYMENT_URL="$(npx --yes vercel@latest deploy --prebuilt --prod --skip-domain --yes \
-            --scope "$VERCEL_SCOPE" \
             --project "$VERCEL_PROJECT_ID" \
             --meta "githubCommitSha=$GITHUB_SHA" \
             --token="$VERCEL_TOKEN")"
@@ -193,7 +190,7 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment_url }}
-        run: npx --yes vercel@latest promote "$DEPLOYMENT_URL" --yes --scope "$VERCEL_SCOPE" --project "$VERCEL_PROJECT_ID" --token="$VERCEL_TOKEN"
+        run: npx --yes vercel@latest promote "$DEPLOYMENT_URL" --yes --project "$VERCEL_PROJECT_ID" --token="$VERCEL_TOKEN"
 
       - name: Verify canonical Production domain
         shell: bash
