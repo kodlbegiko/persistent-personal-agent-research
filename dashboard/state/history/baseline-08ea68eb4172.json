@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.x-baseline",
+  "snapshotId": "baseline-08ea68eb4172",
+  "verifiedAt": "2026-08-16T11:09:26+08:00",
+  "sourceUmbrellaSHA": "08ea68eb417216a56398c12c67c3a281f8b9bee4",
+  "canonicalArchitecture": "researchState.js + recoveryOverlay.js + hourlyEvidenceOverlay.js browser side effects",
+  "note": "Immutable baseline identity captured before Dashboard v2 migration."
+}

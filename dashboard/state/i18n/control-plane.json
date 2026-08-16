@@ -1,0 +1,22 @@
+{
+  "zh-Hant": {
+    "verifiedHistory": "已驗證歷史",
+    "sinceAudit": "自上次已驗證稽核後",
+    "sinceVisit": "自你上次查看後",
+    "registry": "研究 lineage registry",
+    "policy": "監督政策",
+    "pending": "等待 admissibility audit",
+    "stale": "已驗證快照逾期",
+    "fresh": "已驗證快照在 SLA 內"
+  },
+  "en": {
+    "verifiedHistory": "Verified History",
+    "sinceAudit": "Since Last Verified Audit",
+    "sinceVisit": "Since Your Last Visit",
+    "registry": "Research Lineage Registry",
+    "policy": "Watch Policy",
+    "pending": "Pending admissibility audit",
+    "stale": "Stale verified snapshot",
+    "fresh": "Verified snapshot within SLA"
+  }
+}

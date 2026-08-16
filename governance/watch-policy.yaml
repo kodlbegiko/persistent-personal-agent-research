@@ -1,0 +1,26 @@
+
+version: "2.0.0"
+registry: dashboard/state/registry/research-lineages.json
+audit:
+  cadence: PT1H
+  staleVerifiedSnapshotAfter: PT2H
+  failClosedOnPolicyDrift: true
+evidenceRules:
+  completedRequiresEvidenceRef: true
+  failedRequiresEvidenceRef: true
+  terminalEvidenceImmutable: true
+  protectedEvidenceCannotBeReclassifiedByActivity: true
+claimRules:
+  benchmarkSpecificDoesNotImplyUniversalSuperiority: true
+  noProductionSafetyClaimWithoutDedicatedEvidence: true
+terminalRules:
+  preserve: [FAIL, FAIL_CLOSED, INVALID, BLOCKED, PROHIBITED, NEGATIVE_RESULT, INTEGRITY_INCIDENT]
+  passAfterTerminalRequires: [newLineage, explicitSupersessionEvidence]
+admissibilityRules:
+  newRepositoryDefaultsTo: UNREGISTERED_RESEARCH_LINEAGE
+  discoveryDoesNotAutoAdmit: true
+languageSynchronizationRule: zh-Hant/en semantic parity required
+deploymentRule:
+  sourceOfTruthBranch: main
+  productionRequiresCleanCI: true
+  exactSourceSHARequired: true

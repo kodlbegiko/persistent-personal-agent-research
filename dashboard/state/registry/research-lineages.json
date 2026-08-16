@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "2.0.0",
+  "registryVersion": "2026.08.16.1",
+  "owner": "kodlbegiko",
+  "lineages": [
+    {
+      "id": "program-control",
+      "owner": "kodlbegiko",
+      "repo": "persistent-personal-agent-research",
+      "track": "PROGRAM",
+      "role": "PROGRAM_CONTROL",
+      "watchState": "WATCHED",
+      "admissibility": "ADMITTED",
+      "defaultBranch": "main",
+      "activeRefs": [
+        {
+          "type": "branch",
+          "name": "main",
+          "sha": "08ea68eb417216a56398c12c67c3a281f8b9bee4"
+        }
+      ],
+      "sourceOfTruth": "https://github.com/kodlbegiko/persistent-personal-agent-research/tree/main",
+      "addedAt": "2026-08-14",
+      "retiredAt": null,
+      "supersedes": [],
+      "supersededBy": null,
+      "claimBoundary": {
+        "zh": "總體研究治理與可驗證狀態；不得以 umbrella 活動取代 child research evidence。",
+        "en": "Program governance and verified state only; umbrella activity cannot substitute for child-research evidence."
+      },
+      "notes": "GitHub main is the umbrella source of truth."
+    },
+    {
+      "id": "pse-legacy",
+      "owner": "kodlbegiko",
+      "repo": "personal-state-engine-research",
+      "track": "RT-01",
+      "role": "LEGACY_PSE_LINEAGE",
+      "watchState": "WATCHED",
+      "admissibility": "ADMITTED_WITH_FORMAL_FAIL_CLOSED_BOUNDARY",
+      "defaultBranch": "main",
+      "activeRefs": [
+        {
+          "type": "pull_request",
+          "name": "#2",
+          "branch": "research/personal-state-engine-v0",
+          "sha": "8da87b2f8d1d3dbbfcc168a8f7c700e6f3bec4f8"
+        }
+      ],
+      "sourceOfTruth": "https://github.com/kodlbegiko/personal-state-engine-research/pull/2",
+      "addedAt": "2026-08-14",
+      "retiredAt": null,
+      "supersedes": [],
+      "supersededBy": "pse-clean-integrity",
+      "claimBoundary": {
+        "zh": "Candidate-v6 scientific evidence 可保留；formal Gate E 仍 fail-closed，現有 lineage 不得把 Gate F 視為合法進度。",
+        "en": "Candidate-v6 scientific evidence is retained; formal Gate E remains fail-closed and Gate F is not admissible progress in this lineage."
+      },
+      "notes": "Historical negative and integrity evidence remains immutable."
+    },
+    {
+      "id": "pse-clean-integrity",
+      "owner": "kodlbegiko",
+      "repo": "personal-state-engine-clean-integrity",
+      "track": "RT-01",
+      "role": "CLEAN_INTEGRITY_PSE_LINEAGE",
+      "watchState": "WATCHED",
+      "admissibility": "PENDING",
+      "defaultBranch": "main",
+      "activeRefs": [
+        {
+          "type": "pull_request",
+          "name": "#1",
+          "branch": "research/candidate-v13-naturalistic-external-validity",
+          "sha": "bad307ac11e549437b4337f0459ccfd55625f826"
+        }
+      ],
+      "sourceOfTruth": "https://github.com/kodlbegiko/personal-state-engine-clean-integrity/pull/1",
+      "addedAt": "2026-08-16",
+      "retiredAt": null,
+      "supersedes": [
+        "pse-legacy"
+      ],
+      "supersededBy": null,
+      "claimBoundary": {
+        "zh": "目前只能確認 Candidate-v13 external-validity lineage 在 formal execution 前 infrastructure blocked；EV-B/EV-C 未執行。Integrity PASS 不等於 external-validity performance PASS。",
+        "en": "Candidate-v13 external validity is currently infrastructure-blocked before formal execution; EV-B/EV-C were not executed. Integrity PASS is not an external-validity performance PASS."
+      },
+      "notes": "WATCHED / PENDING admissibility. Must not auto-promote RT-01 maturity."
+    },
+    {
+      "id": "pda",
+      "owner": "kodlbegiko",
+      "repo": "Proactivity-Decision-Algorithm",
+      "track": "RT-02",
+      "role": "PROACTIVITY_RESEARCH",
+      "watchState": "WATCHED",
+      "admissibility": "ADMITTED_NEGATIVE_TERMINALS_PRESERVED",
+      "defaultBranch": "main",
+      "activeRefs": [
+        {
+          "type": "pull_request",
+          "name": "#23",
+          "branch": "research/candidate-v9-normative-state-safe-recovery",
+          "sha": "8b8149698d7b04147b620c063887cebd901e2252"
+        }
+      ],
+      "sourceOfTruth": "https://github.com/kodlbegiko/Proactivity-Decision-Algorithm/pull/23",
+      "addedAt": "2026-08-14",
+      "retiredAt": null,
+      "supersedes": [],
+      "supersededBy": null,
+      "claimBoundary": {
+        "zh": "Gate B–E bounded evidence 可保留；Gate F 與後續失敗/失效 lineage 不得被改寫成 protected/OOD generalization PASS。",
+        "en": "Bounded Gate B–E evidence is retained; Gate F and later failed/invalid lineages cannot be rewritten as protected/OOD generalization PASS."
+      },
+      "notes": "Candidate-v9 is a terminal development FAIL; protected evaluation was not executed."
+    },
+    {
+      "id": "pare",
+      "owner": "kodlbegiko",
+      "repo": "personal-agent-recovery-engine",
+      "track": "RT-03",
+      "role": "RECOVERY_RESEARCH",
+      "watchState": "WATCHED",
+      "admissibility": "ADMITTED_BENCHMARK_SPECIFIC",
+      "defaultBranch": "main",
+      "activeRefs": [
+        {
+          "type": "branch",
+          "name": "main",
+          "sha": "881e139bc59ee75d32efaca6a61988640f54db4d"
+        }
+      ],
+      "sourceOfTruth": "https://github.com/kodlbegiko/personal-agent-recovery-engine/tree/main",
+      "addedAt": "2026-08-15",
+      "retiredAt": null,
+      "supersedes": [],
+      "supersededBy": null,
+      "claimBoundary": {
+        "zh": "PARE v0.3 僅支持 benchmark-specific recovery/state-repair evidence；不等於 PAAV / RT-03 Action Verification 已建立。",
+        "en": "PARE v0.3 supports benchmark-specific recovery/state-repair evidence only; it does not establish PAAV / RT-03 Action Verification."
+      },
+      "notes": "Independent recovery research with bounded admitted evidence."
+    }
+  ]
+}

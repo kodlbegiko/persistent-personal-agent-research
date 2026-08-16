@@ -135,3 +135,7 @@ No SOTA, parity, superiority, production-readiness, or safety claim may be infer
 The umbrella program remains a multi-track research program rather than a completed integrated agent. RT-01 and RT-02 have independent active lineages, and PARE now has independent protected benchmark-specific recovery/state-repair evidence. RT-03 Action Verification remains not scientifically established until the independent PAAV protocol completes protected evaluation. Closed-loop integration must not begin from PARE evidence alone.
 
 See `STATUS.md` and the live dashboard for the current evidence-backed state.
+
+## JARVIS Research Control Plane v2
+
+The production dashboard now uses an evidence-first control-plane architecture: a single lineage registry, deterministic compiled verified snapshot, immutable history/diff artifacts, versioned watch policy, registry-driven near-live activity, legal-transition validation, responsive/accessibility regression tests, and exact source-SHA identity. See `docs/dashboard-v2/`.

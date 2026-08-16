@@ -1,12 +1,20 @@
 {
   "name": "persistent-personal-agent-dashboard",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "node scripts/capture-public-events.mjs && vite build",
-    "preview": "vite preview"
+    "dev": "npm run compile:data && vite",
+    "compile:data": "node scripts/compile-dashboard-state.mjs",
+    "validate:data": "npm run compile:data && node scripts/check-watch-policy.mjs && node scripts/validate-dashboard-state.mjs",
+    "discover:lineages": "node scripts/discover-research-lineages.mjs",
+    "test:unit": "node --test tests/state.test.mjs",
+    "build": "npm run compile:data && node scripts/capture-public-events.mjs && vite build && node scripts/check-bundle-budget.mjs",
+    "preview": "vite preview",
+    "test:e2e": "playwright test tests/dashboard.e2e.spec.js",
+    "test:a11y": "playwright test tests/a11y.spec.js",
+    "test:visual": "playwright test tests/visual.spec.js",
+    "test": "npm run validate:data && npm run test:unit"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.0.5",
@@ -14,5 +22,8 @@
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@axe-core/playwright": "^4.10.2"
+  }
 }

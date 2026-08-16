@@ -82,3 +82,7 @@ The merged production source was introduced by commit `f38db4f52d2c39a2ebc6d5605
 ## Optional GitHub Pages
 
 `.github/workflows/deploy-pages.yml` is manual-only until the repository has GitHub Pages enabled with **GitHub Actions** as the source. This prevents a disabled Pages setting from producing false-red CI on normal research commits.
+
+## Control Plane v2
+
+The dashboard no longer treats `researchState.js` plus browser-side overlays as canonical state. `scripts/compile-dashboard-state.mjs` creates `dashboard/state/verified/current.json` before Vite starts, while legacy files are retained only under `dashboard/state/migration/` as deterministic migration input. Live activity is registry-driven and explicitly non-verifying.

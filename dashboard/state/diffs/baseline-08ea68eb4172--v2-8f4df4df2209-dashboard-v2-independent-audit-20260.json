@@ -1,0 +1,21 @@
+{
+  "from": "baseline-08ea68eb4172",
+  "to": "v2-8f4df4df2209-dashboard-v2-independent-audit-20260",
+  "changes": [
+    {
+      "type": "architecture",
+      "zh": "canonical state 改為 deterministic compiled snapshot；browser overlay side effect 已移除。",
+      "en": "Canonical state moved to a deterministic compiled snapshot; browser overlay side effects were removed."
+    },
+    {
+      "type": "lineage",
+      "zh": "PSE clean-integrity repo 登錄為 WATCHED / PENDING，不推進 RT-01。",
+      "en": "PSE clean-integrity is registered WATCHED / PENDING without advancing RT-01."
+    },
+    {
+      "type": "terminal",
+      "zh": "PDA Candidate-v9 terminal development FAIL 已採納為負面證據。",
+      "en": "PDA Candidate-v9 terminal development FAIL was admitted as negative evidence."
+    }
+  ]
+}
