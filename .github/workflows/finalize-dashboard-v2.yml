@@ -3,7 +3,8 @@ name: Finalize Dashboard v2
 on:
   push:
     branches: [agent/dashboard-v2-control-plane]
-    paths: ['.github/workflows/finalize-dashboard-v2.yml']
+    paths:
+      - '.github/workflows/finalize-dashboard-v2.yml'
 
 permissions:
   contents: write
@@ -19,171 +20,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - name: Close final specification gaps
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-
-          def replace(path, old, new, count=1):
-              p = Path(path)
-              s = p.read_text()
-              if old not in s:
-                  raise SystemExit(f'patch target not found in {path}: {old[:80]}')
-              p.write_text(s.replace(old, new, count))
-
-          # Keep RT-02 user-visible semantics synchronized with the newly admitted Candidate-v9 terminal.
-          replace('src/i18n.jsx',
-            "DEVELOPMENT_EVIDENCE: '開發證據', PROTECTED_VALIDATION_FAILED: '保護驗證失敗', SCOPED: '已界定', NOT_STARTED: '未開始',",
-            "DEVELOPMENT_EVIDENCE: '開發證據', PROTECTED_VALIDATION_FAILED: '保護驗證失敗', RECOVERY_LINEAGES_FAILED_OR_INVALID: '復原 LINEAGE 失敗或無效', PAAV_NOT_ESTABLISHED_PARE_RECOVERY_ADMITTED: 'PAAV 尚未建立；PARE 復原證據已採納', SCOPED: '已界定', NOT_STARTED: '未開始',")
-          replace('src/i18n.jsx',
-            "DEVELOPMENT_EVIDENCE: 'DEVELOPMENT EVIDENCE', PROTECTED_VALIDATION_FAILED: 'PROTECTED VALIDATION FAILED', SCOPED: 'SCOPED', NOT_STARTED: 'NOT STARTED',",
-            "DEVELOPMENT_EVIDENCE: 'DEVELOPMENT EVIDENCE', PROTECTED_VALIDATION_FAILED: 'PROTECTED VALIDATION FAILED', RECOVERY_LINEAGES_FAILED_OR_INVALID: 'RECOVERY LINEAGES FAILED OR INVALID', PAAV_NOT_ESTABLISHED_PARE_RECOVERY_ADMITTED: 'PAAV NOT ESTABLISHED; PARE RECOVERY ADMITTED', SCOPED: 'SCOPED', NOT_STARTED: 'NOT STARTED',")
-          replace('src/i18n.jsx',
-            "zh: { name: '主動介入決策', subtitle: '主動介入決策規格', detail: 'Gate B–E 在有界 synthetic protocol 下通過。Gate F protected/OOD validation 對 C5 得到 terminal FAIL；尚未建立 protected generalization。' },\n    en: { name: 'Proactivity', subtitle: 'Specification-grounded intervention decisions', detail: 'Gates B–E passed under the bounded synthetic protocol. Gate F protected/OOD validation reached a terminal FAIL on C5; protected generalization is not established.' },",
-            "zh: { name: '主動介入決策', subtitle: '主動介入決策規格', detail: 'Gate B–E 保留有界 evidence；Gate F 與 Candidate-v3–v9 的後續 recovery lineage 均未建立 protected generalization。Candidate-v9 在首個 formal H1 DEV-OOD holdout 未達門檻，protected evaluation 未執行。' },\n    en: { name: 'Proactivity', subtitle: 'Specification-grounded intervention decisions', detail: 'Gates B–E retain bounded evidence; Gate F and Candidate-v3–v9 recovery lineages have not established protected generalization. Candidate-v9 missed thresholds on its first formal H1 DEV-OOD holdout and protected evaluation was not executed.' },")
-          anchor = "  'integration-contract': {\n"
-          candidate9 = """  'pda-candidate-v9-development-fail': {
-    zh: { title: 'Candidate-v9 Development — FAIL', description: 'Frozen V9-B 通過 pre-freeze validation，但第一個 formal H1 DEV-OOD holdout 未達 preregistered generalization 門檻：macro-F1 0.5772、ACT recall 0.2367。H2–H13 未執行；protected evaluation 不具資格且未執行。', dependsOn: ['Candidate-v8 immutable terminal lineage'], note: 'CANDIDATE_V9 DEVELOPMENT FAIL — NO CANDIDATE QUALIFIED；不得用 H1 結果救援後重跑 qualification。', evidenceLabel: 'PDA Candidate-v9 terminal development evidence' },
-    en: { title: 'Candidate-v9 Development — FAIL', description: 'Frozen V9-B passed pre-freeze validation, but the first formal H1 DEV-OOD holdout missed preregistered generalization thresholds: macro-F1 0.5772 and ACT recall 0.2367. H2–H13 were not executed; protected evaluation was not eligible or executed.', dependsOn: ['Candidate-v8 immutable terminal lineage'], note: 'CANDIDATE_V9 DEVELOPMENT FAIL — NO CANDIDATE QUALIFIED; H1 outcomes cannot be used to rescue and rerun qualification.', evidenceLabel: 'PDA Candidate-v9 terminal development evidence' },
-  },
-"""
-          replace('src/i18n.jsx', anchor, candidate9 + anchor)
-          replace('src/i18n.jsx',
-            "'PDA C5 在 Gate F protected/OOD validation terminal FAIL；此負面結果被保留並限制後續宣稱。',",
-            "'PDA C5 在 Gate F protected/OOD validation terminal FAIL；此負面結果被保留並限制後續宣稱。',\n      'PDA Candidate-v9 在 pre-freeze validation 通過，但首個 formal H1 DEV-OOD 僅 macro-F1 0.5772、ACT recall 0.2367，因此 terminal development FAIL；protected evaluation 未執行。',")
-          replace('src/i18n.jsx',
-            "'PDA C5 terminally failed Gate-F protected/OOD validation; the negative result is preserved and constrains subsequent claims.',",
-            "'PDA C5 terminally failed Gate-F protected/OOD validation; the negative result is preserved and constrains subsequent claims.',\n      'PDA Candidate-v9 passed pre-freeze validation but terminally failed development on its first formal H1 DEV-OOD holdout at macro-F1 0.5772 and ACT recall 0.2367; protected evaluation was not executed.',")
-          replace('src/i18n.jsx',
-            "'Minimum Viable JARVIS 已經達成。',",
-            "'Candidate-v9 已建立 protected/OOD generalization、Gate G authorization、closed-loop readiness 或 production safety。',\n      'Minimum Viable JARVIS 已經達成。',")
-          replace('src/i18n.jsx',
-            "'Minimum Viable JARVIS has been achieved.',",
-            "'Candidate-v9 establishes protected/OOD generalization, Gate G authorization, closed-loop readiness, or production safety.',\n      'Minimum Viable JARVIS has been achieved.',")
-
-          # Compile a real dependency DAG instead of leaving human-readable dependency text only.
-          compiler = Path('scripts/compile-dashboard-state.mjs')
-          s = compiler.read_text()
-          marker = "\nconst pdaLine = snapshot.researchLines?.find((line) => line.id === 'pda-lineage');\n"
-          dag = r'''
-
-const dependencyMap = {
-  'mission-established': [],
-  'pse-gate-e-scientific': ['mission-established'],
-  'pse-integrity-lineage': ['pse-gate-e-scientific'],
-  'pda-gate-b': ['mission-established'],
-  'pda-gate-c': ['pda-gate-b'],
-  'pda-gate-d': ['pda-gate-c'],
-  'pda-gate-e': ['pda-gate-d'],
-  'pda-gate-f': ['pda-gate-e'],
-  'pda-recovery': ['pda-gate-f'],
-  'pda-candidate-v3-confirmatory-fail': ['pda-recovery'],
-  'pda-candidate-v4-confirmatory-fail': ['pda-candidate-v3-confirmatory-fail'],
-  'pda-candidate-v5-integrity-invalid': ['pda-candidate-v4-confirmatory-fail'],
-  'pda-candidate-v6-development-fail': ['pda-candidate-v5-integrity-invalid'],
-  'pda-candidate-v7-development-fail': ['pda-candidate-v6-development-fail'],
-  'pda-candidate-v8-development-fail': ['pda-candidate-v7-development-fail'],
-  'pda-candidate-v9-development-fail': ['pda-candidate-v8-development-fail'],
-  'integration-contract': ['pse-gate-e-scientific', 'pda-gate-e'],
-  'action-verification': ['integration-contract'],
-  'closed-loop-benchmark': ['integration-contract', 'action-verification', 'pda-recovery'],
-  'pare-v03-protected-recovery': ['mission-established'],
-  'long-horizon': ['closed-loop-benchmark'],
-  'multimodal': ['closed-loop-benchmark'],
-  'cross-device': ['closed-loop-benchmark'],
-  'mvj': ['closed-loop-benchmark', 'long-horizon', 'multimodal', 'cross-device', 'pda-recovery'],
-  'physical-world': ['mvj'],
-  'north-star': ['mvj', 'physical-world'],
-};
-const compiledNodes = snapshot.advancementTimeline?.phases?.flatMap((phase) => phase.nodes) || [];
-for (const node of compiledNodes) node.dependencyIds = dependencyMap[node.id] || node.dependencyIds || [];
-'''
-          if marker not in s:
-              raise SystemExit('compiler DAG insertion target not found')
-          compiler.write_text(s.replace(marker, dag + marker, 1))
-
-          # Highlight the actual prerequisite chain for the current critical-path node.
-          roadmap = Path('src/components/NorthStarRoadmap.jsx')
-          s = roadmap.read_text()
-          s = s.replace("criticalPath: 'Jump to current critical path',", "criticalPath: 'Jump to current critical path', criticalNode: 'Critical path',", 1)
-          s = s.replace("criticalPath: '跳到目前關鍵路徑',", "criticalPath: '跳到目前關鍵路徑', criticalNode: '關鍵路徑',", 1)
-          s = s.replace("function TimelineNode({ node, index, t, locale, copy, expanded, onToggle }) {", "function TimelineNode({ node, index, t, locale, copy, expanded, onToggle, critical }) {", 1)
-          s = s.replace("<article className={`roadmap-node status-${node.status}`} id={`roadmap-node-${node.id}`}>", "<article className={`roadmap-node status-${node.status} ${critical ? 'is-critical-path' : ''}`} id={`roadmap-node-${node.id}`}>", 1)
-          s = s.replace("<div className=\"roadmap-node-kicker\"><span>{node.track}</span>{node.requiredForMvj ? <span>{t('timeline.mvjRequired')}</span> : null}</div>", "<div className=\"roadmap-node-kicker\"><span>{node.track}</span>{critical ? <span>{copy.criticalNode}</span> : null}{node.requiredForMvj ? <span>{t('timeline.mvjRequired')}</span> : null}</div>", 1)
-          stats_marker = "  const nodeMatches = (node) => {\n"
-          critical_calc = r'''  const criticalPathIds = useMemo(() => {
-    const byId = new Map(allNodes.map((node) => [node.id, node]));
-    const ids = new Set();
-    const visit = (id) => {
-      if (!id || ids.has(id)) return;
-      ids.add(id);
-      for (const dependencyId of byId.get(id)?.dependencyIds || []) visit(dependencyId);
-    };
-    visit(stats.current?.id);
-    return ids;
-  }, [allNodes, stats.current?.id]);
-
-'''
-          if stats_marker not in s:
-              raise SystemExit('critical-path calculation target not found')
-          s = s.replace(stats_marker, critical_calc + stats_marker, 1)
-          old_map = "<TimelineNode key={node.id} node={node} index={index} t={t} locale={locale} copy={copy} expanded={expandedNodes.has(node.id)} onToggle={toggleNode} />"
-          new_map = "<TimelineNode key={node.id} node={node} index={index} t={t} locale={locale} copy={copy} expanded={expandedNodes.has(node.id)} onToggle={toggleNode} critical={criticalPathIds.has(node.id)} />"
-          if old_map not in s:
-              raise SystemExit('critical-path TimelineNode target not found')
-          roadmap.write_text(s.replace(old_map, new_map, 1))
-
-          css = Path('src/control-plane.css')
-          s = css.read_text()
-          needle = "  .live-state{font-size:.76rem;white-space:nowrap}"
-          if needle not in s:
-              raise SystemExit('critical path CSS target not found')
-          css.write_text(s.replace(needle, "  .roadmap-node.is-critical-path .roadmap-node-card{box-shadow:inset 3px 0 0 currentColor}\n" + needle, 1))
-
-          # Strengthen CI parity validation across all localized verified surfaces.
-          validator = Path('scripts/validate-dashboard-state.mjs')
-          s = validator.read_text()
-          s = s.replace("const i18n = await readJson('dashboard/state/i18n/control-plane.json');", "const i18n = await readJson('dashboard/state/i18n/control-plane.json');\nconst i18nSource = await readFile(resolve('src/i18n.jsx'), 'utf8');", 1)
-          parity_anchor = "assert(Object.keys(i18n['zh-Hant']).sort().join('|') === Object.keys(i18n.en).sort().join('|'), 'zh/en control-plane keys differ');"
-          parity_block = r'''assert(Object.keys(i18n['zh-Hant']).sort().join('|') === Object.keys(i18n.en).sort().join('|'), 'zh/en control-plane keys differ');
-const bilingualObjects = [];
-const walkBilingual = (value, path = 'state') => {
-  if (Array.isArray(value)) return value.forEach((item, index) => walkBilingual(item, path + '[' + index + ']'));
-  if (!value || typeof value !== 'object') return;
-  if (Object.hasOwn(value, 'zh') || Object.hasOwn(value, 'en')) bilingualObjects.push({ value, path });
-  for (const [key, child] of Object.entries(value)) walkBilingual(child, path + '.' + key);
-};
-walkBilingual(state); walkBilingual(registry);
-for (const { value, path } of bilingualObjects) assert(Boolean(value.zh && value.en), 'bilingual zh/en pair incomplete: ' + path);
-for (const track of state.tracks || []) assert(i18nSource.includes("'" + track.id + "':"), 'missing track zh/en translation: ' + track.id);
-for (const node of nodes) assert(i18nSource.includes("'" + node.id + "':"), 'missing timeline node zh/en translation: ' + node.id);
-for (const gate of state.gates || []) assert(i18nSource.includes("'" + gate.track + '|' + gate.gate + "':"), 'missing gate zh/en translation: ' + gate.track + '|' + gate.gate);
-for (const blocker of state.blockers || []) assert(i18nSource.includes("'" + blocker.title + "':"), 'missing blocker zh/en translation: ' + blocker.title);
-for (const milestone of state.milestones || []) assert(i18nSource.includes(String(milestone.issue) + ': { zh:'), 'missing milestone zh/en translation: #' + milestone.issue);'''
-          if parity_anchor not in s:
-              raise SystemExit('parity validator target not found')
-          validator.write_text(s.replace(parity_anchor, parity_block, 1))
-
-          # Unit-test the critical structural dependency chain as a regression guard.
-          tests = Path('tests/state.test.mjs')
-          s = tests.read_text()
-          addition = """
-test('critical path dependency chain remains acyclic and explicit', () => {
-  const nodes = [
-    { id: 'mission-established', dependencyIds: [] },
-    { id: 'pse-gate-e-scientific', dependencyIds: ['mission-established'] },
-    { id: 'pda-gate-b', dependencyIds: ['mission-established'] },
-    { id: 'pda-gate-c', dependencyIds: ['pda-gate-b'] },
-    { id: 'pda-gate-d', dependencyIds: ['pda-gate-c'] },
-    { id: 'pda-gate-e', dependencyIds: ['pda-gate-d'] },
-    { id: 'integration-contract', dependencyIds: ['pse-gate-e-scientific', 'pda-gate-e'] },
-  ];
-  assert.deepEqual(validateDag(nodes), { circular: false, orphan: [] });
-});
-"""
-          if "critical path dependency chain remains acyclic" not in s:
-              tests.write_text(s.rstrip() + '\n' + addition)
-          PY
+      - name: Apply final source patch
+        run: python3 scripts/finalize_dashboard_v2.py
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
       - name: Validate final data model and parity
@@ -204,7 +42,7 @@ test('critical path dependency chain remains acyclic and explicit', () => {
         run: |
           rm -rf dist playwright-report test-results
           rm -f public/live-events.json
-          git checkout HEAD -- .github/workflows/finalize-dashboard-v2.yml
+          git checkout HEAD -- .github/workflows/finalize-dashboard-v2.yml scripts/finalize_dashboard_v2.py
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add src scripts tests dashboard/state/verified dashboard/state/history dashboard/state/diffs package-lock.json
