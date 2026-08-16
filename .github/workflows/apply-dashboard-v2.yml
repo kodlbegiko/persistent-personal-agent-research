@@ -23,6 +23,18 @@ jobs:
           node-version: 24
       - name: Apply deterministic v2 patch
         run: python3 scripts/apply_dashboard_v2.py
+      - name: Fix deterministic snapshot hash ordering
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('scripts/compile-dashboard-state.mjs')
+          s = p.read_text()
+          old = """snapshot.snapshotId = 'v2-' + sourceUmbrellaSHA.slice(0, 12) + '-' + auditId.replace(/[^a-zA-Z0-9]+/g, '-').slice(0, 36);\nconst unsigned = structuredClone(snapshot);\ndelete unsigned.contentHash;\nsnapshot.contentHash = sha256(unsigned);\nsnapshot.controlPlane.history.push({ snapshotId: snapshot.snapshotId, verifiedAt: snapshot.verifiedAt, sourceUmbrellaSHA: snapshot.sourceUmbrellaSHA, auditId: snapshot.auditId });"""
+          new = """snapshot.snapshotId = 'v2-' + sourceUmbrellaSHA.slice(0, 12) + '-' + auditId.replace(/[^a-zA-Z0-9]+/g, '-').slice(0, 36);\nsnapshot.controlPlane.history.push({ snapshotId: snapshot.snapshotId, verifiedAt: snapshot.verifiedAt, sourceUmbrellaSHA: snapshot.sourceUmbrellaSHA, auditId: snapshot.auditId });\nconst unsigned = structuredClone(snapshot);\ndelete unsigned.contentHash;\nsnapshot.contentHash = sha256(unsigned);"""
+          if old not in s:
+              raise SystemExit('hash-order patch target not found')
+          p.write_text(s.replace(old, new))
+          PY
       - name: Install dependencies
         run: npm install --no-audit --no-fund
       - name: Validate data model
