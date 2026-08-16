@@ -1,0 +1,68 @@
+name: Deploy Dashboard v2 Production
+
+on:
+  push:
+    branches: [ops/dashboard-v2-production-artifact]
+    paths:
+      - '.github/workflows/deploy-dashboard-v2-production.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      FINAL_MAIN_SHA: 8e732af555a4726e30c99a4ff1c1344ca58434a3
+      VERCEL_ORG_ID: team_2UInD4pRnALRv9emtsvl4fr5
+      VERCEL_PROJECT_ID: prj_pmEnHIAkJM4XNm9QLM9cwuWDVkAL
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - name: Require deployment credential
+        shell: bash
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo 'VERCEL_TOKEN_MISSING'
+            exit 2
+          fi
+      - uses: actions/checkout@v4
+        with:
+          ref: 8e732af555a4726e30c99a4ff1c1344ca58434a3
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Link exact Vercel project
+        shell: bash
+        run: |
+          mkdir -p .vercel
+          printf '{"orgId":"%s","projectId":"%s"}\n' "$VERCEL_ORG_ID" "$VERCEL_PROJECT_ID" > .vercel/project.json
+      - name: Pull production project settings
+        run: npx --yes vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
+      - name: Build exact merged main
+        shell: bash
+        run: |
+          env -u GITHUB_SHA \
+            VERCEL_GIT_COMMIT_SHA="$FINAL_MAIN_SHA" \
+            DASHBOARD_SOURCE_SHA="$FINAL_MAIN_SHA" \
+            npx --yes vercel@latest build --prod --token="$VERCEL_TOKEN"
+          grep -R --fixed-strings "$FINAL_MAIN_SHA" .vercel/output/static >/dev/null || {
+            echo 'EXACT_MAIN_SHA_NOT_EMBEDDED_IN_BUILD'
+            exit 3
+          }
+      - name: Deploy prebuilt artifact to production
+        id: deploy
+        shell: bash
+        run: |
+          url=$(npx --yes vercel@latest deploy --prebuilt --prod --yes --token="$VERCEL_TOKEN" | tail -n 1)
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "PRODUCTION_URL=$url"
+          echo "### Dashboard v2 production" >> "$GITHUB_STEP_SUMMARY"
+          echo "- URL: $url" >> "$GITHUB_STEP_SUMMARY"
+          echo "- source SHA: $FINAL_MAIN_SHA" >> "$GITHUB_STEP_SUMMARY"
+      - name: Inspect production deployment
+        shell: bash
+        run: |
+          npx --yes vercel@latest inspect "${{ steps.deploy.outputs.url }}" --token="$VERCEL_TOKEN"
