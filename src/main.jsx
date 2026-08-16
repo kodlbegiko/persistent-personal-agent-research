@@ -16,6 +16,7 @@ import './macbook.css';
 import './i18n.css';
 import './polish.css';
 import './detail-fixes.css';
+import './plain-progress.css';
 import './research-history.css';
 import './live-pulse.css';
 import './control-plane.css';
