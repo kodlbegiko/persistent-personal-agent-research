@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './data/recoveryOverlay.js';
+import './navigation-state.js';
 import App from './App.jsx';
 import PolishedAchievementSystem from './components/PolishedAchievementSystem.jsx';
 import { LanguageProvider } from './i18n.jsx';
@@ -11,6 +12,7 @@ import './roadmap-interactions.css';
 import './macbook.css';
 import './i18n.css';
 import './polish.css';
+import './detail-fixes.css';
 
 // Resolve language before the first React paint so labels never flash in the wrong locale.
 const params = new URLSearchParams(window.location.search);
