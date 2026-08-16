@@ -12,6 +12,17 @@ import './macbook.css';
 import './i18n.css';
 import './polish.css';
 
+// Resolve language before the first React paint so labels never flash in the wrong locale.
+const params = new URLSearchParams(window.location.search);
+const queryLanguage = params.get('lang');
+const savedLanguage = window.localStorage.getItem('jarvis-dashboard-language');
+const initialLanguage = queryLanguage === 'en' || queryLanguage === 'en-US'
+  ? 'en'
+  : queryLanguage === 'zh-Hant' || queryLanguage === 'zh-TW' || queryLanguage === 'zh'
+    ? 'zh-Hant'
+    : savedLanguage === 'en' ? 'en' : 'zh-Hant';
+document.documentElement.lang = initialLanguage;
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <LanguageProvider>
