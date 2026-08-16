@@ -1,4 +1,3 @@
-
 # Dashboard v2 Baseline
 
 - Captured: 2026-08-16 11:55 Asia/Taipei
@@ -10,6 +9,7 @@
 - Canonical pre-v2 state path: `src/data/researchState.js` plus `recoveryOverlay.js` and `hourlyEvidenceOverlay.js` browser import side effects.
 - Existing Live Pulse: 60-second cross-tab public GitHub event polling plus build fallback; watched repositories were hard-coded in the component.
 - Existing CI: build-only dashboard workflow.
+- Active umbrella monitoring automation at capture: `JARVIS Research Watch` (`6a7ee962a5cc8191a91b98f966fea361`), enabled hourly as a condition watch. Its pre-v2 prompt contained a hard-coded repository watch set and therefore required post-merge binding to the repository-owned watch-policy version/hash and lineage registry.
 
 ## Research scope at freeze
 
