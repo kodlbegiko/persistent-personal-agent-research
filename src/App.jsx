@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { verifiedSnapshot } from './data/researchState.js';
 import { clearDashboardCache, loadAllLiveState } from './lib/github.js';
 import { useLanguage } from './i18n.jsx';
+import ResearchHistory from './components/ResearchHistory.jsx';
 import {
   ActivityPanel,
   BenchmarkPanel,
@@ -82,6 +83,7 @@ export default function App() {
     ['overview', 'home', t('nav.overview')],
     ['north-star', 'star', t('nav.northStar')],
     ['tracks', 'grid', t('nav.tracks')],
+    ['history', 'clock', language === 'en' ? 'Verified History' : '已驗證歷史'],
     ['gates', 'flag', t('nav.gates')],
     ['benchmarks', 'benchmark', t('nav.benchmarks')],
     ['blockers', 'alert', t('nav.blockers')],
@@ -97,6 +99,7 @@ export default function App() {
         {liveError && <div className="notice warning"><Icon name="alert" /><span>{liveError}</span></div>}
         <NorthStarSummary snapshot={snapshot} t={t} evidenceBearing={evidenceBearing} integrated={integrated} verifiedBlockers={verifiedBlockers} activeIssueCount={activeIssueCount} live={live} />
         <ResearchTracks snapshot={snapshot} t={t} language={language} />
+        <ResearchHistory />
         <div className="two-column"><GateTable snapshot={snapshot} t={t} /><BlockerPanel snapshot={snapshot} t={t} /></div>
         <BenchmarkPanel snapshot={snapshot} t={t} />
         <EvidencePanel snapshot={snapshot} t={t} issueMap={issueMap} language={language} />
