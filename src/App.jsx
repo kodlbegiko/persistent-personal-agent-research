@@ -45,7 +45,7 @@ export default function App() {
   useEffect(() => { load(false); }, [load]);
 
   const evidenceBearing = snapshot.tracks.filter((track) => track.stage >= 2).length;
-  const integrated = snapshot.tracks.filter((track) => track.stage >= 5).length;
+  const integrated = snapshot.tracks.filter((track) => track.stage >= 6).length;
   const activeIssueCount = live.issues.filter((issue) => issue.state === 'open').length || snapshot.milestones.length;
   const verifiedBlockers = snapshot.blockers.length;
   const issueMap = useMemo(() => new Map(live.issues.map((issue) => [issue.number, issue])), [live.issues]);
