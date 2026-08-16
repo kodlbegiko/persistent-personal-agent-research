@@ -17,6 +17,7 @@ concurrency:
 env:
   VERCEL_ORG_ID: team_2UInD4pRnALRv9emtsvl4fr5
   VERCEL_PROJECT_ID: prj_pmEnHIAkJM4XNm9QLM9cwuWDVkAL
+  VERCEL_PROJECT_NAME: jarvis-research-dashboard
   CANONICAL_DOMAIN: https://jarvis-research-dashboard.vercel.app
 
 jobs:
@@ -85,51 +86,108 @@ jobs:
           npm run test:a11y
           npm run test:visual
 
-      - name: Pull Vercel production settings
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          rm -rf .vercel
-          mkdir -p .vercel
-          printf '{"orgId":"%s","projectId":"%s"}\n' "$VERCEL_ORG_ID" "$VERCEL_PROJECT_ID" > .vercel/project.json
-          npx --yes vercel@latest pull --yes --environment=production \
-            --project "$VERCEL_PROJECT_ID" \
-            --token="$VERCEL_TOKEN"
-
-      - name: Build production artifact from exact main
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: npx --yes vercel@latest build --prod --project "$VERCEL_PROJECT_ID" --token="$VERCEL_TOKEN"
-
-      - name: Create production-targeted deployment without routing traffic
+      - name: Create isolated exact-main Vercel deployment through REST API
         id: deploy
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         shell: bash
         run: |
           set -euo pipefail
-          DEPLOYMENT_URL="$(npx --yes vercel@latest deploy --prebuilt --prod --skip-domain --yes \
-            --project "$VERCEL_PROJECT_ID" \
-            --meta "githubCommitSha=$GITHUB_SHA" \
-            --token="$VERCEL_TOKEN")"
-          echo "deployment_url=$DEPLOYMENT_URL" >> "$GITHUB_OUTPUT"
-          echo "Created isolated production-targeted deployment: $DEPLOYMENT_URL"
+          mkdir -p artifacts/dashboard-v2-final-acceptance
+          python - <<'PY'
+          import json, os, pathlib
+          sha = os.environ['GITHUB_SHA']
+          payload = {
+              'name': os.environ['VERCEL_PROJECT_NAME'],
+              'project': os.environ['VERCEL_PROJECT_NAME'],
+              'gitSource': {
+                  'type': 'github',
+                  'org': 'kodlbegiko',
+                  'repo': 'persistent-personal-agent-research',
+                  'ref': 'main',
+                  'sha': sha,
+              },
+              'gitMetadata': {
+                  'remoteUrl': 'https://github.com/kodlbegiko/persistent-personal-agent-research',
+                  'commitRef': 'main',
+                  'commitSha': sha,
+                  'dirty': False,
+                  'ci': True,
+                  'ciType': 'github-actions',
+                  'ciGitProviderUsername': 'kodlbegiko',
+                  'ciGitRepoVisibility': 'public',
+              },
+              'meta': {
+                  'githubCommitSha': sha,
+                  'exactMain': 'true',
+              },
+              'projectSettings': {
+                  'framework': 'vite',
+                  'installCommand': 'npm ci --no-audit --no-fund',
+                  'buildCommand': 'npm run build',
+                  'outputDirectory': 'dist',
+                  'nodeVersion': '24.x',
+              },
+          }
+          pathlib.Path('/tmp/vercel-deploy-request.json').write_text(json.dumps(payload))
+          PY
+          STATUS="$(curl -sS -o /tmp/vercel-deploy-response.json -w '%{http_code}' \
+            -X POST \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            -H 'Content-Type: application/json' \
+            --data-binary @/tmp/vercel-deploy-request.json \
+            "https://api.vercel.com/v13/deployments?forceNew=1&skipAutoDetectionConfirmation=1&teamId=$VERCEL_ORG_ID")"
+          if [ "$STATUS" != "200" ] && [ "$STATUS" != "201" ]; then
+            echo "::error title=Vercel REST deployment creation failed::HTTP $STATUS"
+            cat /tmp/vercel-deploy-response.json
+            exit 82
+          fi
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          d=json.load(open('/tmp/vercel-deploy-response.json'))
+          if not d.get('id') or not d.get('url'):
+              raise SystemExit('Vercel response missing deployment id/url')
+          print('deployment_id='+d['id'])
+          print('deployment_url=https://'+d['url'])
+          PY
+          cp /tmp/vercel-deploy-response.json artifacts/dashboard-v2-final-acceptance/deployment-create-response.json
 
-      - name: Verify Vercel deployment metadata binds exact git SHA
+      - name: Wait for isolated deployment to become READY
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment_url }}
+          DEPLOYMENT_ID: ${{ steps.deploy.outputs.deployment_id }}
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p artifacts/dashboard-v2-final-acceptance
-          DEPLOYMENT_HOST="${DEPLOYMENT_URL#https://}"
-          curl -fsS \
-            -H "Authorization: Bearer $VERCEL_TOKEN" \
-            "https://api.vercel.com/v13/deployments/$DEPLOYMENT_HOST?teamId=$VERCEL_ORG_ID" \
-            > artifacts/dashboard-v2-final-acceptance/production-deployment.json
+          for attempt in $(seq 1 90); do
+            curl -fsS \
+              -H "Authorization: Bearer $VERCEL_TOKEN" \
+              "https://api.vercel.com/v13/deployments/$DEPLOYMENT_ID?withGitRepoInfo=true&teamId=$VERCEL_ORG_ID" \
+              > /tmp/vercel-deployment.json
+            STATE="$(python - <<'PY'
+          import json
+          d=json.load(open('/tmp/vercel-deployment.json'))
+          print(d.get('readyState') or d.get('state') or '')
+          PY
+            )"
+            echo "Vercel deployment state: $STATE (attempt $attempt)"
+            if [ "$STATE" = "READY" ]; then
+              cp /tmp/vercel-deployment.json artifacts/dashboard-v2-final-acceptance/production-deployment.json
+              exit 0
+            fi
+            if [ "$STATE" = "ERROR" ] || [ "$STATE" = "CANCELED" ] || [ "$STATE" = "BLOCKED" ]; then
+              cat /tmp/vercel-deployment.json
+              exit 83
+            fi
+            sleep 5
+          done
+          echo "::error::Timed out waiting for Vercel deployment"
+          exit 84
+
+      - name: Verify Vercel native git source binds exact main SHA
+        shell: bash
+        run: |
+          set -euo pipefail
           python - <<'PY'
           import json, os, pathlib, sys
           p = pathlib.Path('artifacts/dashboard-v2-final-acceptance/production-deployment.json')
@@ -137,19 +195,23 @@ jobs:
           expected = os.environ['GITHUB_SHA']
           meta = d.get('meta') or {}
           git_source = d.get('gitSource') or {}
+          git_meta = d.get('gitMetadata') or {}
           candidates = {
-              'meta.githubCommitSha': meta.get('githubCommitSha'),
-              'meta.gitCommitSha': meta.get('gitCommitSha'),
-              'meta.commitSha': meta.get('commitSha'),
               'gitSource.sha': git_source.get('sha'),
+              'gitMetadata.commitSha': git_meta.get('commitSha'),
+              'meta.githubCommitSha': meta.get('githubCommitSha'),
           }
-          matched = [k for k, v in candidates.items() if v == expected]
-          if not matched:
-              print('EXACT_MAIN_PRODUCTION_IDENTITY_NOT_VERIFIABLE', candidates, file=sys.stderr)
+          if git_source.get('sha') != expected:
+              print('EXACT_MAIN_NATIVE_GIT_SOURCE_FAIL', candidates, file=sys.stderr)
+              sys.exit(2)
+          if meta.get('githubCommitSha') != expected:
+              print('EXACT_MAIN_ATTESTATION_FAIL', candidates, file=sys.stderr)
               sys.exit(2)
           out = {
               'expectedMainSHA': expected,
-              'verifiedBy': matched,
+              'nativeGitSourceSHA': git_source.get('sha'),
+              'metadataCommitSHA': git_meta.get('commitSha'),
+              'attestedCommitSHA': meta.get('githubCommitSha'),
               'deploymentId': d.get('id'),
               'deploymentUrl': d.get('url'),
               'readyState': d.get('readyState') or d.get('state'),
@@ -189,34 +251,46 @@ jobs:
       - name: Promote only the verified deployment to Production
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment_url }}
-        run: npx --yes vercel@latest promote "$DEPLOYMENT_URL" --yes --project "$VERCEL_PROJECT_ID" --token="$VERCEL_TOKEN"
+          DEPLOYMENT_ID: ${{ steps.deploy.outputs.deployment_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          STATUS="$(curl -sS -o /tmp/vercel-promote-response.txt -w '%{http_code}' \
+            -X POST \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com/v10/projects/$VERCEL_PROJECT_ID/promote/$DEPLOYMENT_ID?teamId=$VERCEL_ORG_ID")"
+          if [ "$STATUS" != "201" ] && [ "$STATUS" != "202" ]; then
+            echo "::error title=Vercel promotion failed::HTTP $STATUS"
+            cat /tmp/vercel-promote-response.txt
+            exit 85
+          fi
+          echo "Production promotion accepted: HTTP $STATUS"
 
       - name: Verify canonical Production domain
         shell: bash
         run: |
           set -euo pipefail
-          curl -fsS "$CANONICAL_DOMAIN/" -o /tmp/production-index.html
-          ASSET="$(grep -oE 'assets/index-[^"'"']+\.js' /tmp/production-index.html | head -n1)"
-          if [ -z "$ASSET" ]; then
-            echo "::error::Could not identify production JavaScript asset"
-            exit 4
-          fi
-          curl -fsS "$CANONICAL_DOMAIN/$ASSET" -o /tmp/production-app.js
-          grep -Fq "$GITHUB_SHA" /tmp/production-app.js || {
-            echo "::error::Canonical Production bundle does not contain exact main SHA"
-            exit 5
-          }
-          STATUS="$(curl -sS -o /tmp/research-pulse.json -w '%{http_code}' "$CANONICAL_DOMAIN/api/research-pulse")"
-          if [ "$STATUS" = "404" ] || [ "$STATUS" -ge 500 ]; then
-            echo "::error::Production /api/research-pulse returned HTTP $STATUS"
-            cat /tmp/research-pulse.json
-            exit 6
-          fi
-          printf '{"canonicalDomain":"%s","rootHttp":200,"researchPulseHttp":%s,"sourceSHA":"%s"}\n' \
-            "$CANONICAL_DOMAIN" "$STATUS" "$GITHUB_SHA" \
-            > artifacts/dashboard-v2-final-acceptance/production-api-verification.json
-          echo "CANONICAL_PRODUCTION_VERIFIED $GITHUB_SHA"
+          for attempt in $(seq 1 30); do
+            if curl -fsS "$CANONICAL_DOMAIN/" -o /tmp/production-index.html; then
+              ASSET="$(grep -oE 'assets/index-[^"'"']+\.js' /tmp/production-index.html | head -n1 || true)"
+              if [ -n "$ASSET" ] && curl -fsS "$CANONICAL_DOMAIN/$ASSET" -o /tmp/production-app.js; then
+                if grep -Fq "$GITHUB_SHA" /tmp/production-app.js; then
+                  STATUS="$(curl -sS -o /tmp/research-pulse.json -w '%{http_code}' "$CANONICAL_DOMAIN/api/research-pulse")"
+                  if [ "$STATUS" = "200" ]; then
+                    printf '{"canonicalDomain":"%s","rootHttp":200,"researchPulseHttp":200,"sourceSHA":"%s"}\n' \
+                      "$CANONICAL_DOMAIN" "$GITHUB_SHA" \
+                      > artifacts/dashboard-v2-final-acceptance/production-api-verification.json
+                    echo "CANONICAL_PRODUCTION_VERIFIED $GITHUB_SHA"
+                    exit 0
+                  fi
+                fi
+              fi
+            fi
+            echo "Canonical promotion not fully visible yet (attempt $attempt)"
+            sleep 5
+          done
+          echo "::error::Canonical Production did not converge to exact main with healthy /api/research-pulse"
+          exit 86
 
       - name: Upload final production acceptance evidence
         if: always()
