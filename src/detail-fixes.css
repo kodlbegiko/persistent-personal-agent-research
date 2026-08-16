@@ -78,6 +78,17 @@
   background: rgba(79, 155, 255, .025);
 }
 
+/* Nested Gates / Blockers sections must share one content rail instead of being centered twice. */
+.two-column {
+  align-items: start;
+}
+
+.two-column > .section-block {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
 /* Keep hash navigation accurate even when the browser's :has/:target behavior is inconsistent. */
 body:has(:target) .sidebar nav a.active,
 .sidebar nav a.active {
@@ -102,6 +113,21 @@ body:has(:target) .sidebar nav a.active,
 }
 
 @media (min-width: 1280px) and (max-width: 1536px) and (max-height: 1050px) {
+  /* All primary dashboard sections use the same 1280px rail on a 13-inch MacBook. */
+  .two-column {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .two-column > .section-block {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+  }
+
   .gate-table {
     --gate-track-width: 74px;
     --gate-name-width: 128px;
