@@ -1,0 +1,36 @@
+{
+  "auditId": "hourly-independent-audit-20260816T121926+0800",
+  "verifiedAt": "2026-08-16T12:19:26+08:00",
+  "umbrellaBase": "8e732af555a4726e30c99a4ff1c1344ca58434a3",
+  "materialChanges": [
+    {
+      "lineage": "RT-02 Candidate-v10",
+      "terminal": "CANDIDATE_V10 DEVELOPMENT FAIL — NO CANDIDATE QUALIFIED",
+      "evidenceSha": "0bed752075356b94cf823a172ec86382f558fa17",
+      "protectedExecuted": false
+    },
+    {
+      "lineage": "RT-02 Candidate-v7 Independent Requalification (V7R)",
+      "terminal": "V7R REQUALIFICATION FAIL — CANDIDATE_V7_QUALIFICATION_LINEAGE_TERMINATED",
+      "evidenceSha": "a247c8b9685a48984d7ca9063ba7576d771edb54",
+      "researchIntegrity": "PASS",
+      "actualProtectedExampleAccess": "NONE"
+    },
+    {
+      "lineage": "RT-01 PSE clean-integrity Candidate-v13",
+      "terminal": "NATURALISTIC_EXTERNAL_VALIDITY_INFRASTRUCTURE_BLOCKED",
+      "evidenceSha": "bad307ac11e549437b4337f0459ccfd55625f826",
+      "evB": "NOT_EXECUTED",
+      "evC": "NOT_EXECUTED",
+      "admissibility": "PENDING"
+    }
+  ],
+  "unchangedBoundaries": [
+    "RT-01 umbrella maturity not promoted",
+    "RT-02 protected/OOD generalization not established",
+    "RT-03 PAAV Action Verification not established",
+    "Issue #1 integration contract remains open",
+    "Issue #2 Action Verification protocol remains open",
+    "MVJ completed gates remain 0"
+  ]
+}
