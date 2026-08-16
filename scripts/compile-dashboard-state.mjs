@@ -110,6 +110,38 @@ if (phase1 && !phase1.nodes.some((node) => node.id === 'pda-candidate-v9-develop
   });
 }
 
+
+const dependencyMap = {
+  'mission-established': [],
+  'pse-gate-e-scientific': ['mission-established'],
+  'pse-integrity-lineage': ['pse-gate-e-scientific'],
+  'pda-gate-b': ['mission-established'],
+  'pda-gate-c': ['pda-gate-b'],
+  'pda-gate-d': ['pda-gate-c'],
+  'pda-gate-e': ['pda-gate-d'],
+  'pda-gate-f': ['pda-gate-e'],
+  'pda-recovery': ['pda-gate-f'],
+  'pda-candidate-v3-confirmatory-fail': ['pda-recovery'],
+  'pda-candidate-v4-confirmatory-fail': ['pda-candidate-v3-confirmatory-fail'],
+  'pda-candidate-v5-integrity-invalid': ['pda-candidate-v4-confirmatory-fail'],
+  'pda-candidate-v6-development-fail': ['pda-candidate-v5-integrity-invalid'],
+  'pda-candidate-v7-development-fail': ['pda-candidate-v6-development-fail'],
+  'pda-candidate-v8-development-fail': ['pda-candidate-v7-development-fail'],
+  'pda-candidate-v9-development-fail': ['pda-candidate-v8-development-fail'],
+  'integration-contract': ['pse-gate-e-scientific', 'pda-gate-e'],
+  'action-verification': ['integration-contract'],
+  'closed-loop-benchmark': ['integration-contract', 'action-verification', 'pda-recovery'],
+  'pare-v03-protected-recovery': ['mission-established'],
+  'long-horizon': ['closed-loop-benchmark'],
+  'multimodal': ['closed-loop-benchmark'],
+  'cross-device': ['closed-loop-benchmark'],
+  'mvj': ['closed-loop-benchmark', 'long-horizon', 'multimodal', 'cross-device', 'pda-recovery'],
+  'physical-world': ['mvj'],
+  'north-star': ['mvj', 'physical-world'],
+};
+const compiledNodes = snapshot.advancementTimeline?.phases?.flatMap((phase) => phase.nodes) || [];
+for (const node of compiledNodes) node.dependencyIds = dependencyMap[node.id] || node.dependencyIds || [];
+
 const pdaLine = snapshot.researchLines?.find((line) => line.id === 'pda-lineage');
 if (pdaLine) {
   pdaLine.status = 'failed';

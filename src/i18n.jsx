@@ -44,7 +44,7 @@ const dictionary = {
     maturityStage: '成熟度階段 {stage} / {total}',
     stage: '階段',
     status: {
-      DEVELOPMENT_EVIDENCE: '開發證據', PROTECTED_VALIDATION_FAILED: '保護驗證失敗', SCOPED: '已界定', NOT_STARTED: '未開始',
+      DEVELOPMENT_EVIDENCE: '開發證據', PROTECTED_VALIDATION_FAILED: '保護驗證失敗', RECOVERY_LINEAGES_FAILED_OR_INVALID: '復原 LINEAGE 失敗或無效', PAAV_NOT_ESTABLISHED_PARE_RECOVERY_ADMITTED: 'PAAV 尚未建立；PARE 復原證據已採納', SCOPED: '已界定', NOT_STARTED: '未開始',
       PASS: '通過', FAIL: '失敗', COMPLETE: '完成', 'FAIL CLOSED': '封閉式失敗', PROHIBITED: '禁止', open: '未結', closed: '已結', merged: '已合併', unknown: '未知',
     },
     timeline: {
@@ -98,7 +98,7 @@ const dictionary = {
     maturityStage: 'Maturity stage {stage} of {total}',
     stage: 'Stage',
     status: {
-      DEVELOPMENT_EVIDENCE: 'DEVELOPMENT EVIDENCE', PROTECTED_VALIDATION_FAILED: 'PROTECTED VALIDATION FAILED', SCOPED: 'SCOPED', NOT_STARTED: 'NOT STARTED',
+      DEVELOPMENT_EVIDENCE: 'DEVELOPMENT EVIDENCE', PROTECTED_VALIDATION_FAILED: 'PROTECTED VALIDATION FAILED', RECOVERY_LINEAGES_FAILED_OR_INVALID: 'RECOVERY LINEAGES FAILED OR INVALID', PAAV_NOT_ESTABLISHED_PARE_RECOVERY_ADMITTED: 'PAAV NOT ESTABLISHED; PARE RECOVERY ADMITTED', SCOPED: 'SCOPED', NOT_STARTED: 'NOT STARTED',
       PASS: 'PASS', FAIL: 'FAIL', COMPLETE: 'COMPLETE', 'FAIL CLOSED': 'FAIL CLOSED', PROHIBITED: 'PROHIBITED', open: 'OPEN', closed: 'CLOSED', merged: 'MERGED', unknown: 'UNKNOWN',
     },
     timeline: {
@@ -121,8 +121,8 @@ const trackTranslations = {
     en: { name: 'Personal State', subtitle: 'Personal state and evidence maintenance', detail: 'Candidate-v6 scientific Gate E requirements are complete; formal Gate E remains integrity fail-closed. Gate F is not admissible as formal progress in the current lineage.' },
   },
   'RT-02': {
-    zh: { name: '主動介入決策', subtitle: '主動介入決策規格', detail: 'Gate B–E 在有界 synthetic protocol 下通過。Gate F protected/OOD validation 對 C5 得到 terminal FAIL；尚未建立 protected generalization。' },
-    en: { name: 'Proactivity', subtitle: 'Specification-grounded intervention decisions', detail: 'Gates B–E passed under the bounded synthetic protocol. Gate F protected/OOD validation reached a terminal FAIL on C5; protected generalization is not established.' },
+    zh: { name: '主動介入決策', subtitle: '主動介入決策規格', detail: 'Gate B–E 保留有界 evidence；Gate F 與 Candidate-v3–v9 的後續 recovery lineage 均未建立 protected generalization。Candidate-v9 在首個 formal H1 DEV-OOD holdout 未達門檻，protected evaluation 未執行。' },
+    en: { name: 'Proactivity', subtitle: 'Specification-grounded intervention decisions', detail: 'Gates B–E retain bounded evidence; Gate F and Candidate-v3–v9 recovery lineages have not established protected generalization. Candidate-v9 missed thresholds on its first formal H1 DEV-OOD holdout and protected evaluation was not executed.' },
   },
   'RT-03': {
     zh: { name: '行動驗證', subtitle: '行動結果驗證與恢復', detail: 'Issue #2 已界定研究 protocol；implementation 與 protected evaluation 尚未開始。' },
@@ -233,6 +233,38 @@ const nodeTranslations = {
     zh: { title: 'PDA Protected/OOD 復原 Lineage', description: '若要補齊可信主動性，需要新的 development/candidate lineage，再於候選者固定後建立全新的 protected evaluation。', dependsOn: ['保留 Gate F 負面結果'], unlockCondition: '建立新 candidate lineage，且 fresh protected set 必須在新候選者 freeze 後才產生。', evidenceLabel: 'Gate-F terminal recovery rule' },
     en: { title: 'PDA Protected/OOD Recovery Lineage', description: 'Credible proactivity recovery requires a new development/candidate lineage and a fresh protected evaluation created only after the new candidate is frozen.', dependsOn: ['Gate F negative result preserved'], unlockCondition: 'Create a new candidate lineage; the fresh protected set must be generated only after the new candidate is frozen.', evidenceLabel: 'Gate-F terminal recovery rule' },
   },
+  'pda-candidate-v9-development-fail': {
+    zh: { title: 'Candidate-v9 Development — FAIL', description: 'Frozen V9-B 通過 pre-freeze validation，但第一個 formal H1 DEV-OOD holdout 未達 preregistered generalization 門檻：macro-F1 0.5772、ACT recall 0.2367。H2–H13 未執行；protected evaluation 不具資格且未執行。', dependsOn: ['Candidate-v8 immutable terminal lineage'], note: 'CANDIDATE_V9 DEVELOPMENT FAIL — NO CANDIDATE QUALIFIED；不得用 H1 結果救援後重跑 qualification。', evidenceLabel: 'PDA Candidate-v9 terminal development evidence' },
+    en: { title: 'Candidate-v9 Development — FAIL', description: 'Frozen V9-B passed pre-freeze validation, but the first formal H1 DEV-OOD holdout missed preregistered generalization thresholds: macro-F1 0.5772 and ACT recall 0.2367. H2–H13 were not executed; protected evaluation was not eligible or executed.', dependsOn: ['Candidate-v8 immutable terminal lineage'], note: 'CANDIDATE_V9 DEVELOPMENT FAIL — NO CANDIDATE QUALIFIED; H1 outcomes cannot be used to rescue and rerun qualification.', evidenceLabel: 'PDA Candidate-v9 terminal development evidence' },
+  },
+  'pda-candidate-v3-confirmatory-fail': {
+    zh: { title: 'Candidate-v3 Fresh Confirmatory — FAIL', description: '在 600 筆 fresh protected confirmatory evaluation 中，macro-F1 0.0476，WAIT=600/600，counterfactual exact-pair 0/120；Candidate-v3 lineage 因 terminal FAIL 終止。', dependsOn: ['Candidate-v3 frozen', 'historical Gate F FAIL preserved'], note: 'FRESH CONFIRMATORY FAIL — CANDIDATE_V3_LINEAGE_TERMINATED', evidenceLabel: 'PDA Candidate-v3 terminal 2a9e2f08' },
+    en: { title: 'Candidate-v3 Fresh Confirmatory — FAIL', description: 'On the 600-example fresh protected confirmatory evaluation, macro-F1 was 0.0476, WAIT=600/600, and counterfactual exact-pair was 0/120; the Candidate-v3 lineage terminated with a terminal FAIL.', dependsOn: ['Candidate-v3 frozen', 'historical Gate F FAIL preserved'], note: 'FRESH CONFIRMATORY FAIL — CANDIDATE_V3_LINEAGE_TERMINATED', evidenceLabel: 'PDA Candidate-v3 terminal 2a9e2f08' },
+  },
+  'pda-candidate-v4-confirmatory-fail': {
+    zh: { title: 'Candidate-v4 Fresh Confirmatory — FAIL', description: '在 600 筆 fresh protected confirmatory evaluation 中，macro-F1 0.0846，WAIT=544、SUGGEST=56，counterfactual exact-pair 0.0；Candidate-v4 lineage 因 terminal FAIL 終止。', dependsOn: ['Candidate-v4 development freeze ffb79eef', 'Candidate-v3 lineage terminated'], note: 'FRESH CONFIRMATORY FAIL — CANDIDATE V4 LINEAGE TERMINATED', evidenceLabel: 'PDA Candidate-v4 terminal 370aac30' },
+    en: { title: 'Candidate-v4 Fresh Confirmatory — FAIL', description: 'On the 600-example fresh protected confirmatory evaluation, macro-F1 was 0.0846, WAIT=544, SUGGEST=56, and counterfactual exact-pair was 0.0; the Candidate-v4 lineage terminated with a terminal FAIL.', dependsOn: ['Candidate-v4 development freeze ffb79eef', 'Candidate-v3 lineage terminated'], note: 'FRESH CONFIRMATORY FAIL — CANDIDATE V4 LINEAGE TERMINATED', evidenceLabel: 'PDA Candidate-v4 terminal 370aac30' },
+  },
+  'pda-candidate-v5-integrity-invalid': {
+    zh: { title: 'Candidate-v5 Integrity Terminal — INVALID', description: 'development 前因非預期 connector overfetch 暴露歷史 protected individual rows；未建立 Candidate-v5 corpus、candidate freeze、protected seed、dataset 或 scoring，因此此 execution lineage 以 integrity INVALID 終止。', dependsOn: ['Candidate-v4 lineage terminated', 'historical protected quarantine'], note: 'FRESH CONFIRMATORY INVALID — EVALUATION INTEGRITY FAILURE；保留為 invalidated evidence，不得重解釋成 performance 結果。', evidenceLabel: 'PDA Candidate-v5 integrity terminal 0af794aa' },
+    en: { title: 'Candidate-v5 Integrity Terminal — INVALID', description: 'Historical protected individual rows were exposed by unintended connector overfetch before development. No Candidate-v5 corpus, candidate freeze, protected seed, dataset, or scoring was produced, so the execution lineage terminated as integrity INVALID.', dependsOn: ['Candidate-v4 lineage terminated', 'historical protected quarantine'], note: 'FRESH CONFIRMATORY INVALID — EVALUATION INTEGRITY FAILURE; preserved as invalidated evidence and not reinterpreted as a performance result.', evidenceLabel: 'PDA Candidate-v5 integrity terminal 0af794aa' },
+  },
+  'pda-candidate-v6-development-fail': {
+    zh: { title: 'Candidate-v6 Development — FAIL', description: 'validation macro-F1 0.9972，但 mandatory safety gates 未通過：DEV-OOD forbidden ACT=1、counterfactual forbidden ACT=4。Protected evaluation 從未建立或執行。', dependsOn: ['Fresh clean execution context', 'Candidate-v5 invalid lineage preserved'], note: 'CANDIDATE_V6 DEVELOPMENT FAIL — NO CANDIDATE QUALIFIED；freeze-manifest chronology deviation 保留，未授權 protected progression。', evidenceLabel: 'PDA Candidate-v6 terminal f7bb15ab' },
+    en: { title: 'Candidate-v6 Development — FAIL', description: 'Validation macro-F1 was 0.9972, but mandatory safety gates failed: DEV-OOD forbidden ACT=1 and counterfactual forbidden ACT=4. Protected evaluation was never created or run.', dependsOn: ['Fresh clean execution context', 'Candidate-v5 invalid lineage preserved'], note: 'CANDIDATE_V6 DEVELOPMENT FAIL — NO CANDIDATE QUALIFIED; the freeze-manifest chronology deviation is preserved and protected progression was not authorized.', evidenceLabel: 'PDA Candidate-v6 terminal f7bb15ab' },
+  },
+  'pda-candidate-v7-development-fail': {
+    zh: { title: 'Candidate-v7 Development — FAIL', description: 'Frozen V7-B 在 preregistered validation 達 macro-F1 1.0、ACT recall 1.0、forbidden ACT=0，但多個 post-freeze development holdouts 失敗；DEV-OOD ACT recall 降至 0.07，counterfactual exact-pair 0.10，protected evaluation 未執行。', dependsOn: ['Candidate-v7 freeze 545af659', 'Candidate-v6 terminal lineage preserved'], note: 'CANDIDATE_V7 DEVELOPMENT FAIL — NO CANDIDATE QUALIFIED；candidate 在 first holdout 前已 freeze，不得用 holdout 結果回頭修正。', evidenceLabel: 'PDA Candidate-v7 terminal 83e41d91' },
+    en: { title: 'Candidate-v7 Development — FAIL', description: 'Frozen V7-B reached macro-F1 1.0, ACT recall 1.0, and forbidden ACT=0 on preregistered validation, but multiple post-freeze development holdouts failed. DEV-OOD ACT recall fell to 0.07, counterfactual exact-pair was 0.10, and protected evaluation was not executed.', dependsOn: ['Candidate-v7 freeze 545af659', 'Candidate-v6 terminal lineage preserved'], note: 'CANDIDATE_V7 DEVELOPMENT FAIL — NO CANDIDATE QUALIFIED; the candidate was frozen before the first holdout and holdout outcomes cannot be used for retroactive repair.', evidenceLabel: 'PDA Candidate-v7 terminal 83e41d91' },
+  },
+  'pda-candidate-v8-development-fail': {
+    zh: { title: 'Candidate-v8 Development — FAIL', description: 'Frozen V8-C 在 validation qualified（macro-F1 0.9917；ACT recall/precision 1.0/1.0；forbidden/false ACT=0/0），但第一個 formal H1 DEV-OOD holdout 因 frozen parser 產生 invalid structured state 而 terminal；未授權 repair、rerun 或 protected evaluation。', dependsOn: ['Candidate-v8 freeze d4077860', 'Candidate-v7 immutable terminal lineage'], note: 'CANDIDATE_V8 DEVELOPMENT FAIL — NO CANDIDATE QUALIFIED · FROZEN_CANDIDATE_SEMANTIC_FAILURE_NOT_INFRASTRUCTURE_ONLY · protected_executed=false', evidenceLabel: 'PDA Candidate-v8 terminal 887903e8' },
+    en: { title: 'Candidate-v8 Development — FAIL', description: 'Frozen V8-C qualified on validation (macro-F1 0.9917; ACT recall/precision 1.0/1.0; forbidden/false ACT=0/0), but the first formal H1 DEV-OOD holdout terminated on an invalid structured state emitted by the frozen parser. No repair, rerun, or protected evaluation was authorized.', dependsOn: ['Candidate-v8 freeze d4077860', 'Candidate-v7 immutable terminal lineage'], note: 'CANDIDATE_V8 DEVELOPMENT FAIL — NO CANDIDATE QUALIFIED · FROZEN_CANDIDATE_SEMANTIC_FAILURE_NOT_INFRASTRUCTURE_ONLY · protected_executed=false', evidenceLabel: 'PDA Candidate-v8 terminal 887903e8' },
+  },
+  'pare-v03-protected-recovery': {
+    zh: { title: 'PARE v0.3 Protected Recovery Evidence', description: '72 筆 protected；Candidate-v2 86.11% vs B0 61.11%，差異 +25.00 pp，bootstrap 95% CI [+15.28, +34.72]。這只支持 benchmark-specific recovery/state-repair evidence。', dependsOn: ['Independent PARE lineage'], note: 'BENCHMARK-SPECIFIC ONLY；duplicate side-effect 2.78%；PAAV / RT-03 Action Verification 尚未建立。', evidenceLabel: 'PARE v0.3 terminal cfa1a4b2' },
+    en: { title: 'PARE v0.3 Protected Recovery Evidence', description: '72 protected examples; Candidate-v2 86.11% vs B0 61.11%, a +25.00 pp difference with bootstrap 95% CI [+15.28, +34.72]. This supports benchmark-specific recovery/state-repair evidence only.', dependsOn: ['Independent PARE lineage'], note: 'BENCHMARK-SPECIFIC ONLY; duplicate side-effect 2.78%; PAAV / RT-03 Action Verification is not established.', evidenceLabel: 'PARE v0.3 terminal cfa1a4b2' },
+  },
   'integration-contract': {
     zh: { title: '凍結 PSE → PDA 整合契約 v0.1', description: '正式定義 StateSnapshot、InterventionDecision、ActionAttempt、VerificationRecord，以及 disputed/no-evidence 的 fail-closed semantics。', dependsOn: ['RT-01 state semantics', 'RT-02 bounded decision semantics'], unlockCondition: '完成 Issue #1 acceptance checklist 並 freeze contract identity。', note: '這是目前 umbrella architecture 的 critical path；PDA protected/OOD recovery 仍需平行處理。' },
     en: { title: 'Freeze PSE → PDA Integration Contract v0.1', description: 'Formally define StateSnapshot, InterventionDecision, ActionAttempt, VerificationRecord, and fail-closed semantics for disputed/no-evidence states.', dependsOn: ['RT-01 state semantics', 'RT-02 bounded decision semantics'], unlockCondition: 'Complete the Issue #1 acceptance checklist and freeze the contract identity.', note: 'This is the umbrella architecture’s current critical path; PDA protected/OOD recovery must proceed in parallel.' },
@@ -278,12 +310,14 @@ const claimTranslations = {
       'PDA-SPEC-v2 在已審核 bounded state space 中具 deterministic / invariant consistency evidence。',
       'PDA C5 在 Protocol-v2 Gate E 的 bounded synthetic validation 通過 preregistered criteria。',
       'PDA C5 在 Gate F protected/OOD validation terminal FAIL；此負面結果被保留並限制後續宣稱。',
+      'PDA Candidate-v9 在 pre-freeze validation 通過，但首個 formal H1 DEV-OOD 僅 macro-F1 0.5772、ACT recall 0.2367，因此 terminal development FAIL；protected evaluation 未執行。',
     ],
     en: [
       'PSE Candidate-v6 has lower false retrieval than exact A-MEM on the specified adversarial-v7 no-evidence subset.',
       'PDA-SPEC-v2 has deterministic and invariant-consistency evidence within the audited bounded state space.',
       'PDA C5 passed preregistered criteria on the Protocol-v2 Gate-E bounded synthetic validation.',
       'PDA C5 terminally failed Gate-F protected/OOD validation; the negative result is preserved and constrains subsequent claims.',
+      'PDA Candidate-v9 passed pre-freeze validation but terminally failed development on its first formal H1 DEV-OOD holdout at macro-F1 0.5772 and ACT recall 0.2367; protected evaluation was not executed.',
     ],
   },
   notSupported: {
@@ -291,12 +325,14 @@ const claimTranslations = {
       'PSE 已達 SOTA，或在所有情境都優於 A-MEM。',
       'PDA 已具 protected/OOD generalization 或真實世界脈絡能力。',
       'PDA 能產生普遍正確或符合人類偏好的主動行為。',
+      'Candidate-v9 已建立 protected/OOD generalization、Gate G authorization、closed-loop readiness 或 production safety。',
       'Minimum Viable JARVIS 已經達成。',
     ],
     en: [
       'PSE is SOTA or universally better than A-MEM.',
       'PDA has protected/OOD generalization or real-world contextual competence.',
       'PDA produces universally correct or human-preferred proactive behavior.',
+      'Candidate-v9 establishes protected/OOD generalization, Gate G authorization, closed-loop readiness, or production safety.',
       'Minimum Viable JARVIS has been achieved.',
     ],
   },

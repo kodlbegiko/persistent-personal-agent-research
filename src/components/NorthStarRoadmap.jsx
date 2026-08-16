@@ -49,7 +49,7 @@ function getCopy(language) {
         inProgress: 'In progress', focus: 'Focus path', focused: 'Focused', jumpNext: 'Jump to next target',
         explorer: 'ROADMAP EXPLORER', explorerTitle: 'Explore the path to the North Star', line: 'Research line', status: 'Node status',
         allLines: 'All lines', all: 'All', mvjOnly: 'MVJ-required only', reset: 'Reset view', showing: 'Showing', nodes: 'nodes',
-        noMatches: 'No roadmap nodes match the current filters.', details: 'Details', hideDetails: 'Hide details', criticalPath: 'Jump to current critical path',
+        noMatches: 'No roadmap nodes match the current filters.', details: 'Details', hideDetails: 'Hide details', criticalPath: 'Jump to current critical path', criticalNode: 'Critical path',
         visible: 'visible', phaseUnavailable: 'No matching nodes in this phase', openEvidence: 'Open evidence', history: 'Evidence history',
       }
     : {
@@ -60,7 +60,7 @@ function getCopy(language) {
         inProgress: '進行中', focus: '聚焦路徑', focused: '已聚焦', jumpNext: '跳到下一個目標',
         explorer: '路徑探索器', explorerTitle: '互動探索通往 North Star 的路徑', line: '研究線', status: '節點狀態',
         allLines: '全部研究線', all: '全部', mvjOnly: '只看 MVJ 必要節點', reset: '重設視圖', showing: '目前顯示', nodes: '個節點',
-        noMatches: '目前篩選條件下沒有符合的路徑節點。', details: '查看細節', hideDetails: '收合細節', criticalPath: '跳到目前關鍵路徑',
+        noMatches: '目前篩選條件下沒有符合的路徑節點。', details: '查看細節', hideDetails: '收合細節', criticalPath: '跳到目前關鍵路徑', criticalNode: '關鍵路徑',
         visible: '可見', phaseUnavailable: '此階段目前沒有符合條件的節點', openEvidence: '開啟證據', history: '證據歷史',
       };
 }
@@ -126,7 +126,7 @@ function ResearchLineCard({ line, language, locale, copy, selected, onFocus, onJ
   );
 }
 
-function TimelineNode({ node, index, t, locale, copy, expanded, onToggle }) {
+function TimelineNode({ node, index, t, locale, copy, expanded, onToggle, critical }) {
   const meta = getStatusMeta(t)[node.status] || getStatusMeta(t).future;
   const timestamp = formatEvidenceTime(node.achievedAt || node.terminalAt, node.datePrecision, locale);
   const timeLabel = node.status === 'complete'
@@ -134,7 +134,7 @@ function TimelineNode({ node, index, t, locale, copy, expanded, onToggle }) {
     : node.status === 'failed' ? t('timeline.terminalAt') : t('timeline.time');
 
   return (
-    <article className={`roadmap-node status-${node.status}`} id={`roadmap-node-${node.id}`}>
+    <article className={`roadmap-node status-${node.status} ${critical ? 'is-critical-path' : ''}`} id={`roadmap-node-${node.id}`}>
       <div className="roadmap-node-rail" aria-hidden="true">
         <span className="roadmap-node-index">{String(index + 1).padStart(2, '0')}</span>
         <span className="roadmap-node-dot">{meta.symbol}</span>
@@ -142,7 +142,7 @@ function TimelineNode({ node, index, t, locale, copy, expanded, onToggle }) {
       <div className={`roadmap-node-card ${expanded ? 'is-expanded' : 'is-collapsed'}`}>
         <div className="roadmap-node-heading">
           <div className="roadmap-node-title-wrap">
-            <div className="roadmap-node-kicker"><span>{node.track}</span>{node.requiredForMvj ? <span>{t('timeline.mvjRequired')}</span> : null}</div>
+            <div className="roadmap-node-kicker"><span>{node.track}</span>{critical ? <span>{copy.criticalNode}</span> : null}{node.requiredForMvj ? <span>{t('timeline.mvjRequired')}</span> : null}</div>
             <h3>{node.title}</h3>
             <p>{node.description}</p>
           </div>
@@ -210,6 +210,18 @@ export default function NorthStarRoadmap() {
     current: allNodes.find((node) => node.status === 'current'),
     lastCompleted: [...allNodes].filter((node) => node.status === 'complete' && node.achievedAt).sort((a, b) => new Date(b.achievedAt) - new Date(a.achievedAt))[0],
   }), [allNodes]);
+
+  const criticalPathIds = useMemo(() => {
+    const byId = new Map(allNodes.map((node) => [node.id, node]));
+    const ids = new Set();
+    const visit = (id) => {
+      if (!id || ids.has(id)) return;
+      ids.add(id);
+      for (const dependencyId of byId.get(id)?.dependencyIds || []) visit(dependencyId);
+    };
+    visit(stats.current?.id);
+    return ids;
+  }, [allNodes, stats.current?.id]);
 
   const nodeMatches = (node) => {
     if (!lineMatchesNode(lineFilter, node)) return false;
@@ -329,7 +341,7 @@ export default function NorthStarRoadmap() {
                 {filteredPhases.length ? filteredPhases.map((phase) => (
                   <section className="roadmap-phase" key={phase.id} id={`roadmap-phase-${phase.id}`}>
                     <header className="roadmap-phase-header"><span>{phase.shortLabel}</span><div><h3>{phase.title}</h3><p>{phase.description}</p></div></header>
-                    <div className="roadmap-nodes">{phase.nodes.map((node, index) => <TimelineNode key={node.id} node={node} index={index} t={t} locale={locale} copy={copy} expanded={expandedNodes.has(node.id)} onToggle={toggleNode} />)}</div>
+                    <div className="roadmap-nodes">{phase.nodes.map((node, index) => <TimelineNode key={node.id} node={node} index={index} t={t} locale={locale} copy={copy} expanded={expandedNodes.has(node.id)} onToggle={toggleNode} critical={criticalPathIds.has(node.id)} />)}</div>
                   </section>
                 )) : <div className="roadmap-empty-filter" aria-live="polite">{copy.noMatches}<button type="button" onClick={resetView}>{copy.reset}</button></div>}
               </div>
