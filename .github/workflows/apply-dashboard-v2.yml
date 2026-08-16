@@ -35,6 +35,22 @@ jobs:
               raise SystemExit('hash-order patch target not found')
           p.write_text(s.replace(old, new))
           PY
+      - name: Repair Gate table ARIA semantics
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('src/App.jsx')
+          s = p.read_text()
+          replacements = {
+            '<span>{t(\'gates.track\')}</span><span>{t(\'gates.gate\')}</span><span>{t(\'gates.verdict\')}</span><span>{t(\'gates.boundary\')}</span>': '<span role="columnheader">{t(\'gates.track\')}</span><span role="columnheader">{t(\'gates.gate\')}</span><span role="columnheader">{t(\'gates.verdict\')}</span><span role="columnheader">{t(\'gates.boundary\')}</span>',
+            '<span>{gate.track}</span>\n                    <strong>{gate.gate}</strong>\n                    <span><Badge tone={gate.tone}>{gate.verdictLabel}</Badge></span>\n                    <span className="gate-detail">{gate.detail}</span>': '<span role="cell">{gate.track}</span>\n                    <strong role="cell">{gate.gate}</strong>\n                    <span role="cell"><Badge tone={gate.tone}>{gate.verdictLabel}</Badge></span>\n                    <span role="cell" className="gate-detail">{gate.detail}</span>'
+          }
+          for old, new in replacements.items():
+              if old not in s:
+                  raise SystemExit('gate ARIA patch target not found: ' + old[:48])
+              s = s.replace(old, new)
+          p.write_text(s)
+          PY
       - name: Install dependencies
         run: npm install --no-audit --no-fund
       - name: Validate data model
