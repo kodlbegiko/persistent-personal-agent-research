@@ -1,0 +1,37 @@
+name: Export Dashboard v2 Production Artifact
+
+on:
+  push:
+    branches: [ops/dashboard-v2-production-artifact]
+    paths:
+      - '.github/workflows/export-production-artifact.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ops/dashboard-v2-production-artifact
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Build from exact merged main identity
+        run: env -u GITHUB_SHA DASHBOARD_SOURCE_SHA=8e732af555a4726e30c99a4ff1c1344ca58434a3 npm run build
+      - name: Stage immutable deployment artifact
+        run: |
+          rm -rf production-artifact
+          mkdir -p production-artifact
+          cp -R dist/. production-artifact/
+          printf '%s\n' '8e732af555a4726e30c99a4ff1c1344ca58434a3' > production-artifact/SOURCE_SHA
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f production-artifact
+          git commit -m 'Export exact-main Dashboard v2 production artifact'
+          git push origin HEAD:ops/dashboard-v2-production-artifact
